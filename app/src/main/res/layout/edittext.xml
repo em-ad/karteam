@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    app:boxBackgroundColor="@color/secondary_very_light"
+    app:boxCornerRadiusTopEnd="6dp"
+    app:boxCornerRadiusTopStart="6dp"
+    app:boxCornerRadiusBottomEnd="6dp"
+    app:boxCornerRadiusBottomStart="6dp"
+    app:boxStrokeColor="@color/primary"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    app:boxStrokeWidth="1dp"
+    app:boxStrokeWidthFocused="1dp"
+    android:textColorHint="#777"
+    app:hintTextColor="@color/primary_very_dark">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/app_font"
+        android:hint="متن را بنویسید"
+        android:textColor="#333"
+        android:textCursorDrawable="@color/black"
+        android:textSize="15sp" />
+
+</com.google.android.material.textfield.TextInputLayout>

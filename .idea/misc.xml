@@ -21,10 +21,12 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/texted.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/edittext.xml" value="0.1" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_request.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_request_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_traffic.xml" value="0.264" />
-        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/toolbar.xml" value="0.2" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/menu/bottom_nav.xml" value="0.25416666666666665" />
       </map>
     </option>
