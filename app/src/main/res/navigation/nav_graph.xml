@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/trafficFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="space.kheyrati.nanowatch.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/trafficFragment"
+        android:name="space.kheyrati.nanowatch.TrafficFragment"
+        android:label="fragment_traffic"
+        tools:layout="@layout/fragment_traffic" />
+
+    <fragment
+        android:id="@+id/requestFragment"
+        android:name="space.kheyrati.nanowatch.RequestListFragment"
+        android:label="fragment_request"
+        tools:layout="@layout/fragment_request_list" />
+
+
+</navigation>
