@@ -10,6 +10,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_arrow_right.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_checkmark.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_coffee.xml" value="0.1135" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_door_open.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_fingerprint.xml" value="0.142" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_fingerprint_primary.xml" value="0.142" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_fingerprint_white.xml" value="0.142" />
@@ -17,11 +18,15 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_plane_departure.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_user.xml" value="0.142" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/oval_primary.xml" value="0.142" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_dark_box.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_white_box.xml" value="0.1" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/texted.xml" value="0.1135" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/edittext.xml" value="0.1" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_otp.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_request.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_request_list.xml" value="0.25416666666666665" />

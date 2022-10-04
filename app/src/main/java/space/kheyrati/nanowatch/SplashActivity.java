@@ -19,7 +19,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         MAlerter.show(this, "خوش آمدید", "نرم افزار مدیریت رفت و آمد عماد");
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+//            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         }, SPLASH_TIME_MILLIS);
     }

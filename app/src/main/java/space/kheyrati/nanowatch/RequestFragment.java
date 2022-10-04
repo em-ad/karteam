@@ -7,7 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,9 +28,13 @@ public class RequestFragment extends Fragment {
 
     private FloatingActionButton fabDone;
     private TextInputLayout etDate;
+    private TextInputEditText etDateEt;
     private TextInputLayout etDays;
+    private TextInputEditText etDaysEt;
     private TextInputLayout etType;
+    private TextInputEditText etTypeEt;
     private TextInputLayout etDescription;
+    private TextInputEditText etDescriptionEt;
 
     public RequestFragment() {
         // Required empty public constructor
@@ -64,8 +71,30 @@ public class RequestFragment extends Fragment {
         etType.setHint("نوع مرخصی");
         etDescription.setHint("توضیحات");
 
-        ((TextInputEditText) etDays.findViewById(R.id.edittext))
-                .setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
+        etDaysEt.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+        etDaysEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String rawNum = editable.toString()
+                        .replace("ر", "")
+                        .replace("و", "")
+                        .replace("ز", "")
+                        .replace(" ", "");
+                    if(!editable.toString().endsWith(" روز")) {
+                    String newString = rawNum + " روز";
+                    etDaysEt.setText(newString);
+                    etDaysEt.setSelection(newString.length() - 4);
+                }
+            }
+        });
 
         etDate.findViewById(R.id.edittext).setOnTouchListener((view, motionEvent) -> {
             if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) return false;
@@ -94,9 +123,13 @@ public class RequestFragment extends Fragment {
         view.findViewById(R.id.arrow).setOnClickListener(v ->
                 getParentFragmentManager().popBackStackImmediate());
         fabDone = view.findViewById(R.id.fabDone);
-        etDate = view.findViewById(R.id.etDate);//.findViewById(R.id.edittext);
-        etDays = view.findViewById(R.id.etDays);//.findViewById(R.id.edittext);
-        etType = view.findViewById(R.id.etType);//.findViewById(R.id.edittext);
-        etDescription = view.findViewById(R.id.etDescription);//.findViewById(R.id.edittext);
+        etDate = view.findViewById(R.id.etDate);
+        etDateEt = etDate.findViewById(R.id.edittext);
+        etDays = view.findViewById(R.id.etDays);
+        etDaysEt = etDays.findViewById(R.id.edittext);
+        etType = view.findViewById(R.id.etType);
+        etTypeEt = etType.findViewById(R.id.edittext);
+        etDescription = view.findViewById(R.id.etDescription);
+        etDescriptionEt = etDescription.findViewById(R.id.edittext);
     }
 }
