@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -184,6 +185,12 @@ public class TrafficFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void setTouchListener() {
         ivFinger.setOnTouchListener((view1, motionEvent) -> {
+            if(!MyApplication.locationValid()){
+                MAlerter.show(getActivity(), "در حال جستجوی لوکیشن", "برای ثبت ورود و خروج باید در محدوده دانشگاه باشید");
+            }
+            if(getActivity() != null) {
+                ((MainActivity) getActivity()).findUserLocation();
+            }
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     initAttendance();
