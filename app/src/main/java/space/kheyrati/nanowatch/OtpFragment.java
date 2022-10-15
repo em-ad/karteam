@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OtpFragment#newInstance} factory method to
@@ -20,9 +22,11 @@ import android.widget.TextView;
 public class OtpFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
-    private TextView tvOtp;
+    private TextView tvEnter;
+    private TextInputEditText loginEt;
 
-    public OtpFragment() {}
+    public OtpFragment() {
+    }
 
     public static OtpFragment newInstance() {
         OtpFragment fragment = new OtpFragment();
@@ -41,8 +45,29 @@ public class OtpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tvEnter = view.findViewById(R.id.tvEnter);
+        loginEt = view.findViewById(R.id.loginEt).findViewById(R.id.edittext);
+        loginEt.setHint("کد تاییدی که پیامک شده رو وارد کن");
         loginViewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(LoginViewModel.class);
-        tvOtp = view.findViewById(R.id.tvOtp);
-        tvOtp.setOnClickListener(view1 -> loginViewModel.verify(""));
+        if (loginViewModel.getOtp() != null && !loginViewModel.getOtp().isEmpty()) {
+            loginEt.setText(loginViewModel.getOtp());
+        }
+        tvEnter.setOnClickListener(view1 -> {
+            if (loginEt.getText().toString().trim().length() <= 2) {
+                MAlerter.show(getActivity(), "خطا", "کد تایید را به درستی وارد کنید");
+                return;
+            }
+            loginViewModel.verify(loginEt.getText().toString().trim(), new ApiCallback() {
+                @Override
+                public void apiFailed(Object o) {
+                    MAlerter.show(getActivity(), "خطا", "در تایید کد ورود خطایی رخ داد");
+                }
+
+                @Override
+                public void apiSucceeded(Object o) {
+
+                }
+            });
+        });
     }
 }

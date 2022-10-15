@@ -1,4 +1,4 @@
-package space.kheyrati.nanowatch.utils;
+package space.kheyrati.nanowatch;
 
 import android.app.Activity;
 import android.view.Gravity;

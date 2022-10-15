@@ -1,14 +1,24 @@
 package space.kheyrati.nanowatch;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends AndroidViewModel {
 
     private final MutableLiveData<LoginState> stateLiveData = new MutableLiveData<>(LoginState.LOGIN);
-
+    private final KheyratiRepository kheyratiRepository;
+    private String otp;
     private String phoneNumber;
+
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
+        this.kheyratiRepository = new KheyratiRepository();
+    }
 
     public LiveData<LoginState> getStateLiveData() {
         return stateLiveData;
@@ -20,15 +30,53 @@ public class LoginViewModel extends ViewModel {
         DONE
     }
 
-    public void login(String phone){
-        stateLiveData.postValue(LoginState.OTP);
-        this.phoneNumber = phone;
+    public String getOtp() {
+        return otp;
     }
 
-    public void verify(String otp){
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void login(String phone, ApiCallback apiCallback){
+        this.phoneNumber = phone;
+        kheyratiRepository.login(phone, new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                apiCallback.apiFailed(o);
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                if(o instanceof SigninResponseModel) {
+                    SigninResponseModel responseModel = ((SigninResponseModel) o);
+                    otp = responseModel.getOtp();
+                    stateLiveData.postValue(LoginState.OTP);
+                    apiCallback.apiSucceeded(o);
+                }
+            }
+        });
+    }
+
+    public void verify(String otp, ApiCallback apiCallback){
         if(this.phoneNumber == null || this.phoneNumber.isEmpty())
             return;
-        stateLiveData.postValue(LoginState.DONE);
+        kheyratiRepository.verify(phoneNumber, otp, new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                apiCallback.apiFailed(o);
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                if(o instanceof VerifyResponseModel) {
+                    VerifyResponseModel responseModel = ((VerifyResponseModel) o);
+                    MSharedPreferences.getInstance().saveToken(getApplication(), responseModel.getTokenModel().getToken());
+                    stateLiveData.postValue(LoginState.DONE);
+                    apiCallback.apiSucceeded(o);
+                }
+            }
+        });
     }
 
 }

@@ -10,6 +10,19 @@
     android:id="@+id/root"
     tools:context=".RequestListFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="15"
+        tools:listitem="@layout/item_request"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
     <com.nambimobile.widgets.efab.ExpandableFabLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_orientation="portrait"
-            app:fab_icon="@drawable/ic_coffee"
+            app:fab_icon="@drawable/ic_vacation_white"
             app:label_backgroundColor="@color/primary_dark"
             app:fab_color="@color/primary_dark"
             app:label_text="درخواست مرخصی"/>
@@ -56,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_orientation="portrait"
-            app:fab_icon="@drawable/ic_plane_departure"
+            app:fab_icon="@drawable/ic_mission_white"
             app:label_backgroundColor="@color/primary_dark"
             app:fab_color="@color/primary_dark"
             app:label_text="درخواست ماموریت"/>

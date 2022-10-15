@@ -15,6 +15,7 @@
     <color name="secondary_light">#EBDEF4</color>
     <color name="secondary_very_light">#F7F3FA</color>
 
-	<color name="grey_6">#333333</color>
+	<color name="grey_3">#333333</color>
+	<color name="grey_6">#666</color>
 
 </resources>

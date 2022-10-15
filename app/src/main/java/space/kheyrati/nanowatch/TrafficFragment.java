@@ -3,18 +3,13 @@ package space.kheyrati.nanowatch;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
@@ -22,22 +17,16 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import ir.hamsaa.persiandatepicker.date.PersianDateImpl;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
-import space.kheyrati.nanowatch.utils.MAlerter;
 
 public class TrafficFragment extends Fragment {
 

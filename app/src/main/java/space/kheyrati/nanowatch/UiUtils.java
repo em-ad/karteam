@@ -1,4 +1,4 @@
-package space.kheyrati.nanowatch.utils;
+package space.kheyrati.nanowatch;
 
 public class UiUtils {
     private String getTime(long millisUntilFinished) {

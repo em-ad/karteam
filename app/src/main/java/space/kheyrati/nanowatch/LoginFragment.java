@@ -12,10 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     private TextView tvEnter;
+    private TextInputEditText loginEt;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -45,6 +48,24 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         loginViewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(LoginViewModel.class);
         tvEnter = view.findViewById(R.id.tvEnter);
-        tvEnter.setOnClickListener(view1 -> loginViewModel.login("0"));
+        loginEt = view.findViewById(R.id.loginEt).findViewById(R.id.edittext);
+        loginEt.setHint("شماره موبایلت رو وارد کن");
+        tvEnter.setOnClickListener(view1 -> {
+            if(loginEt.getText().toString().trim().length() < 10){
+                MAlerter.show(getActivity(), "خطا در ورود", "در فرایند ورود خطایی رخ داد");
+                return;
+            }
+            loginViewModel.login(loginEt.getText().toString().trim(), new ApiCallback() {
+                @Override
+                public void apiFailed(Object o) {
+                    MAlerter.show(getActivity(), "خطا در لاگین", "خطایی در ورود به اپ رخ داد");
+                }
+
+                @Override
+                public void apiSucceeded(Object o) {
+
+                }
+            });
+        });
     }
 }

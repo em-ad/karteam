@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
-
-import space.kheyrati.nanowatch.utils.MAlerter;
 
 public class SplashActivity extends AppCompatActivity {
 
