@@ -16,6 +16,12 @@ public interface KheyratiApi {
     @POST("user/signIn")
     Call<SigninResponseModel> signin(@Body SigninRequestModel requestModel);
 
+    @POST("user/enter")
+    Call<EnterResponseModel> enter(@Header("Authorization") String authHeader);
+
+    @POST("user/exit")
+    Call<ExitResponseModel> exit(@Header("Authorization") String authHeader);
+
 //    @GET("/license/myRequests")
 //    Call<List<RequestItem>> getMyRequests(@Header("Authorization") String authHeader);
 //

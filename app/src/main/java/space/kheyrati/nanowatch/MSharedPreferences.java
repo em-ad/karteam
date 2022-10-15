@@ -37,5 +37,21 @@ public class MSharedPreferences {
    }
 
     public void saveToken(Context context, String token) {
+       SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+       pref.edit().putString("token", token).apply();
     }
+
+   public boolean hasToken(Context context) {
+      SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+      return pref.contains("token") && pref.getString("token", null) != null;
+   }
+
+   public String getToken(Context context) {
+      return context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", null);
+   }
+
+   public String getTokenHeader(Context context) {
+      return "Bearer " + context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", null);
+   }
+
 }

@@ -39,11 +39,12 @@ public class TrafficFragment extends Fragment {
     private LottieAnimationView pbProgress;
     private FrameLayout flEdge;
     private volatile boolean isTimerRunning;
+    private KheyratiRepository repository;
 
     private Handler attendanceHandler;
     private final Runnable attendanceRunnable = () -> {
         boolean isIn = viewModel.isIn.getValue() != null && viewModel.isIn.getValue();
-        if(isIn){
+        if (isIn) {
             viewModel.isIn.postValue(false);
         } else {
             PersianCalendar date = new PersianCalendar(System.currentTimeMillis());
@@ -54,7 +55,7 @@ public class TrafficFragment extends Fragment {
         }
     };
 
-    private final CountDownTimer countDownTimer = new CountDownTimer(60000, 1000){
+    private final CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {
 
         @Override
         public void onTick(long untilEnd) {
@@ -67,7 +68,8 @@ public class TrafficFragment extends Fragment {
         }
     };
 
-    public TrafficFragment() {}
+    public TrafficFragment() {
+    }
 
     public static TrafficFragment newInstance() {
         TrafficFragment fragment = new TrafficFragment();
@@ -82,7 +84,7 @@ public class TrafficFragment extends Fragment {
     }
 
     private void startTimerFromScratch() {
-        if(isTimerRunning) return;
+        if (isTimerRunning) return;
         countDownTimer.start();
         isTimerRunning = true;
     }
@@ -111,29 +113,66 @@ public class TrafficFragment extends Fragment {
     }
 
     private void attendanceStateChanged(Boolean entered) {
-        if(entered == null) return;
-        if(entered) {
-            lav.setVisibility(View.VISIBLE);
-            lav.playAnimation();
-            tvEntered.setVisibility(View.VISIBLE);
-            flEdge.setVisibility(View.VISIBLE);
-            tvTime.setVisibility(View.GONE);
-            PersianCalendar date = new PersianCalendar(PreferencesManager
-                    .getInstance(getContext()).getLong("last_enter", System.currentTimeMillis()));
-            tvEntered.setText("شما در " + date.getPersianShortDateTime().replace(" ", " در ساعت ") + " وارد شدید" + "\n\n" + getString(R.string.hold_to_exit));
+        if (entered == null || repository == null || getContext() == null) return;
+        if (entered) {
+            callEnter();
         } else {
-            lav.setVisibility(View.INVISIBLE);
-            tvEntered.setVisibility(View.INVISIBLE);
-            flEdge.setVisibility(View.INVISIBLE);
-            tvTime.setVisibility(View.VISIBLE);
-            PreferencesManager.getInstance(getContext()).edit().remove("last_enter").commit();
+            callExit();
         }
+    }
+
+    private void callExit() {
+        repository.exit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                MAlerter.show(getActivity(), "خطا", "خطایی در ثبت خروج پیش آمد");
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                changeUiForExit();
+            }
+        });
+    }
+
+    private void callEnter(){
+        repository.enter(MSharedPreferences.getInstance().getTokenHeader(requireContext()), new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                MAlerter.show(getActivity(), "خطا", "خطایی در ثبت ورود پیش آمد");
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                changeUiForEnter();
+            }
+        });
+    }
+
+    private void changeUiForExit() {
+        lav.setVisibility(View.INVISIBLE);
+        tvEntered.setVisibility(View.INVISIBLE);
+        flEdge.setVisibility(View.INVISIBLE);
+        tvTime.setVisibility(View.VISIBLE);
+        PreferencesManager.getInstance(getContext()).edit().remove("last_enter").commit();
+    }
+
+    private void changeUiForEnter() {
+        lav.setVisibility(View.VISIBLE);
+        lav.playAnimation();
+        tvEntered.setVisibility(View.VISIBLE);
+        flEdge.setVisibility(View.VISIBLE);
+        tvTime.setVisibility(View.GONE);
+        PersianCalendar date = new PersianCalendar(PreferencesManager
+                .getInstance(getContext()).getLong("last_enter", System.currentTimeMillis()));
+        tvEntered.setText("شما در " + date.getPersianShortDateTime().replace(" ", " در ساعت ") + " وارد شدید" + "\n\n" + getString(R.string.hold_to_exit));
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        repository = new KheyratiRepository();
         startTimerFromScratch();
     }
 
@@ -145,7 +184,7 @@ public class TrafficFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void setTouchListener() {
         ivFinger.setOnTouchListener((view1, motionEvent) -> {
-            switch (motionEvent.getAction()){
+            switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     initAttendance();
                     break;
@@ -181,7 +220,7 @@ public class TrafficFragment extends Fragment {
     }
 
     private void vibratePhone() {
-        if(getContext() == null) return;
+        if (getContext() == null) return;
         Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));

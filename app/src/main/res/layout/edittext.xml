@@ -23,6 +23,7 @@
         android:fontFamily="@font/app_font"
         android:hint="متن را بنویسید"
         android:textColor="#333"
+        android:inputType="phone"
         android:textCursorDrawable="@color/black"
         android:textSize="15sp" />
 

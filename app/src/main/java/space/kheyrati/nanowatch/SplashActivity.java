@@ -14,10 +14,13 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        MAlerter.show(this, "خوش آمدید", "نرم افزار مدیریت رفت و آمد عماد");
+        MAlerter.show(this, "خوش آمدید", "نرم افزار عبور و مرور عماد");
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-//            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            if(MSharedPreferences.getInstance().hasToken(this)){
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            } else {
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            }
             finish();
         }, SPLASH_TIME_MILLIS);
     }
