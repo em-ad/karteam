@@ -2,8 +2,6 @@ package space.kheyrati.nanowatch;
 
 import android.app.Application;
 import android.location.Location;
-import android.util.Log;
-import android.widget.Toast;
 
 
 public class MyApplication extends Application {
@@ -14,8 +12,8 @@ public class MyApplication extends Application {
     public static final double sattariLon = 51.353377;
 
     public static boolean locationValid() {
-        if(lastLocation == null) return false;
-        return isDistanceValid(lastLocation) < 3;
+        if (lastLocation == null) return false;
+        return isDistanceValid(lastLocation) < 3.5;
     }
 
     public static double isDistanceValid(Location point1) {

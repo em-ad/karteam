@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface KheyratiApi {
 
@@ -22,24 +23,8 @@ public interface KheyratiApi {
     @POST("user/exit")
     Call<ExitResponseModel> exit(@Header("Authorization") String authHeader);
 
-//    @GET("/license/myRequests")
-//    Call<List<RequestItem>> getMyRequests(@Header("Authorization") String authHeader);
-//
-//    @GET("/license/requests")
-//    Call<List<RequestResponseModel>> getRequests(@Header("Authorization") String authHeader);
-//
-//    @POST("/license/create")
-//    Call<Void> createRequest(@Header("Authorization") String authHeader,
-//                             @Body CreateRequestModel createRequestModel);
-//
-//    @POST("/license/changeRequestStatus")
-//    Call<Void> changeRequestStatus(@Header("Authorization") String authHeader,
-//                             @Body ChangeStatusModel model);
-//
-//    @GET("/notification/list")
-//    Call<List<NotificationModel>> getNotifications(@Header("Authorization") String authHeader);
-//
-//    @POST("/notification/create")
-//    Call<Void> createNotification(@Header("Authorization") String authHeader,
-//                             @Body CreateNotificationModel model);
+    @GET("company/logs/{userId}")
+    Call<List<UserLogResponseItem>> getMyLogs(@Header("Authorization") String authHeader,
+                                              @Path("userId") String customerId);
+
 }

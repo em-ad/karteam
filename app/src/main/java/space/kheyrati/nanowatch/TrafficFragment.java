@@ -136,7 +136,7 @@ public class TrafficFragment extends Fragment {
         });
     }
 
-    private void callEnter(){
+    private void callEnter() {
         repository.enter(MSharedPreferences.getInstance().getTokenHeader(requireContext()), new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
@@ -167,7 +167,6 @@ public class TrafficFragment extends Fragment {
         PersianCalendar date = new PersianCalendar(PreferencesManager
                 .getInstance(getContext()).getLong("last_enter", System.currentTimeMillis()));
         tvEntered.setText("شما در " + date.getPersianShortDateTime().replace(" ", " در ساعت ") + " وارد شدید" + "\n\n" + getString(R.string.hold_to_exit));
-
     }
 
     @Override
@@ -175,6 +174,8 @@ public class TrafficFragment extends Fragment {
         super.onResume();
         repository = new KheyratiRepository();
         startTimerFromScratch();
+        if (viewModel != null)
+            attendanceStateChanged(viewModel.isIn.getValue());
     }
 
     private void initComponents() {
@@ -185,10 +186,11 @@ public class TrafficFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void setTouchListener() {
         ivFinger.setOnTouchListener((view1, motionEvent) -> {
-            if(!MyApplication.locationValid()){
+            if (!MyApplication.locationValid()) {
                 MAlerter.show(getActivity(), "در حال جستجوی لوکیشن", "برای ثبت ورود و خروج باید در محدوده دانشگاه باشید");
+                stopAttendance();
             }
-            if(getActivity() != null) {
+            if (getActivity() != null) {
                 ((MainActivity) getActivity()).findUserLocation();
             }
             switch (motionEvent.getAction()) {

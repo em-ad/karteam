@@ -1,5 +1,7 @@
 package space.kheyrati.nanowatch;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,6 +79,25 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<ExitResponseModel> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void getLogs(String headerToken, String myUserId, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getMyLogs(headerToken, myUserId)
+                .enqueue(new Callback<List<UserLogResponseItem>>() {
+                    @Override
+                    public void onResponse(Call<List<UserLogResponseItem>> call, Response<List<UserLogResponseItem>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<UserLogResponseItem>> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });

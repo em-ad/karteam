@@ -2,7 +2,9 @@ package space.kheyrati.nanowatch;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.auth0.android.jwt.JWT;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -52,6 +54,12 @@ public class MSharedPreferences {
 
    public String getTokenHeader(Context context) {
       return "Bearer " + context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", null);
+   }
+
+   public String getUserIdFromToken(Context context){
+      String rawToken = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
+      JWT jwt = new JWT(rawToken);
+      return jwt.getSubject();
    }
 
 }

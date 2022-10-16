@@ -32,6 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/time_box"
         android:alpha="0.2"
+        android:tint="@color/primary_very_dark"
         />
 
     <TextView
@@ -61,6 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvEntered"
         app:lottie_autoPlay="true"
+        android:visibility="gone"
         app:lottie_rawRes="@raw/pendulum"
         android:tint="@color/primary"
         app:lottie_loop="true"
@@ -77,7 +79,7 @@
         tools:visibility="visible"
         android:visibility="invisible"
         android:textSize="16sp"
-        android:textColor="@color/grey_3"
+        android:textColor="@color/secondary_very_light"
         android:fontFamily="@font/app_font"
         android:background="@drawable/rounded_white_box"
         android:paddingRight="12dp"
@@ -98,6 +100,7 @@
         app:layout_constraintRight_toRightOf="@id/tvEntered"
         app:layout_constraintLeft_toLeftOf="@id/tvEntered"
         android:layout_marginTop="-8dp"
+        android:visibility="gone"
         />
 
     <androidx.appcompat.widget.AppCompatImageView

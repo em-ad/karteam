@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:focusable="true"
+    tools:background="@color/white"
+    android:background="#00ffffff">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivStatus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="8dp"
+        app:srcCompat="@drawable/ic_sign_out_alt"
+        android:padding="6dp"
+        />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/app_font"
+        android:textSize="12sp"
+        android:gravity="right|center_vertical"
+        android:layout_marginRight="14dp"
+        app:layout_constraintRight_toLeftOf="@id/ivStatus"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:drawableRight="@drawable/ic_calendar_check"
+        tools:text="12/02/1400"
+        android:textColor="@color/grey_6"
+        android:drawablePadding="6dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/app_font"
+        android:textSize="12sp"
+        android:gravity="right|center_vertical"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tvDate"
+        android:drawableRight="@drawable/ic_calendar_alt"
+        tools:text="12/02/1400"
+        android:textColor="@color/grey_6"
+        android:drawablePadding="6dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d9d9d9"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

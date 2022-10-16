@@ -79,12 +79,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     public void findUserLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-//        fusedLocationClient.getLastLocation().addOnCompleteListener(task -> {
-//            if(task.getResult() != null) {
-//                MyApplication.lastLocation = task.getResult();
-//                Toast.makeText(this, MyApplication.isDistanceValid(task.getResult()) + " ", Toast.LENGTH_LONG).show();
-//            }
-//        });
         fusedLocationClient.requestLocationUpdates(new LocationRequest(), new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
