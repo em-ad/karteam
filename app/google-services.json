@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "28800867625",
+    "project_id": "karteam-aa9e5",
+    "storage_bucket": "karteam-aa9e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28800867625:android:8e62a4a148b0c9019ceb38",
+        "android_client_info": {
+          "package_name": "space.kheyrati.nanowatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28800867625-uij8uptgnl440u1hqiko27iomaf3pegl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "space.kheyrati.nanowatch",
+            "certificate_hash": "17e93b96f19265798dbce9eedf4ca330a9023f95"
+          }
+        },
+        {
+          "client_id": "28800867625-v021br6lu18jl4e0s8ais66cup664v2t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSu0ZgU_xivOwyOFg5TsmmrzYTHeFIwOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28800867625-v021br6lu18jl4e0s8ais66cup664v2t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

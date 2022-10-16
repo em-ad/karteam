@@ -21,7 +21,12 @@ public class MSharedPreferences {
       return instance;
    }
 
-   public List<GeneralRequestListItem> getAllRequests(Context context){
+    public static void saveFcmToken(Context context, String token) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+        pref.edit().putString("fcm", token).apply();
+    }
+
+    public List<GeneralRequestListItem> getAllRequests(Context context){
       ArrayList<GeneralRequestListItem> result = new ArrayList<>();
       SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
       String jsonRequests = pref.getString("requests", null);
@@ -62,4 +67,8 @@ public class MSharedPreferences {
       return jwt.getSubject();
    }
 
+    public void removeToken(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+        pref.edit().remove("token").commit();
+    }
 }
