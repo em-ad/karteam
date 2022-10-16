@@ -20,7 +20,10 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
@@ -51,6 +54,19 @@ public class MainActivity extends AppCompatActivity {
             isIn = oldDate.getPersianShortDate().equals(currentDate.getPersianShortDate());
         }
         attendanceViewModel.isIn.postValue(isIn);
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("TAG", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+                        String token = task.getResult();
+                        new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
+                        Log.e("TAG", "onComplete: " + token );
+                    }
+                });
     }
 
     private void initFragmentsIfNeeded() {

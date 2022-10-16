@@ -102,4 +102,20 @@ public class KheyratiRepository {
                     }
                 });
     }
+
+    public void sendToken(String headerToken, String fcmToken){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .sendFcmToken(headerToken, new FcmRequestModel(fcmToken))
+                .enqueue(new Callback<FcmResponseModel>() {
+                    @Override
+                    public void onResponse(Call<FcmResponseModel> call, Response<FcmResponseModel> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<FcmResponseModel> call, Throwable t) {
+
+                    }
+                });
+    }
 }

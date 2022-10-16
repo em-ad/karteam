@@ -47,31 +47,20 @@ public class FcmService extends FirebaseMessagingService implements LifecycleObs
 
     }
 
-    /**
-     * Called if InstanceID token is updated. This may occur if the security of
-     * the previous token had been compromised. Note that this is called when the InstanceID token
-     * is initially generated so this is where you would retrieve the token.
-     **/
     @Override
     public void onNewToken(@NotNull String token) {
-        Log.e(TAG, "Refreshed token: " + token);
-
         MSharedPreferences.saveFcmToken(getApplication(), token);
-
         sendRegistrationToServer(token);
     }
 
     private void sendRegistrationToServer(String token) {
-
+        new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
     }
 
     public void sendNotification(String title, String messageBody) {
 
         Intent intent = new Intent();
 
-        /**
-         * Handle clicking on push notification to run app while is in background state
-         */
         if (isAppInBackground) {
             PackageManager pm = getPackageManager();
             intent = pm.getLaunchIntentForPackage(getPackageName());

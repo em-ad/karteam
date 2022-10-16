@@ -22,18 +22,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         MAlerter.show(this, "خوش آمدید", "نرم افزار عبور و مرور عماد");
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("TAG", "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-                        String token = task.getResult();
-                        Log.e("TAG", "onComplete: " + token );
-                    }
-                });
         new Handler().postDelayed(() -> {
             if(MSharedPreferences.getInstance().hasToken(this)){
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));

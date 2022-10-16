@@ -27,4 +27,8 @@ public interface KheyratiApi {
     Call<List<UserLogResponseItem>> getMyLogs(@Header("Authorization") String authHeader,
                                               @Path("userId") String customerId);
 
+    @POST("user/updateFCM")
+    Call<FcmResponseModel> sendFcmToken(@Header("Authorization") String authHeader,
+                                @Body FcmRequestModel fcmRequestModel );
+
 }
