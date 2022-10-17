@@ -121,11 +121,13 @@ public class TrafficFragment extends Fragment {
     private void attendanceStateChanged(Boolean entered) {
         if (entered == null || repository == null || getContext() == null) return;
         if (entered) {
-            if(MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
+            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
                 callEnter();
+            else changeUiForEnter();
         } else {
-            if(MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
+            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
                 callExit();
+            else changeUiForExit();
         }
     }
 

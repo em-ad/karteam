@@ -41,10 +41,11 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
         } else if(item.getType().equalsIgnoreCase("exit")){
             holder.ivStatus.setImageResource(R.drawable.ic_sign_out_alt);
         }
+        PersianCalendar cal = new PersianCalendar(item.getDate());
         PersianDateImpl date = new PersianDateImpl();
         date.setDate(item.getDate());
         holder.tvDate.setText(date.getPersianYear() + "/" + date.getPersianMonth() + "/" + date.getPersianDay());
-        holder.tvTime.setText(date.getPersianLongDate());
+        holder.tvTime.setText(cal.getPersianShortDateTime().substring(cal.getPersianShortDateTime().indexOf(" ")));
     }
 
     @Override
