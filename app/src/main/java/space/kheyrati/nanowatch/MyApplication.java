@@ -2,6 +2,7 @@ package space.kheyrati.nanowatch;
 
 import android.app.Application;
 import android.location.Location;
+import android.util.Log;
 
 
 public class MyApplication extends Application {
@@ -13,7 +14,8 @@ public class MyApplication extends Application {
 
     public static boolean locationValid() {
         if (lastLocation == null) return false;
-        return isDistanceValid(lastLocation) < 3.5;
+        Log.e("TAG", "locationValid: " + isDistanceValid(lastLocation) );
+        return isDistanceValid(lastLocation) < 100;
     }
 
     public static double isDistanceValid(Location point1) {

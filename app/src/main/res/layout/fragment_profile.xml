@@ -33,6 +33,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginTop="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:drawableLeft="@drawable/ic_sign_out_dark"

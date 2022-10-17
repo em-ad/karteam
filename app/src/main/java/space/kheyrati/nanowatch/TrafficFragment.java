@@ -2,7 +2,9 @@ package space.kheyrati.nanowatch;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -27,6 +29,8 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import java.util.Locale;
+
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
 public class TrafficFragment extends Fragment {
@@ -35,6 +39,7 @@ public class TrafficFragment extends Fragment {
     private MediaPlayer mPlayer;
     private TextView tvTime;
     private TextView tvEntered;
+    private TextView tvLocationSearch;
     private AttendanceViewModel viewModel;
     private LottieAnimationView lav;
     private LottieAnimationView pbProgress;
@@ -116,9 +121,11 @@ public class TrafficFragment extends Fragment {
     private void attendanceStateChanged(Boolean entered) {
         if (entered == null || repository == null || getContext() == null) return;
         if (entered) {
-            callEnter();
+            if(MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
+                callEnter();
         } else {
-            callExit();
+            if(MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
+                callExit();
         }
     }
 
@@ -131,6 +138,8 @@ public class TrafficFragment extends Fragment {
 
             @Override
             public void apiSucceeded(Object o) {
+                if (getContext() != null)
+                    MSharedPreferences.getInstance().saveLastTrafficEvent(getContext(), "exit");
                 changeUiForExit();
             }
         });
@@ -145,6 +154,8 @@ public class TrafficFragment extends Fragment {
 
             @Override
             public void apiSucceeded(Object o) {
+                if (getContext() != null)
+                    MSharedPreferences.getInstance().saveLastTrafficEvent(getContext(), "enter");
                 changeUiForEnter();
             }
         });
@@ -176,6 +187,15 @@ public class TrafficFragment extends Fragment {
         startTimerFromScratch();
         if (viewModel != null)
             attendanceStateChanged(viewModel.isIn.getValue());
+        handleMapAccessVisibility();
+    }
+
+    private void handleMapAccessVisibility() {
+        if (MyApplication.locationValid()) {
+            tvLocationSearch.setVisibility(View.GONE);
+        } else {
+            tvLocationSearch.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initComponents() {
@@ -186,15 +206,18 @@ public class TrafficFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void setTouchListener() {
         ivFinger.setOnTouchListener((view1, motionEvent) -> {
-            if (!MyApplication.locationValid()) {
-                MAlerter.show(getActivity(), "در حال جستجوی لوکیشن", "برای ثبت ورود و خروج باید در محدوده دانشگاه باشید");
-                stopAttendance();
-            }
-            if (getActivity() != null) {
-                ((MainActivity) getActivity()).findUserLocation();
-            }
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    if (!MyApplication.locationValid()) {
+                        MAlerter.show(getActivity(), "در حال جستجوی لوکیشن", "برای ثبت ورود و خروج باید در محدوده دانشگاه باشید");
+                        if (getActivity() != null) {
+                            ((MainActivity) getActivity()).findUserLocation();
+                        }
+                        tvLocationSearch.setVisibility(View.VISIBLE);
+                        return true;
+                    } else {
+                        tvLocationSearch.setVisibility(View.GONE);
+                    }
                     initAttendance();
                     break;
                 case MotionEvent.ACTION_UP:
@@ -226,6 +249,16 @@ public class TrafficFragment extends Fragment {
         tvEntered = view.findViewById(R.id.tvEntered);
         lav = view.findViewById(R.id.lav_thumbUp);
         flEdge = view.findViewById(R.id.flEdge);
+        tvLocationSearch = view.findViewById(R.id.tvLocationSearch);
+        tvLocationSearch.setOnClickListener(view1 -> {
+            try {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", MyApplication.lastLocation.getLatitude(), MyApplication.lastLocation.getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            } catch (Exception e) {
+                MAlerter.show(getActivity(), "خطا", "در باز کردن نقشه خطایی رخ داد. از نصب بودن نقشه گوگل روی گوشی مطمئن شوید");
+            }
+        });
     }
 
     private void vibratePhone() {

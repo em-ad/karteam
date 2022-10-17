@@ -50,7 +50,7 @@ public class OtpFragment extends Fragment {
         loginEt.setHint("کد تاییدی که پیامک شده رو وارد کن");
         loginViewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(LoginViewModel.class);
         if (loginViewModel.getOtp() != null && !loginViewModel.getOtp().isEmpty()) {
-            loginEt.setText(loginViewModel.getOtp());
+            loginEt.setText(loginViewModel.getOtp().equals("0") ? "" : loginViewModel.getOtp());
         }
         tvEnter.setOnClickListener(view1 -> {
             if (loginEt.getText().toString().trim().length() <= 2) {

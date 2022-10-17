@@ -71,4 +71,14 @@ public class MSharedPreferences {
         SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
         pref.edit().remove("token").commit();
     }
+
+    public String whatIsLastTrafficEvent(Context context){
+        SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+        return pref.getString("last_event", null);
+    }
+
+    public void saveLastTrafficEvent(Context context, String event){
+        SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+        pref.edit().putString("last_event", event).apply();
+    }
 }

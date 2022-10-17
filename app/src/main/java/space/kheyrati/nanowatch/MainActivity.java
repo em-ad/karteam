@@ -3,6 +3,7 @@ package space.kheyrati.nanowatch;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -59,12 +60,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<String> task) {
                         if (!task.isSuccessful()) {
-                            Log.e("TAG", "Fetching FCM registration token failed", task.getException());
                             return;
                         }
                         String token = task.getResult();
                         new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
-                        Log.e("TAG", "onComplete: " + token );
                     }
                 });
     }
@@ -92,10 +91,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private LocationRequest getLocationRequest(){
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(500);
+        locationRequest.setFastestInterval(100);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return locationRequest;
+    }
+
     @SuppressLint("MissingPermission")
     public void findUserLocation() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationClient.requestLocationUpdates(new LocationRequest(), new LocationCallback() {
+        if(fusedLocationClient == null)
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.requestLocationUpdates(getLocationRequest(), new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);

@@ -14,6 +14,8 @@ import space.kheyrati.nanowatch.R;
 public class MAlerter {
 
    public static void show(Activity activity, String title, String msg) {
+      if(activity == null)
+         return;
       if (msg == null)
          msg = "خطا";
       if(title == null)

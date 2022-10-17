@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
                             LoginFragment.newInstance()).commit();
                     break;
                 case OTP:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.root,
+                    getSupportFragmentManager().beginTransaction().add(R.id.root,
                             OtpFragment.newInstance()).commit();
                     break;
                 case DONE:
