@@ -14,6 +14,7 @@
     <color name="primary_dark">#0D4587</color>
     <color name="green">#A1E8AC</color>
     <color name="green_sharp">#33DC4D</color>
+    <color name="green_dark">#8F2ADC45</color>
     <color name="primary_very_dark">#071440</color>
     <color name="secondary">#D7F0DB</color>
     <color name="secondary_light">#E2F6E5</color>

@@ -6,13 +6,17 @@ plugins {
 android {
     compileSdk 32
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    
     defaultConfig {
         applicationId "space.kheyrati.nanowatch"
         minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -61,5 +65,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
 
     implementation 'com.auth0.android:jwtdecode:2.0.1'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
 
 }

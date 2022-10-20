@@ -1,5 +1,8 @@
 package space.kheyrati.nanowatch;
 
+import android.provider.Settings;
+import android.util.Log;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -109,7 +112,7 @@ public class KheyratiRepository {
                 .enqueue(new Callback<FcmResponseModel>() {
                     @Override
                     public void onResponse(Call<FcmResponseModel> call, Response<FcmResponseModel> response) {
-
+                        Log.e("TAG", "onResponse: " + response.isSuccessful() );
                     }
 
                     @Override

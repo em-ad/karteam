@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <application
         android:name=".MyApplication"
@@ -42,6 +43,8 @@
             android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"></activity>
+        <meta-data android:name="pushe_token" android:value="bWc2M21xejlvb2t2MDEwZ0BrdWZAMjg4MDA4Njc2MjU" />
+
     </application>
 
 </manifest>

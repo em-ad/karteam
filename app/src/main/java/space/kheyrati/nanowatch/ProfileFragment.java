@@ -1,7 +1,12 @@
 package space.kheyrati.nanowatch;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,10 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +29,7 @@ public class ProfileFragment extends Fragment {
     private TrafficAdapter adapter;
     private KheyratiRepository repository;
     private TextView logout;
+    private BarChart chart;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -75,9 +81,41 @@ public class ProfileFragment extends Fragment {
                     public void apiSucceeded(Object o) {
                         List<UserLogResponseItem> data = (List<UserLogResponseItem>) o;
                         Collections.reverse(data);
-                        adapter.setDataset(new ArrayList<>(data));
+                        try {
+                            adapter.setDataset(new ArrayList<>(data));
+                        } catch (Exception e) {
+                            MAlerter.show(getActivity(), "خطا", "در دریافت لیست رفت و آمدها خطایی رخ داد!");
+                        }
+                        try {
+                            setNewDataToChart(data);
+                        } catch (Exception e) {
+                            MAlerter.show(getActivity(), "خطا", "در دریافت لیست رفت و آمدها خطایی رخ داد!");
+                        }
                     }
                 });
+    }
+
+    private void setNewDataToChart(List<UserLogResponseItem> data) {
+        int limit = 0;
+        List<BarEntry> entries = new ArrayList<>();
+        List<DailyPresence> presenceList = DailyPresence.fromLogs(data);
+        for (DailyPresence item : presenceList) {
+            float value = Math.min(24, Math.max(item.getPresence() / 3600, 0));
+            entries.add(new BarEntry(item.getDay(), value));
+            if (value > 0)
+                entries.add(new BarEntry(item.getDay(), 8));
+            limit++;
+            if (limit == 30) break;
+        }
+        BarDataSet set = new BarDataSet(entries, "مجموع میزان حضور در مجموعه در یک ماه اخیر (ساعت)");
+        set.setColors(R.color.green_dark);
+        set.setValueTextColor(R.color.black);
+        set.setDrawValues(false);
+        BarData barData = new BarData(set);
+        barData.setValueTextSize(13);
+        barData.setValueTypeface(Typeface.SANS_SERIF);
+        chart.setData(barData);
+        chart.invalidate();
     }
 
     private void findViews(View view) {
@@ -86,6 +124,7 @@ public class ProfileFragment extends Fragment {
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         logout = view.findViewById(R.id.logout);
+        chart = view.findViewById(R.id.chart);
     }
 
 

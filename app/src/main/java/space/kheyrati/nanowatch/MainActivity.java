@@ -24,6 +24,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
@@ -55,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
             isIn = oldDate.getPersianShortDate().equals(currentDate.getPersianShortDate());
         }
         attendanceViewModel.isIn.postValue(isIn);
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<String> task) {
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
                             return;
                         }
-                        String token = task.getResult();
+                        String token = task.getResult().getToken();
                         new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
                     }
                 });
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private LocationRequest getLocationRequest(){
+    private LocationRequest getLocationRequest() {
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(500);
         locationRequest.setFastestInterval(100);
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     public void findUserLocation() {
-        if(fusedLocationClient == null)
+        if (fusedLocationClient == null)
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fusedLocationClient.requestLocationUpdates(getLocationRequest(), new LocationCallback() {
             @Override

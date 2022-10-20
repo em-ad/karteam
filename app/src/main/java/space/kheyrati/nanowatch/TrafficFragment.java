@@ -10,7 +10,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -115,10 +114,10 @@ public class TrafficFragment extends Fragment {
         initComponents();
         setTouchListener();
         viewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(AttendanceViewModel.class);
-        viewModel.isIn.observe(getViewLifecycleOwner(), this::attendanceStateChanged);
+        viewModel.isIn.observe(getViewLifecycleOwner(), this::attendanceStateUpdated);
     }
 
-    private void attendanceStateChanged(Boolean entered) {
+    private void attendanceStateUpdated(Boolean entered) {
         if (entered == null || repository == null || getContext() == null) return;
         if (entered) {
             if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
@@ -188,7 +187,7 @@ public class TrafficFragment extends Fragment {
         repository = new KheyratiRepository();
         startTimerFromScratch();
         if (viewModel != null)
-            attendanceStateChanged(viewModel.isIn.getValue());
+            attendanceStateUpdated(viewModel.isIn.getValue());
         handleMapAccessVisibility();
     }
 
