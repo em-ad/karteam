@@ -11,17 +11,23 @@ import retrofit2.http.Path;
 
 public interface KheyratiApi {
 
-    @POST("user/verify")
-    Call<VerifyResponseModel> verify(@Body VerifyRequestModel requestModel);
+    @POST("auth/verify")
+    Call<TokenModel> verify(@Body VerifyRequestModel requestModel);
 
-    @POST("user/signIn")
+    @POST("auth/signIn")
     Call<SigninResponseModel> signin(@Body SigninRequestModel requestModel);
 
-    @POST("user/enter")
-    Call<EnterResponseModel> enter(@Header("Authorization") String authHeader);
+    @GET("company")
+    Call<List<CompanyResponseModel>> getMyCompanies(@Header("Authorization") String authHeader);
 
-    @POST("user/exit")
-    Call<ExitResponseModel> exit(@Header("Authorization") String authHeader);
+    @GET("companyLocation/company/{companyId}")
+    Call<List<CompanyLocationResponseModel>> getCompanyLocations(@Header("Authorization") String authHeader,
+                                                           @Path("companyId") String companyId);
+
+
+    @POST("EnterExit")
+    Call<EnterResponseModel> enterOrExit(@Header("Authorization") String authHeader,
+                                         @Body EnterExitRequestModel requestModel);
 
     @GET("company/logs/{userId}")
     Call<List<UserLogResponseItem>> getMyLogs(@Header("Authorization") String authHeader,

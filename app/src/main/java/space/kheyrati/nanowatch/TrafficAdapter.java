@@ -36,7 +36,9 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(position == -1) return;
         UserLogResponseItem item = dataset.get(position);
-        if(item.getType().equalsIgnoreCase("enter")){
+        if(item.getType() == null){
+            holder.ivStatus.setImageResource(android.R.drawable.ic_menu_info_details);
+        } else if(item.getType().equalsIgnoreCase("enter")){
             holder.ivStatus.setImageResource(R.drawable.ic_sign_in_alt);
         } else if(item.getType().equalsIgnoreCase("exit")){
             holder.ivStatus.setImageResource(R.drawable.ic_sign_out_alt);

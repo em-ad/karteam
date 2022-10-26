@@ -1,6 +1,5 @@
 package space.kheyrati.nanowatch;
 
-import android.provider.Settings;
 import android.util.Log;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class KheyratiRepository {
                         if (response.isSuccessful() && response.body() != null) {
                             apiCallback.apiSucceeded(response.body());
                         } else
-                            apiCallback.apiFailed(new Throwable(response.message()));
+                            apiCallback.apiFailed(new Throwable(response.body() == null ? response.message() : response.body().getStatusCode()));
                     }
 
                     @Override
@@ -33,9 +32,9 @@ public class KheyratiRepository {
     public void verify(String phone, String otp, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .verify(new VerifyRequestModel(phone, otp))
-                .enqueue(new Callback<VerifyResponseModel>() {
+                .enqueue(new Callback<TokenModel>() {
                     @Override
-                    public void onResponse(Call<VerifyResponseModel> call, Response<VerifyResponseModel> response) {
+                    public void onResponse(Call<TokenModel> call, Response<TokenModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             apiCallback.apiSucceeded(response.body());
                         } else
@@ -43,15 +42,15 @@ public class KheyratiRepository {
                     }
 
                     @Override
-                    public void onFailure(Call<VerifyResponseModel> call, Throwable t) {
+                    public void onFailure(Call<TokenModel> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });
     }
 
-    public void enter(String headerToken, ApiCallback apiCallback){
+    public void enterOrExit(String headerToken, EnterExitRequestModel model, ApiCallback apiCallback){
         RetrofitClient.getInstance().getKheyratiApi()
-                .enter(headerToken)
+                .enterOrExit(headerToken, model)
                 .enqueue(new Callback<EnterResponseModel>() {
                     @Override
                     public void onResponse(Call<EnterResponseModel> call, Response<EnterResponseModel> response) {
@@ -63,25 +62,6 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<EnterResponseModel> call, Throwable t) {
-                        apiCallback.apiFailed(t);
-                    }
-                });
-    }
-
-    public void exit(String headerToken, ApiCallback apiCallback){
-        RetrofitClient.getInstance().getKheyratiApi()
-                .exit(headerToken)
-                .enqueue(new Callback<ExitResponseModel>() {
-                    @Override
-                    public void onResponse(Call<ExitResponseModel> call, Response<ExitResponseModel> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            apiCallback.apiSucceeded(response.body());
-                        } else
-                            apiCallback.apiFailed(new Throwable(response.message()));
-                    }
-
-                    @Override
-                    public void onFailure(Call<ExitResponseModel> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });
@@ -118,6 +98,44 @@ public class KheyratiRepository {
                     @Override
                     public void onFailure(Call<FcmResponseModel> call, Throwable t) {
 
+                    }
+                });
+    }
+
+    public void getMyCompanies(String headerToken, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getMyCompanies(headerToken)
+                .enqueue(new Callback<List<CompanyResponseModel>>() {
+                    @Override
+                    public void onResponse(Call<List<CompanyResponseModel>> call, Response<List<CompanyResponseModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<CompanyResponseModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void getCompanyLocation(String headerToken, String companyId, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getCompanyLocations(headerToken, companyId)
+                .enqueue(new Callback<List<CompanyLocationResponseModel>>() {
+                    @Override
+                    public void onResponse(Call<List<CompanyLocationResponseModel>> call, Response<List<CompanyLocationResponseModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<CompanyLocationResponseModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
                     }
                 });
     }

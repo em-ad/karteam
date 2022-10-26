@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 public class LoginViewModel extends AndroidViewModel {
 
@@ -38,7 +37,7 @@ public class LoginViewModel extends AndroidViewModel {
         return phoneNumber;
     }
 
-    public void login(String phone, ApiCallback apiCallback){
+    public void login(String phone, ApiCallback apiCallback) {
         this.phoneNumber = phone;
         kheyratiRepository.login(phone, new ApiCallback() {
             @Override
@@ -48,7 +47,7 @@ public class LoginViewModel extends AndroidViewModel {
 
             @Override
             public void apiSucceeded(Object o) {
-                if(o instanceof SigninResponseModel) {
+                if (o instanceof SigninResponseModel) {
                     SigninResponseModel responseModel = ((SigninResponseModel) o);
                     otp = responseModel.getOtp();
                     stateLiveData.postValue(LoginState.OTP);
@@ -58,8 +57,8 @@ public class LoginViewModel extends AndroidViewModel {
         });
     }
 
-    public void verify(String otp, ApiCallback apiCallback){
-        if(this.phoneNumber == null || this.phoneNumber.isEmpty())
+    public void verify(String otp, ApiCallback apiCallback) {
+        if (this.phoneNumber == null || this.phoneNumber.isEmpty())
             return;
         kheyratiRepository.verify(phoneNumber, otp, new ApiCallback() {
             @Override
@@ -69,12 +68,12 @@ public class LoginViewModel extends AndroidViewModel {
 
             @Override
             public void apiSucceeded(Object o) {
-                if(o instanceof VerifyResponseModel) {
-                    VerifyResponseModel responseModel = ((VerifyResponseModel) o);
-                    MSharedPreferences.getInstance().saveToken(getApplication(), responseModel.getTokenModel().getToken());
+                if (o instanceof TokenModel) {
+                    TokenModel responseModel = ((TokenModel) o);
+                    MSharedPreferences.getInstance().saveToken(getApplication(), responseModel.getToken());
                     stateLiveData.postValue(LoginState.DONE);
                     apiCallback.apiSucceeded(o);
-                }
+                } else apiCallback.apiFailed(o);
             }
         });
     }

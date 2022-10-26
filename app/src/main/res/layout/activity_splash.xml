@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secondary"
+    android:background="@drawable/background_gradient"
     android:layoutDirection="rtl"
     tools:context=".SplashActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/nano_splash"
+        android:scaleType="centerCrop"
+        android:alpha="0.8"
+        android:tint="#220000ff"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

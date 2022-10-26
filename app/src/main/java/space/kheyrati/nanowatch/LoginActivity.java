@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
                             OtpFragment.newInstance()).commit();
                     break;
                 case DONE:
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, CompanyChooserActivity.class));
                     finish();
                     break;
             }

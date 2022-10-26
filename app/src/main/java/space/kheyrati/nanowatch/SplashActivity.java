@@ -22,10 +22,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        MAlerter.show(this, "خوش آمدید", "نرم افزار عبور و مرور عماد");
+        MAlerter.show(this, "خوش آمدید", "نرم افزار عبور و مرور کارتیم");
         new Handler().postDelayed(() -> {
             if(MSharedPreferences.getInstance().hasToken(this)){
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashActivity.this, CompanyChooserActivity.class));
             } else {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }

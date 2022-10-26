@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:name=".MyApplication"
@@ -20,6 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NanoWatch"
         tools:targetApi="31">
+        <activity
+            android:name=".CompanyChooserActivity"
+            android:exported="false" />
+
         <service
             android:name=".FcmService"
             android:exported="false">
@@ -27,6 +31,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
@@ -42,9 +47,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
-        <meta-data android:name="pushe_token" android:value="bWc2M21xejlvb2t2MDEwZ0BrdWZAMjg4MDA4Njc2MjU" />
+            android:screenOrientation="portrait" />
 
+        <meta-data
+            android:name="pushe_token"
+            android:value="bWc2M21xejlvb2t2MDEwZ0BrdWZAMjg4MDA4Njc2MjU" />
     </application>
 
 </manifest>

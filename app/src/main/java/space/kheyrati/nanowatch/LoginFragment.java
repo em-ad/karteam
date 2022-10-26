@@ -57,7 +57,7 @@ public class LoginFragment extends Fragment {
         loginEt.setHint("شماره موبایلت رو وارد کن");
         tvEnter.setOnClickListener(view1 -> {
             if(loginEt.getText().toString().trim().length() < 10){
-                MAlerter.show(getActivity(), "خطا در ورود", "در فرایند ورود خطایی رخ داد");
+                MAlerter.show(getActivity(), "خطا در ورود", "شماره موبایل را به صورت صحیح وارد کنید");
                 return;
             }
             progress.setVisibility(View.VISIBLE);
@@ -65,7 +65,12 @@ public class LoginFragment extends Fragment {
                 @Override
                 public void apiFailed(Object o) {
                     progress.setVisibility(View.GONE);
-                    MAlerter.show(getActivity(), "خطا در لاگین", "خطایی در ورود به اپ رخ داد");
+                    if((o instanceof SigninResponseModel && ((SigninResponseModel) o).getStatusCode().equals("404")) ||
+                            (o instanceof Throwable && ((Throwable) o).getMessage().equals("Not Found"))){
+                        MAlerter.show(getActivity(), "کاربر پیدا نشد", "برای ثبت نام با ادمین تماس بگیرید");
+                    } else {
+                        MAlerter.show(getActivity(), "خطا در لاگین", "خطایی در ورود به اپ رخ داد");
+                    }
                 }
 
                 @Override

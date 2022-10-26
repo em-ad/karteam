@@ -36,6 +36,7 @@ public class TrafficFragment extends Fragment {
 
     private AppCompatImageView ivFinger;
     private MediaPlayer mPlayer;
+    private TextView tvTitle;
     private TextView tvTime;
     private TextView tvEntered;
     private TextView tvLocationSearch;
@@ -64,17 +65,18 @@ public class TrafficFragment extends Fragment {
 
         @Override
         public void onTick(long untilEnd) {
+            tvTime.setVisibility(View.VISIBLE);
             tvTime.setText(String.valueOf(untilEnd / 1000));
         }
 
         @Override
         public void onFinish() {
             isTimerRunning = false;
+            tvTime.setVisibility(View.INVISIBLE);
         }
     };
 
-    public TrafficFragment() {
-    }
+    public TrafficFragment() {}
 
     public static TrafficFragment newInstance() {
         TrafficFragment fragment = new TrafficFragment();
@@ -115,23 +117,25 @@ public class TrafficFragment extends Fragment {
         setTouchListener();
         viewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(AttendanceViewModel.class);
         viewModel.isIn.observe(getViewLifecycleOwner(), this::attendanceStateUpdated);
+        tvTitle.setText("عبور و مرور در " + MyApplication.company.getName());
     }
 
     private void attendanceStateUpdated(Boolean entered) {
         if (entered == null || repository == null || getContext() == null) return;
         if (entered) {
-            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
+            if (MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
                 callEnter();
             else changeUiForEnter();
         } else {
-            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
+            if (MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
                 callExit();
             else changeUiForExit();
         }
     }
 
     private void callExit() {
-        repository.exit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), new ApiCallback() {
+        EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getId(), MyApplication.company.getLocation().get(0).getId(), "Exit");
+        repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
                 MAlerter.show(getActivity(), "خطا", "خطایی در ثبت خروج پیش آمد");
@@ -147,7 +151,8 @@ public class TrafficFragment extends Fragment {
     }
 
     private void callEnter() {
-        repository.enter(MSharedPreferences.getInstance().getTokenHeader(requireContext()), new ApiCallback() {
+        EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getId(), MyApplication.company.getLocation().get(0).getId(), "Enter");
+        repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
                 MAlerter.show(getActivity(), "خطا", "خطایی در ثبت ورود پیش آمد");
@@ -244,6 +249,7 @@ public class TrafficFragment extends Fragment {
     }
 
     private void findViews(View view) {
+        tvTitle = view.findViewById(R.id.tvTitle);
         ivFinger = view.findViewById(R.id.ivFingerprint);
         pbProgress = view.findViewById(R.id.progress);
         tvTime = view.findViewById(R.id.tvTime);
