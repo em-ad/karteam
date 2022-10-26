@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
     private TrafficFragment trafficFragment;
     private RequestListFragment requestListFragment;
+    private CartableFragment cartableFragment;
     private AttendanceViewModel attendanceViewModel;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
             requestListFragment = new RequestListFragment();
         if (trafficFragment == null)
             trafficFragment = new TrafficFragment();
+        if(cartableFragment == null)
+            cartableFragment = new CartableFragment();
     }
 
     @Override
@@ -143,6 +146,9 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
 
                     switch (item.getItemId()) {
+                        case R.id.cartableFragment:
+                            selectedFragment = cartableFragment;
+                            break;
                         case R.id.profileFragment:
                             selectedFragment = profileFragment;
                             break;

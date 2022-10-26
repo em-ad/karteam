@@ -2,6 +2,10 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="کارتایل"
+        android:id="@+id/cartableFragment"
+        android:icon="@drawable/ic_window_restore"/>
+
     <item android:title="درخواست ها"
         android:id="@+id/requestFragment"
         android:icon="@drawable/ic_list_alt"/>
