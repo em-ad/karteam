@@ -62,7 +62,7 @@ public class CompanyChooserActivity extends AppCompatActivity {
         MAlerter.show(this, "صبر کنید", "در حال دریافت مکان های مجاز..." + company.getCompany().getName());
         progress.setVisibility(View.VISIBLE);
         MyApplication.company = company;
-        repository.getCompanyLocation(MSharedPreferences.getInstance().getTokenHeader(this), company.getId(), new ApiCallback() {
+        repository.getCompanyLocation(MSharedPreferences.getInstance().getTokenHeader(this), company.getCompany().getId(), new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
                 progress.setVisibility(View.GONE);
