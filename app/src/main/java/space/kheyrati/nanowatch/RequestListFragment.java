@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RequestListFragment extends Fragment {
+public class RequestListFragment extends Fragment implements RefreshCallback {
 
     private FabOption fabTraffic;
     private FabOption fabVacation;
@@ -73,6 +73,12 @@ public class RequestListFragment extends Fragment {
                 List<RequestResponseModel> data = ((List<RequestResponseModel>) o);
                 Collections.reverse(data);
                 adapter.submitList(data);
+                recycler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recycler.smoothScrollToPosition(0);
+                    }
+                }, 500);
             }
         });
     }
@@ -81,19 +87,19 @@ public class RequestListFragment extends Fragment {
         fabVacation.setOnClickListener(view1 ->
                 getChildFragmentManager()
                         .beginTransaction()
-                        .add(R.id.root, new RequestFragment())
+                        .add(R.id.root, new RequestFragment(this))
                         .addToBackStack(RequestFragment.class.getSimpleName())
                         .commit());
         fabMission.setOnClickListener(view1 ->
                 getChildFragmentManager()
                         .beginTransaction()
-                        .add(R.id.root, new RequestFragment())
+                        .add(R.id.root, new RequestFragment(this))
                         .addToBackStack(RequestFragment.class.getSimpleName())
                         .commit());
         fabTraffic.setOnClickListener(view1 ->
                 getChildFragmentManager()
                         .beginTransaction()
-                        .add(R.id.root, new RequestFragment())
+                        .add(R.id.root, new RequestFragment(this))
                         .addToBackStack(RequestFragment.class.getSimpleName())
                         .commit());
     }
@@ -105,5 +111,10 @@ public class RequestListFragment extends Fragment {
         recycler = view.findViewById(R.id.recycler);
         adapter = new RequestListAdapter();
         recycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void refresh() {
+        getItems();
     }
 }

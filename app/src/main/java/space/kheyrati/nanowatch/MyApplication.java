@@ -18,7 +18,7 @@ public class MyApplication extends Application {
     }
 
     public static double isDistanceValid(Location point1) {
-        if(company == null || company.getLocation() == null)
+        if(company == null || company.getLocation() == null || company.getLocation().isEmpty())
             return Integer.MAX_VALUE;
         double distance = Math.sqrt(
                 Math.pow(point1.getLatitude() - company.getLocation().get(0).getLat(), 2) +

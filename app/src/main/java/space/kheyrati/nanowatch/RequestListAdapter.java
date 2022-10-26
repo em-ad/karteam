@@ -22,12 +22,12 @@ class RequestListAdapter extends ListAdapter<RequestResponseModel, RequestListAd
         super(new DiffUtil.ItemCallback<RequestResponseModel>() {
             @Override
             public boolean areItemsTheSame(@NonNull RequestResponseModel oldItem, @NonNull RequestResponseModel newItem) {
-                return oldItem.getId().equals(newItem.getId());
+                return false;
             }
 
             @Override
             public boolean areContentsTheSame(@NonNull RequestResponseModel oldItem, @NonNull RequestResponseModel newItem) {
-                return oldItem.equals(newItem);
+                return false;
             }
         });
     }
@@ -70,8 +70,10 @@ class RequestListAdapter extends ListAdapter<RequestResponseModel, RequestListAd
             try{
                 startDate = format.parse(item.getStart());
                 endDate = format.parse(item.getEnd());
-                cal = new PersianCalendar(startDate.getTime());
-                time = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
+                cal = new PersianCalendar(((long) (startDate.getTime() + (3600 * 3.5 * 1000))));
+                if(endDate.getTime() != startDate.getTime()) {
+                    time = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -80,6 +82,8 @@ class RequestListAdapter extends ListAdapter<RequestResponseModel, RequestListAd
             }
             if(!item.getType().equals("Enter") && !item.getType().equals("Exit")) {
                 tvTime.setText(time < 24 ? time + " ساعت" : (Math.ceil(((double) time) / 24) + " روز").replace(".0", ""));
+                if(tvTime.getText().toString().equals("0 ساعت"))
+                    tvTime.setText("کمتر از یک ساعت");
             } else {
                 tvTime.setText(cal.getPersianShortDateTime().substring(cal.getPersianShortDateTime().indexOf(" ")));
             }

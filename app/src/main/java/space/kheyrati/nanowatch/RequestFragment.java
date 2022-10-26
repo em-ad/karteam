@@ -30,18 +30,12 @@ public class RequestFragment extends Fragment {
     private EditText etDescription;
     private TextView etType;
     private KheyratiRepository repository;
+    private RefreshCallback callback;
 
     private final RequestRequestModel requestModel = new RequestRequestModel();
 
-    public RequestFragment() {
-        // Required empty public constructor
-    }
-
-    public static RequestFragment newInstance(String param1, String param2) {
-        RequestFragment fragment = new RequestFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public RequestFragment(RefreshCallback callback) {
+        this.callback = callback;
     }
 
     @Override
@@ -74,6 +68,9 @@ public class RequestFragment extends Fragment {
                         @Override
                         public void onDateSelected(PersianPickerDate persianPickerDate) {
                             etStartDate.setText(persianPickerDate.getPersianLongDate());
+                            if(requestModel.getEnd() == 0){
+                                requestModel.setEnd(persianPickerDate.getTimestamp());
+                            }
                             requestModel.setStart(persianPickerDate.getTimestamp());
                         }
 
@@ -154,8 +151,9 @@ public class RequestFragment extends Fragment {
     }
 
     private void submitRequest() {
-        requestModel.setDescription(etDescription.getText().toString());
+        requestModel.setDescription(etDescription.getText().toString() + " ");
         requestModel.setStart(requestModel.getStart() + requestModel.getTime());
+        requestModel.setTime(0);
         repository.submitRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
@@ -164,6 +162,7 @@ public class RequestFragment extends Fragment {
 
             @Override
             public void apiSucceeded(Object o) {
+                callback.refresh();
                 getParentFragmentManager().popBackStackImmediate();
             }
         });
