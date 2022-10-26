@@ -24,7 +24,6 @@ public interface KheyratiApi {
     Call<List<CompanyLocationResponseModel>> getCompanyLocations(@Header("Authorization") String authHeader,
                                                            @Path("companyId") String companyId);
 
-
     @POST("EnterExit")
     Call<EnterResponseModel> enterOrExit(@Header("Authorization") String authHeader,
                                          @Body EnterExitRequestModel requestModel);
@@ -36,5 +35,8 @@ public interface KheyratiApi {
     @POST("user/updateFCM")
     Call<FcmResponseModel> sendFcmToken(@Header("Authorization") String authHeader,
                                 @Body FcmRequestModel fcmRequestModel );
+
+    @GET("request")
+    Call<List<RequestResponseModel>> getMyRequests(@Header("Authorization") String authHeader);
 
 }

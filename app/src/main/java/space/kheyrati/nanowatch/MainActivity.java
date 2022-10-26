@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.e("TAG", "ACCESS TOKEN IS = " + MSharedPreferences.getInstance().getToken(this) );
         bottomNav = findViewById(R.id.bottom_navigation_view);
         bottomNav.setSelectedItemId(R.id.trafficFragment);
         bottomNav.setOnItemSelectedListener(navListener);

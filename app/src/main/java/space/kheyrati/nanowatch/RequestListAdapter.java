@@ -11,17 +11,22 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-class RequestListAdapter extends ListAdapter<GeneralRequestListItem, RequestListAdapter.ViewHolder> {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+
+class RequestListAdapter extends ListAdapter<RequestResponseModel, RequestListAdapter.ViewHolder> {
 
     protected RequestListAdapter() {
-        super(new DiffUtil.ItemCallback<GeneralRequestListItem>() {
+        super(new DiffUtil.ItemCallback<RequestResponseModel>() {
             @Override
-            public boolean areItemsTheSame(@NonNull GeneralRequestListItem oldItem, @NonNull GeneralRequestListItem newItem) {
+            public boolean areItemsTheSame(@NonNull RequestResponseModel oldItem, @NonNull RequestResponseModel newItem) {
                 return oldItem.getId().equals(newItem.getId());
             }
 
             @Override
-            public boolean areContentsTheSame(@NonNull GeneralRequestListItem oldItem, @NonNull GeneralRequestListItem newItem) {
+            public boolean areContentsTheSame(@NonNull RequestResponseModel oldItem, @NonNull RequestResponseModel newItem) {
                 return oldItem.equals(newItem);
             }
         });
@@ -56,29 +61,55 @@ class RequestListAdapter extends ListAdapter<GeneralRequestListItem, RequestList
             ivType = itemView.findViewById(R.id.ivType);
         }
 
-        public void bind(GeneralRequestListItem item) {
-            tvTitle.setText(item.getTitle());
-            tvDate.setText(item.getDate());
-            tvTime.setText(item.getTime());
-            switch (item.getRequestStatus()){
-                case PENDING:
+        public void bind(RequestResponseModel item) {
+            SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            Date startDate = new Date();
+            Date endDate = new Date();
+            PersianCalendar cal = null;
+            long time = 0;
+            try{
+                startDate = format.parse(item.getStart());
+                endDate = format.parse(item.getEnd());
+                cal = new PersianCalendar(startDate.getTime());
+                time = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            if(cal != null) {
+                tvDate.setText(cal.getPersianShortDate());
+            }
+            if(!item.getType().equals("Enter") && !item.getType().equals("Exit")) {
+                tvTime.setText(time < 24 ? time + " ساعت" : (Math.ceil(((double) time) / 24) + " روز").replace(".0", ""));
+            } else {
+                tvTime.setText(cal.getPersianShortDateTime().substring(cal.getPersianShortDateTime().indexOf(" ")));
+            }
+
+            switch (item.getStatus().toLowerCase()){
+                case "pending":
                     ivStatus.setImageResource(R.drawable.ic_pending);
                     break;
-                case SUCCESS:
+                case "accept":
                     ivStatus.setImageResource(R.drawable.ic_success);
                     break;
-                case FAIL:
+                case "reject":
                     ivStatus.setImageResource(R.drawable.ic_failed);
                     break;
             }
-            switch (item.getRequestType()){
-                case MISSION:
+            switch (item.getType().toLowerCase()){
+                case "mission":
+                    tvTitle.setText("ماموریت");
                     ivType.setImageResource(R.drawable.ic_mission_primary_dark);
                     break;
-                case TRAFFIC:
+                case "enter":
+                    tvTitle.setText("درخواست ورود");
                     ivType.setImageResource(R.drawable.ic_fingerprint_primary);
                     break;
-                case VACATION:
+                case "exit":
+                    tvTitle.setText("درخواست خروج");
+                    ivType.setImageResource(R.drawable.ic_fingerprint_primary);
+                    break;
+                case "vacation":
+                    tvTitle.setText("درخواست مرخصی");
                     ivType.setImageResource(R.drawable.ic_vacation_primary_dark);
                     break;
             }
