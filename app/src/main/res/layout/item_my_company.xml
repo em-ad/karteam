@@ -24,6 +24,9 @@
         android:paddingBottom="24dp"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
+        android:drawableRight="@drawable/ic_building"
+        android:drawableLeft="@drawable/ic_arrow_left"
+        android:drawablePadding="12dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
