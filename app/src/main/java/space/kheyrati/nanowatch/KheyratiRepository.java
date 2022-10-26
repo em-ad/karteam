@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -154,6 +155,25 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<List<RequestResponseModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void submitRequest(String headerToken, RequestRequestModel requestModel, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .submitRequest(headerToken, requestModel)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });

@@ -1,24 +1,21 @@
 package space.kheyrati.nanowatch;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
@@ -27,14 +24,14 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 public class RequestFragment extends Fragment {
 
     private FloatingActionButton fabDone;
-    private TextInputLayout etDate;
-    private TextInputEditText etDateEt;
-    private TextInputLayout etDays;
-    private TextInputEditText etDaysEt;
-    private TextInputLayout etType;
-    private TextInputEditText etTypeEt;
-    private TextInputLayout etDescription;
-    private TextInputEditText etDescriptionEt;
+    private TextView etStartDate;
+    private TextView etEndDate;
+    private TextView etTime;
+    private EditText etDescription;
+    private TextView etType;
+    private KheyratiRepository repository;
+
+    private final RequestRequestModel requestModel = new RequestRequestModel();
 
     public RequestFragment() {
         // Required empty public constructor
@@ -63,59 +60,112 @@ public class RequestFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         setupEditTexts();
+        requestModel.setCompany(MyApplication.company.getId());
+        requestModel.setUser(MSharedPreferences.getInstance().getUserIdFromToken(getContext()));
+        repository = new KheyratiRepository();
     }
 
     private void setupEditTexts() {
-        etDate.setHint("تاریخ شروع مرخصی");
-        etDays.setHint("مدت مرخصی (روز)");
-        etType.setHint("نوع مرخصی");
-        etDescription.setHint("توضیحات");
 
-        etDaysEt.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-        etDaysEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String rawNum = editable.toString()
-                        .replace("ر", "")
-                        .replace("و", "")
-                        .replace("ز", "")
-                        .replace(" ", "");
-                    if(!editable.toString().endsWith(" روز")) {
-                    String newString = rawNum + " روز";
-                    etDaysEt.setText(newString);
-                    etDaysEt.setSelection(newString.length() - 4);
-                }
-            }
-        });
-
-        etDate.findViewById(R.id.edittext).setOnTouchListener((view, motionEvent) -> {
-            if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) return false;
-            if(getContext() == null) return false;
+        etStartDate.setOnClickListener(view -> {
+            if (getContext() == null) return;
             new PersianDatePickerDialog(getContext())
                     .setListener(new PersianPickerListener() {
                         @Override
                         public void onDateSelected(PersianPickerDate persianPickerDate) {
-                            ((TextInputEditText) etDate.findViewById(R.id.edittext))
-                                    .setText(persianPickerDate.getPersianLongDate());
+                            etStartDate.setText(persianPickerDate.getPersianLongDate());
+                            requestModel.setStart(persianPickerDate.getTimestamp());
                         }
 
                         @Override
-                        public void onDismissed() {}
+                        public void onDismissed() {
+                        }
                     })
                     .setPickerBackgroundDrawable(R.drawable.bottom_rounded_purple)
                     .setTypeFace(ResourcesCompat.getFont(getContext(), R.font.app_font))
                     .setInitDate(System.currentTimeMillis())
                     .show();
-            view.performClick();
-            return true;
+        });
+
+        etEndDate.setOnClickListener(view -> {
+            if (getContext() == null) return;
+            new PersianDatePickerDialog(getContext())
+                    .setListener(new PersianPickerListener() {
+                        @Override
+                        public void onDateSelected(PersianPickerDate persianPickerDate) {
+                            etEndDate.setText(persianPickerDate.getPersianLongDate());
+                            requestModel.setEnd(persianPickerDate.getTimestamp());
+                        }
+
+                        @Override
+                        public void onDismissed() {
+                        }
+                    })
+                    .setPickerBackgroundDrawable(R.drawable.bottom_rounded_purple)
+                    .setTypeFace(ResourcesCompat.getFont(getContext(), R.font.app_font))
+                    .setInitDate(System.currentTimeMillis())
+                    .show();
+        });
+
+        etTime.setOnClickListener(view -> {
+            MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                    .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                    .setTitleText("انتخاب زمان")
+                    .setPositiveButtonText("تایید")
+                    .setNegativeButtonText("انصراف")
+                    .build();
+            picker.addOnPositiveButtonClickListener(view1 -> {
+                String selectedTime = String.format("%02d", picker.getHour()) + ":" + String.format("%02d", picker.getMinute());
+                etTime.setText(selectedTime);
+                requestModel.setTime(picker.getHour() * 3600 * 1000 + picker.getMinute() * 60 * 1000);
+            });
+            picker.show(getChildFragmentManager(), "picker");
+        });
+
+        etType.setOnClickListener(view -> {
+            RequestTypeDialog dialog = new RequestTypeDialog(getContext(), type -> {
+                requestModel.setType(type);
+                switch (type) {
+                    case "Enter":
+                        etType.setText("درخواست ورود");
+                        break;
+                    case "Exit":
+                        etType.setText("درخواست خروج");
+                        break;
+                    case "Mission":
+                        etType.setText("درخواست ماموریت");
+                        break;
+                    case "Vacation":
+                        etType.setText("درخواست مرخصی");
+                        break;
+                }
+            });
+            dialog.show();
+        });
+
+        fabDone.setOnClickListener(view -> {
+            if(requestModel.isValid()){
+                submitRequest();
+            } else {
+                MAlerter.show(getActivity(), "خطا", "همه موارد ضروری را وارد کنید");
+            }
+        });
+    }
+
+    private void submitRequest() {
+        requestModel.setDescription(etDescription.getText().toString());
+        requestModel.setStart(requestModel.getStart() + requestModel.getTime());
+        repository.submitRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                MAlerter.show(getActivity(), "خطا", "در ثبت درخواست خطایی رخ داد");
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                getParentFragmentManager().popBackStackImmediate();
+            }
         });
     }
 
@@ -123,13 +173,10 @@ public class RequestFragment extends Fragment {
         view.findViewById(R.id.arrow).setOnClickListener(v ->
                 getParentFragmentManager().popBackStackImmediate());
         fabDone = view.findViewById(R.id.fabDone);
-        etDate = view.findViewById(R.id.etDate);
-        etDateEt = etDate.findViewById(R.id.edittext);
-        etDays = view.findViewById(R.id.etDays);
-        etDaysEt = etDays.findViewById(R.id.edittext);
+        etStartDate = view.findViewById(R.id.etStartDate);
+        etEndDate = view.findViewById(R.id.etEndDate);
+        etTime = view.findViewById(R.id.etTime);
         etType = view.findViewById(R.id.etType);
-        etTypeEt = etType.findViewById(R.id.edittext);
         etDescription = view.findViewById(R.id.etDescription);
-        etDescriptionEt = etDescription.findViewById(R.id.edittext);
     }
 }

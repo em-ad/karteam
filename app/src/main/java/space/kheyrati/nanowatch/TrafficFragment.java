@@ -117,7 +117,7 @@ public class TrafficFragment extends Fragment {
         setTouchListener();
         viewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(AttendanceViewModel.class);
         viewModel.isIn.observe(getViewLifecycleOwner(), this::attendanceStateUpdated);
-        tvTitle.setText("عبور و مرور در " + MyApplication.company.getName());
+        tvTitle.setText("عبور و مرور در " + MyApplication.company.getCompany().getName());
     }
 
     private void attendanceStateUpdated(Boolean entered) {

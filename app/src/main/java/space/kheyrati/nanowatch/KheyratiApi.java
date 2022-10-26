@@ -2,6 +2,7 @@ package space.kheyrati.nanowatch;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -17,7 +18,7 @@ public interface KheyratiApi {
     @POST("auth/signIn")
     Call<SigninResponseModel> signin(@Body SigninRequestModel requestModel);
 
-    @GET("company")
+    @GET("companyUser")
     Call<List<CompanyResponseModel>> getMyCompanies(@Header("Authorization") String authHeader);
 
     @GET("companyLocation/company/{companyId}")
@@ -38,5 +39,9 @@ public interface KheyratiApi {
 
     @GET("request")
     Call<List<RequestResponseModel>> getMyRequests(@Header("Authorization") String authHeader);
+
+    @POST("request")
+    Call<ResponseBody> submitRequest(@Header("Authorization") String authHeader,
+                                    @Body RequestRequestModel fcmRequestModel );
 
 }

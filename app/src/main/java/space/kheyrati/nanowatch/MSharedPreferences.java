@@ -64,7 +64,7 @@ public class MSharedPreferences {
    public String getUserIdFromToken(Context context){
       String rawToken = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
       JWT jwt = new JWT(rawToken);
-      return jwt.getSubject();
+      return jwt.getClaims().get("uid").asString();
    }
 
     public void removeToken(Context context) {

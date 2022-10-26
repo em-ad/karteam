@@ -36,7 +36,7 @@ public class MyCompanyAdapter extends RecyclerView.Adapter<MyCompanyAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (position < 0)
             return;
-        holder.companyNameTextView.setText(dataSet.get(position).getName());
+        holder.companyNameTextView.setText(dataSet.get(position).getCompany().getName());
         holder.itemView.setOnClickListener(view -> callback.companyClicked(dataSet.get(holder.getAdapterPosition())));
     }
 

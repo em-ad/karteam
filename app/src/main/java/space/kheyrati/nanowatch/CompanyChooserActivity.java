@@ -36,6 +36,7 @@ public class CompanyChooserActivity extends AppCompatActivity {
         repository.getMyCompanies(MSharedPreferences.getInstance().getTokenHeader(this), new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
+                progress.setVisibility(View.GONE);
                 MAlerter.show(CompanyChooserActivity.this, "خطا", "در دریافت لیست شرکت های شما خطایی رخ داد");
             }
 
@@ -58,7 +59,7 @@ public class CompanyChooserActivity extends AppCompatActivity {
     }
 
     private void companyItemClicked(CompanyResponseModel company) {
-        MAlerter.show(this, "صبر کنید", "در حال دریافت مکان های مجاز..." + company.getName());
+        MAlerter.show(this, "صبر کنید", "در حال دریافت مکان های مجاز..." + company.getCompany().getName());
         progress.setVisibility(View.VISIBLE);
         MyApplication.company = company;
         repository.getCompanyLocation(MSharedPreferences.getInstance().getTokenHeader(this), company.getId(), new ApiCallback() {

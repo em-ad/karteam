@@ -9,12 +9,10 @@ public class CompanyResponseModel implements Serializable {
 
     @SerializedName("_id")
     private String id;
-    @SerializedName("name")
-    private String name;
-    @SerializedName("phoneNumber")
-    private String phoneNumber;
-    @SerializedName("owner")
-    private String owner;
+    @SerializedName("company")
+    private CompanyModel company;
+    @SerializedName("role")
+    private String role;
 
     private List<CompanyLocationResponseModel> location;
 
@@ -34,27 +32,19 @@ public class CompanyResponseModel implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public CompanyModel getCompany() {
+        return company;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompany(CompanyModel company) {
+        this.company = company;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getRole() {
+        return role;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

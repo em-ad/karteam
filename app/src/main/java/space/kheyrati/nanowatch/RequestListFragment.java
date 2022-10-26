@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.nambimobile.widgets.efab.FabOption;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RequestListFragment extends Fragment {
@@ -49,11 +50,16 @@ public class RequestListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         initListeners();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getItems();
     }
 
     private void getItems() {
-        if(getContext() == null){
+        if(getContext() == null || repository == null){
             return;
         }
         repository.getMyRequests(MSharedPreferences.getInstance().getTokenHeader(getContext()), new ApiCallback() {
@@ -65,6 +71,7 @@ public class RequestListFragment extends Fragment {
             @Override
             public void apiSucceeded(Object o) {
                 List<RequestResponseModel> data = ((List<RequestResponseModel>) o);
+                Collections.reverse(data);
                 adapter.submitList(data);
             }
         });
@@ -72,6 +79,18 @@ public class RequestListFragment extends Fragment {
 
     private void initListeners() {
         fabVacation.setOnClickListener(view1 ->
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.root, new RequestFragment())
+                        .addToBackStack(RequestFragment.class.getSimpleName())
+                        .commit());
+        fabMission.setOnClickListener(view1 ->
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.root, new RequestFragment())
+                        .addToBackStack(RequestFragment.class.getSimpleName())
+                        .commit());
+        fabTraffic.setOnClickListener(view1 ->
                 getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.root, new RequestFragment())

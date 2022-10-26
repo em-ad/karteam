@@ -1,44 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_gradient"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/background_gradient"
     tools:context=".RequestFragment">
 
-    <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:alpha="0.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_magic" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:paddingBottom="72dp"
-        android:orientation="vertical">
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <include layout="@layout/edittext"
-            android:id="@+id/etDate"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="72dp">
 
-        <include layout="@layout/edittext"
-            android:id="@+id/etDays"/>
+            <TextView
+                android:id="@+id/etType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_white_mini"
+                android:fontFamily="@font/app_font"
+                android:gravity="right"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:text="نوع درخواست را انتخاب کنید"
+                android:textColor="#333"
+                android:textCursorDrawable="@color/black"
+                android:textSize="15sp" />
 
-        <include layout="@layout/edittext"
-            android:id="@+id/etType"/>
+            <TextView
+                android:id="@+id/etStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_white_mini"
+                android:fontFamily="@font/app_font"
+                android:gravity="right"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:text="تاریخ شروع را انتخاب کنید"
+                android:textColor="#333"
+                android:textCursorDrawable="@color/black"
+                android:textSize="15sp" />
 
-        <include layout="@layout/edittext"
-            android:id="@+id/etDescription"/>
+            <TextView
+                android:id="@+id/etEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_white_mini"
+                android:fontFamily="@font/app_font"
+                android:gravity="right"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:text="تاریخ پایان را انتخاب کنید"
+                android:textColor="#333"
+                android:textCursorDrawable="@color/black"
+                android:textSize="15sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/etTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_white_mini"
+                android:fontFamily="@font/app_font"
+                android:gravity="right"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:text="انتخاب زمان"
+                android:textColor="#333"
+                android:textCursorDrawable="@color/black"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/app_font"
+                android:gravity="right"
+                android:hint="توضیحات"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:layoutDirection="rtl"
+                android:background="@drawable/rounded_white_mini"
+                android:textColor="#333"
+                android:textColorHint="#333"
+                android:textCursorDrawable="@color/black"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
     </ScrollView>
 
@@ -46,14 +133,13 @@
         android:id="@+id/fabDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:fabSize="normal"
         android:layout_margin="20dp"
-        app:srcCompat="@drawable/ic_checkmark"
-        app:tint="@color/white"
         android:foregroundTint="@color/white"
         app:backgroundTint="@color/primary_dark"
-        />
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:srcCompat="@drawable/ic_checkmark"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
