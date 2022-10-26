@@ -72,6 +72,10 @@ public class CompanyChooserActivity extends AppCompatActivity {
             @Override
             public void apiSucceeded(Object o) {
                 progress.setVisibility(View.GONE);
+                if(o == null || ((List<CompanyLocationResponseModel>) o).isEmpty()){
+                    MAlerter.show(CompanyChooserActivity.this, "خطا","برای " + company.getCompany().getName() + " محلی تعیین نشده است");
+                    return;
+                }
                 MyApplication.company.setLocation(((List<CompanyLocationResponseModel>) o));
                 startActivity(new Intent(CompanyChooserActivity.this, MainActivity.class));
             }
