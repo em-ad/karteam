@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.nambimobile.widgets.efab.FabOption;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
     private FabOption fabVacation;
     private FabOption fabMission;
     private RecyclerView recycler;
-    private RequestListAdapter adapter;
+    private MyRequestListAdapter adapter;
     private KheyratiRepository repository;
 
     public RequestListFragment() {
@@ -109,7 +107,7 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
         fabVacation = view.findViewById(R.id.fabVacation);
         fabMission = view.findViewById(R.id.fabMission);
         recycler = view.findViewById(R.id.recycler);
-        adapter = new RequestListAdapter();
+        adapter = new MyRequestListAdapter();
         recycler.setAdapter(adapter);
     }
 

@@ -32,6 +32,8 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_sign_in_alt.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_sign_out_alt.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_sign_out_dark.xml" value="0.176" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_thumbs_down.xml" value="0.176" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_thumbs_up.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_times_circle.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_user.xml" value="0.142" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_vacation.xml" value="0.176" />
@@ -57,6 +59,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_request_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_traffic.xml" value="0.264" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_my_company.xml" value="0.253125" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_others_request.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_request.xml" value="0.253125" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_request_mission.xml" value="0.253125" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_request_traffic.xml" value="0.25416666666666665" />

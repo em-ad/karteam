@@ -3,6 +3,10 @@ package space.kheyrati.nanowatch;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
 public class RequestResponseModel implements Serializable {
 
@@ -20,9 +24,19 @@ public class RequestResponseModel implements Serializable {
     private String status;
     @SerializedName("type")
     private String type;
+    @SerializedName("description")
+    private String description;
 
     public String getId() {
         return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setId(String id) {
@@ -93,4 +107,29 @@ public class RequestResponseModel implements Serializable {
         return type != null ? type.equals(that.type) : that.type == null;
     }
 
+    public RequestRequestModel accept() {
+        RequestRequestModel model = new RequestRequestModel();
+        model.setTime(0);
+        model.setEnd(Utils.getTimeStamp(end));
+        model.setStart(Utils.getTimeStamp(start));
+        model.setStatus("Accept");
+        model.setType(type);
+        model.setUser(user);
+        model.setCompany(company);
+        model.setDescription(description);
+        return model;
+    }
+
+    public RequestRequestModel reject() {
+        RequestRequestModel model = new RequestRequestModel();
+        model.setTime(0);
+        model.setEnd(Utils.getTimeStamp(end));
+        model.setStart(Utils.getTimeStamp(start));
+        model.setStatus("Reject");
+        model.setType(type);
+        model.setUser(user);
+        model.setCompany(company);
+        model.setDescription(description);
+        return model;
+    }
 }

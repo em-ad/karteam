@@ -38,10 +38,10 @@ public interface KheyratiApi {
                                 @Body FcmRequestModel fcmRequestModel );
 
     @GET("request")
-    Call<List<RequestResponseModel>> getMyRequests(@Header("Authorization") String authHeader);
+    Call<List<RequestResponseModel>> getRequests(@Header("Authorization") String authHeader);
 
     @POST("request")
     Call<ResponseBody> submitRequest(@Header("Authorization") String authHeader,
-                                    @Body RequestRequestModel fcmRequestModel );
+                                    @Body RequestRequestModel fcmRequestModel);
 
 }

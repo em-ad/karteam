@@ -143,7 +143,7 @@ public class KheyratiRepository {
 
     public void getMyRequests(String headerToken, ApiCallback apiCallback){
         RetrofitClient.getInstance().getKheyratiApi()
-                .getMyRequests(headerToken)
+                .getRequests(headerToken)
                 .enqueue(new Callback<List<RequestResponseModel>>() {
                     @Override
                     public void onResponse(Call<List<RequestResponseModel>> call, Response<List<RequestResponseModel>> response) {
@@ -178,4 +178,45 @@ public class KheyratiRepository {
                     }
                 });
     }
+
+    public void acceptRequest(String headerToken, RequestResponseModel model, ApiCallback apiCallback) {
+        RequestRequestModel requestModel = model.accept();
+        RetrofitClient.getInstance().getKheyratiApi()
+                .submitRequest(headerToken, requestModel)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void rejectRequest(String headerToken, RequestResponseModel model, ApiCallback apiCallback) {
+        RequestRequestModel requestModel = model.reject();
+        RetrofitClient.getInstance().getKheyratiApi()
+                .submitRequest(headerToken, requestModel)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
 }

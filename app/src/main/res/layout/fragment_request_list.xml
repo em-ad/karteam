@@ -16,7 +16,7 @@
         android:id="@+id/recycler"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="15"
-        tools:listitem="@layout/item_request"
+        tools:listitem="@layout/item_my_request"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
