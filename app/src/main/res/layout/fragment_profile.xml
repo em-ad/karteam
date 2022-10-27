@@ -45,6 +45,26 @@
         android:id="@+id/logout"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="تغییر شرکت"
+        android:fontFamily="@font/app_font"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="visible"
+        android:layout_marginTop="12dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/rounded_grey"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:id="@+id/changeCompany"
+        />
+
     <com.github.mikephil.charting.charts.BarChart
         android:layout_width="match_parent"
         android:layout_height="200dp"

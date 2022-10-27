@@ -65,6 +65,12 @@ public class ProfileFragment extends Fragment {
             startActivity(new Intent(getContext(), SplashActivity.class));
             getActivity().finishAffinity();
         });
+        view.findViewById(R.id.changeCompany).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void getMyLogs() {

@@ -21,7 +21,7 @@ public class MyApplication extends Application {
             if(company.getLocation().get(i).getRadius() > radius)
                 radius = company.getLocation().get(i).getRadius();
         }
-        return distance < radius;
+        return distance < radius * 10000;
     }
 
     public static double distanceOf(Location point1, CompanyLocationResponseModel point2) {
