@@ -76,7 +76,6 @@ public class ProfileFragment extends Fragment {
     private void getMyLogs() {
         if (getContext() == null) return;
         repository.getLogs(MSharedPreferences.getInstance().getTokenHeader(getContext()),
-                MSharedPreferences.getInstance().getUserIdFromToken(getContext()),
                 new ApiCallback() {
                     @Override
                     public void apiFailed(Object o) {

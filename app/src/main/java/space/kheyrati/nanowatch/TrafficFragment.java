@@ -123,18 +123,18 @@ public class TrafficFragment extends Fragment {
     private void attendanceStateUpdated(Boolean entered) {
         if (entered == null || repository == null || getContext() == null) return;
         if (entered) {
-            if (MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
+            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
                 callEnter();
             else changeUiForEnter();
         } else {
-            if (MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
+            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
                 callExit();
             else changeUiForExit();
         }
     }
 
     private void callExit() {
-        EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getId(), MyApplication.company.getLocation().get(0).getId(), "Exit");
+        EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getCompany().getId(), MyApplication.company.getLocation().get(0).getId(), "Exit");
         repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
@@ -151,7 +151,7 @@ public class TrafficFragment extends Fragment {
     }
 
     private void callEnter() {
-        EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getId(), MyApplication.company.getLocation().get(0).getId(), "Enter");
+        EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getCompany().getId(), MyApplication.company.getLocation().get(0).getId(), "Enter");
         repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
             @Override
             public void apiFailed(Object o) {

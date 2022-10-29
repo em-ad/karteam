@@ -13,9 +13,9 @@ public class RequestResponseModel implements Serializable {
     @SerializedName("_id")
     private String id;
     @SerializedName("user")
-    private String user;
+    private UserResponseModel user;
     @SerializedName("company")
-    private String company;
+    private CompanyModel company;
     @SerializedName("start")
     private String start;
     @SerializedName("end")
@@ -41,22 +41,6 @@ public class RequestResponseModel implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
     }
 
     public String getStart() {
@@ -114,8 +98,8 @@ public class RequestResponseModel implements Serializable {
         model.setStart(Utils.getTimeStamp(start));
         model.setStatus("Accept");
         model.setType(type);
-        model.setUser(user);
-        model.setCompany(company);
+        model.setUser(user.getId());
+        model.setCompany(company.getId());
         model.setDescription(description);
         return model;
     }
@@ -127,9 +111,25 @@ public class RequestResponseModel implements Serializable {
         model.setStart(Utils.getTimeStamp(start));
         model.setStatus("Reject");
         model.setType(type);
-        model.setUser(user);
-        model.setCompany(company);
+        model.setUser(user.getId());
+        model.setCompany(company.getId());
         model.setDescription(description);
         return model;
+    }
+
+    public UserResponseModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserResponseModel user) {
+        this.user = user;
+    }
+
+    public CompanyModel getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyModel company) {
+        this.company = company;
     }
 }

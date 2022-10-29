@@ -68,9 +68,9 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getLogs(String headerToken, String myUserId, ApiCallback apiCallback){
+    public void getLogs(String headerToken, ApiCallback apiCallback){
         RetrofitClient.getInstance().getKheyratiApi()
-                .getMyLogs(headerToken, myUserId)
+                .getMyLogs(headerToken)
                 .enqueue(new Callback<List<UserLogResponseItem>>() {
                     @Override
                     public void onResponse(Call<List<UserLogResponseItem>> call, Response<List<UserLogResponseItem>> response) {

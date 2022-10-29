@@ -9,17 +9,15 @@ public class UserLogResponseItem implements Serializable {
     @SerializedName("_id")
     private String id;
     @SerializedName("company")
-    private String company;
+    private CompanyModel company;
+    @SerializedName("location")
+    private CompanyLocationResponseModel location;
     @SerializedName("user")
-    private String user;
+    private UserResponseModel user;
     @SerializedName("type")
     private String type;
     @SerializedName("date")
     private long date;
-    @SerializedName("firstName")
-    private String firstName;
-    @SerializedName("lastName")
-    private String lastName;
 
     public String getId() {
         return id;
@@ -29,20 +27,12 @@ public class UserLogResponseItem implements Serializable {
         this.id = id;
     }
 
-    public String getCompany() {
+    public CompanyModel getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void setCompany(CompanyModel company) {
         this.company = company;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public String getType() {
@@ -61,19 +51,19 @@ public class UserLogResponseItem implements Serializable {
         this.date = date;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public CompanyLocationResponseModel getLocation() {
+        return location;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setLocation(CompanyLocationResponseModel location) {
+        this.location = location;
     }
 
-    public String getLastName() {
-        return lastName;
+    public UserResponseModel getUser() {
+        return user;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUser(UserResponseModel user) {
+        this.user = user;
     }
 }

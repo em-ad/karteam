@@ -29,9 +29,8 @@ public interface KheyratiApi {
     Call<EnterResponseModel> enterOrExit(@Header("Authorization") String authHeader,
                                          @Body EnterExitRequestModel requestModel);
 
-    @GET("company/logs/{userId}")
-    Call<List<UserLogResponseItem>> getMyLogs(@Header("Authorization") String authHeader,
-                                              @Path("userId") String customerId);
+    @GET("EnterExit")
+    Call<List<UserLogResponseItem>> getMyLogs(@Header("Authorization") String authHeader);
 
     @POST("user/updateFCM")
     Call<FcmResponseModel> sendFcmToken(@Header("Authorization") String authHeader,
