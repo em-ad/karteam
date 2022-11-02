@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -73,7 +75,7 @@ public class CompanyChooserActivity extends AppCompatActivity {
     }
 
     private void companyItemClicked(CompanyResponseModel company) {
-        MAlerter.show(this, "صبر کنید", "در حال دریافت مکان های مجاز..." + company.getCompany().getName());
+        MAlerter.show(this, "صبر کنید", "در حال دریافت مکان های مجاز " + company.getCompany().getName());
         progress.setVisibility(View.VISIBLE);
         MyApplication.company = company;
         repository.getCompanyLocation(MSharedPreferences.getInstance().getTokenHeader(this), company.getCompany().getId(), new ApiCallback() {
@@ -95,5 +97,31 @@ public class CompanyChooserActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    boolean exitPressed = false;
+
+    CountDownTimer exitTimer = new CountDownTimer(1500, 1500) {
+        @Override
+        public void onTick(long l) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            exitPressed = false;
+        }
+    };
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onBackPressed() {
+        if (!exitPressed) {
+            exitPressed = true;
+            exitTimer.start();
+            MAlerter.show(this, "", "برای خروج دوباره دکمه بازگشت را لمس کنید");
+        } else {
+            super.onBackPressed();
+        }
     }
 }

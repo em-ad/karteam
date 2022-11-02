@@ -17,9 +17,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
+import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
 public class RequestFragment extends Fragment {
 
@@ -29,8 +34,10 @@ public class RequestFragment extends Fragment {
     private TextView etTime;
     private EditText etDescription;
     private TextView etType;
+    private TextView title;
     private KheyratiRepository repository;
     private RefreshCallback callback;
+    private RequestResponseModel item = null;
 
     private String type;
 
@@ -39,6 +46,39 @@ public class RequestFragment extends Fragment {
     public RequestFragment(RefreshCallback callback, String type) {
         this.callback = callback;
         this.type = type;
+    }
+
+    public RequestFragment(RefreshCallback callback, RequestResponseModel item) {
+        this.callback = callback;
+        this.item = item;
+    }
+
+    private void handleRequestItem(RequestResponseModel item) {
+        handleType(item.getType());
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        long start = 0;
+        long end = 0;
+        try {
+            Date startDate = format.parse(item.getStart());
+            Date endDate = format.parse(item.getStart());
+            start = startDate.getTime();
+            end = endDate.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        etStartDate.setText(new PersianCalendar(start).getPersianLongDate());
+        etEndDate.setText(new PersianCalendar(end).getPersianLongDate());
+        etDescription.setText(item.getDescription());
+
+        requestModel.setEnd(end);
+        requestModel.setStart(start);
+        requestModel.setStatus(item.getStatus());
+        requestModel.setDescription(item.getDescription());
+        requestModel.setType(item.getType());
+        requestModel.setCompany(item.getCompany() != null ? item.getCompany().getId() : "");
+        requestModel.setUser(item.getUser().getId());
     }
 
     @Override
@@ -60,6 +100,9 @@ public class RequestFragment extends Fragment {
         requestModel.setCompany(MyApplication.company.getCompany().getId());
         requestModel.setUser(MSharedPreferences.getInstance().getUserIdFromToken(getContext()));
         repository = new KheyratiRepository();
+        if(item != null){
+            handleRequestItem(item);
+        }
     }
 
     private void setupEditTexts() {
@@ -199,6 +242,12 @@ public class RequestFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        title.setText("ثبت درخواست");
+    }
+
     private void findViews(View view) {
         view.findViewById(R.id.arrow).setOnClickListener(v ->
                 getParentFragmentManager().popBackStackImmediate());
@@ -208,5 +257,6 @@ public class RequestFragment extends Fragment {
         etTime = view.findViewById(R.id.etTime);
         etType = view.findViewById(R.id.etType);
         etDescription = view.findViewById(R.id.etDescription);
+        title = view.findViewById(R.id.title);
     }
 }

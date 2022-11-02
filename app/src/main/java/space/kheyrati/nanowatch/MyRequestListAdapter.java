@@ -18,7 +18,9 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
 class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestListAdapter.ViewHolder> {
 
-    protected MyRequestListAdapter() {
+    RequestClickCallback callback;
+
+    protected MyRequestListAdapter(RequestClickCallback callback) {
         super(new DiffUtil.ItemCallback<RequestResponseModel>() {
             @Override
             public boolean areItemsTheSame(@NonNull RequestResponseModel oldItem, @NonNull RequestResponseModel newItem) {
@@ -30,6 +32,7 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
                 return false;
             }
         });
+        this.callback = callback;
     }
 
     @NonNull
@@ -117,6 +120,7 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
                     ivType.setImageResource(R.drawable.ic_vacation_primary_dark);
                     break;
             }
+            itemView.setOnClickListener(view -> callback.itemClicked(item));
         }
     }
 }

@@ -48,6 +48,7 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         initListeners();
+        MAlerter.show(getActivity(), "توجه", "میتوانید برای ویرایش درخواست روی آن کلیک کنید");
     }
 
     @Override
@@ -107,8 +108,20 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
         fabVacation = view.findViewById(R.id.fabVacation);
         fabMission = view.findViewById(R.id.fabMission);
         recycler = view.findViewById(R.id.recycler);
-        adapter = new MyRequestListAdapter();
+        adapter = new MyRequestListAdapter(this::requestClicked);
         recycler.setAdapter(adapter);
+    }
+
+    private void requestClicked(RequestResponseModel item) {
+        if(!item.getStatus().equalsIgnoreCase("pending")){
+            MAlerter.show(getActivity(), "خطا", "تنها درخواست های در حال بررسی قابل ویرایش هستند");
+            return;
+        }
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.root, new RequestFragment(this, item))
+                .addToBackStack(RequestFragment.class.getSimpleName())
+                .commit();
     }
 
     @Override
