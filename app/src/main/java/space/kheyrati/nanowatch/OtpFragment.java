@@ -8,6 +8,7 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,24 @@ public class OtpFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     private TextView tvEnter;
+    private TextView resend;
     private TextInputEditText loginEt;
     private ProgressBar progress;
 
     public OtpFragment() {
     }
+
+    private CountDownTimer timer = new CountDownTimer(120000, 1000) {
+        @Override
+        public void onTick(long l) {
+            resend.setText("ارسال مجدد کد تایید" + " " + ((int) l/1000));
+        }
+
+        @Override
+        public void onFinish() {
+            resend.setText("ارسال مجدد کد تایید");
+        }
+    };
 
     public static OtpFragment newInstance() {
         OtpFragment fragment = new OtpFragment();
@@ -46,7 +60,28 @@ public class OtpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         tvEnter = view.findViewById(R.id.tvEnter);
         progress = view.findViewById(R.id.progress);
-        loginEt = view.findViewById(R.id.loginEt).findViewById(R.id.edittext);
+        resend = view.findViewById(R.id.resend);
+        timer.start();
+        resend.setOnClickListener(view12 -> {
+            if(!resend.getText().toString().trim().equals("ارسال مجدد کد تایید")){
+                MAlerter.show(getActivity(), "صبر کنید", "برای درخواست مجدد کد تا پایان زمان صبر کنید");
+                return;
+            }
+            progress.setVisibility(View.VISIBLE);
+            loginViewModel.login(loginViewModel.getPhoneNumber(), new ApiCallback() {
+                @Override
+                public void apiFailed(Object o) {
+                    progress.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void apiSucceeded(Object o) {
+                    progress.setVisibility(View.GONE);
+                    timer.start();
+                }
+            });
+        });
+        loginEt = view.findViewById(R.id.edittext);
         loginEt.setHint("کد تاییدی که پیامک شده رو وارد کن");
         loginViewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(LoginViewModel.class);
         if (loginViewModel.getOtp() != null && !loginViewModel.getOtp().isEmpty()) {

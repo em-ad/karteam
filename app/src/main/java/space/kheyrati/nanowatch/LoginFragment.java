@@ -53,7 +53,7 @@ public class LoginFragment extends Fragment {
         loginViewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(LoginViewModel.class);
         tvEnter = view.findViewById(R.id.tvEnter);
         progress = view.findViewById(R.id.progress);
-        loginEt = view.findViewById(R.id.loginEt).findViewById(R.id.edittext);
+        loginEt = view.findViewById(R.id.edittext);
         loginEt.setHint("شماره موبایلت رو وارد کن");
         tvEnter.setOnClickListener(view1 -> {
             if(loginEt.getText().toString().trim().length() < 10){

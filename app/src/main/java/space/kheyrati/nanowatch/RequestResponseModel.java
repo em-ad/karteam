@@ -99,7 +99,7 @@ public class RequestResponseModel implements Serializable {
         model.setStatus("Accept");
         model.setType(type);
         model.setUser(user.getId());
-        model.setCompany(company.getId());
+        model.setCompany(company == null ? "" : company.getId());
         model.setDescription(description);
         return model;
     }
@@ -112,7 +112,7 @@ public class RequestResponseModel implements Serializable {
         model.setStatus("Reject");
         model.setType(type);
         model.setUser(user.getId());
-        model.setCompany(company.getId());
+        model.setCompany(company == null ? "" : company.getId());
         model.setDescription(description);
         return model;
     }

@@ -1,13 +1,16 @@
 package space.kheyrati.nanowatch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyChooserActivity extends AppCompatActivity {
@@ -15,6 +18,8 @@ public class CompanyChooserActivity extends AppCompatActivity {
     private RecyclerView recycler;
     private MyCompanyAdapter adapter;
     private ProgressBar progress;
+    private AppCompatImageView ivEmpty;
+    private TextView tvEmpty;
     private KheyratiRepository repository;
 
     @Override
@@ -47,6 +52,13 @@ public class CompanyChooserActivity extends AppCompatActivity {
                 if(adapter != null){
                     adapter.setDataSet(data);
                 }
+                if(data == null || data.size() == 0){
+                    ivEmpty.setVisibility(View.VISIBLE);
+                    tvEmpty.setVisibility(View.VISIBLE);
+                } else {
+                    ivEmpty.setVisibility(View.GONE);
+                    tvEmpty.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -54,6 +66,8 @@ public class CompanyChooserActivity extends AppCompatActivity {
     private void findViews() {
         recycler = findViewById(R.id.recycler);
         progress = findViewById(R.id.progress);
+        ivEmpty = findViewById(R.id.ivEmpty);
+        tvEmpty = findViewById(R.id.tvEmpty);
         adapter = new MyCompanyAdapter(this::companyItemClicked);
         recycler.setAdapter(adapter);
     }

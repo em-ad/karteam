@@ -32,10 +32,13 @@ public class RequestFragment extends Fragment {
     private KheyratiRepository repository;
     private RefreshCallback callback;
 
+    private String type;
+
     private final RequestRequestModel requestModel = new RequestRequestModel();
 
-    public RequestFragment(RefreshCallback callback) {
+    public RequestFragment(RefreshCallback callback, String type) {
         this.callback = callback;
+        this.type = type;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class RequestFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         setupEditTexts();
-        requestModel.setCompany(MyApplication.company.getId());
+        requestModel.setCompany(MyApplication.company.getCompany().getId());
         requestModel.setUser(MSharedPreferences.getInstance().getUserIdFromToken(getContext()));
         repository = new KheyratiRepository();
     }
@@ -68,7 +71,7 @@ public class RequestFragment extends Fragment {
                         @Override
                         public void onDateSelected(PersianPickerDate persianPickerDate) {
                             etStartDate.setText(persianPickerDate.getPersianLongDate());
-                            if(requestModel.getEnd() == 0){
+                            if (requestModel.getEnd() == 0) {
                                 requestModel.setEnd(persianPickerDate.getTimestamp());
                             }
                             requestModel.setStart(persianPickerDate.getTimestamp());
@@ -121,38 +124,66 @@ public class RequestFragment extends Fragment {
         });
 
         etType.setOnClickListener(view -> {
-            RequestTypeDialog dialog = new RequestTypeDialog(getContext(), type -> {
-                requestModel.setType(type);
-                switch (type) {
-                    case "Enter":
-                        etType.setText("درخواست ورود");
-                        break;
-                    case "Exit":
-                        etType.setText("درخواست خروج");
-                        break;
-                    case "Mission":
-                        etType.setText("درخواست ماموریت");
-                        break;
-                    case "Vacation":
-                        etType.setText("درخواست مرخصی");
-                        break;
-                }
-            });
+            RequestTypeDialog dialog = new RequestTypeDialog(getContext(), this::handleType);
             dialog.show();
         });
 
         fabDone.setOnClickListener(view -> {
-            if(requestModel.isValid()){
+            if (requestModel.isValid()) {
                 submitRequest();
             } else {
                 MAlerter.show(getActivity(), "خطا", "همه موارد ضروری را وارد کنید");
             }
         });
+
+        if(type != null){
+            switch (type){
+                case "mission":
+                    handleType("Mission");
+                    break;
+                case "vacation":
+                    handleType("Vacation");
+                    break;
+                case "traffic":
+                    handleType("Enter");
+                    break;
+            }
+        }
+    }
+
+    private void handleType(String type) {
+        requestModel.setType(type);
+        etEndDate.setVisibility(View.VISIBLE);
+        etTime.setVisibility(View.VISIBLE);
+        etStartDate.setHint("تاریخ شروع را انتخاب کنید");
+        switch (type) {
+            case "Enter":
+                etEndDate.setVisibility(View.GONE);
+                etStartDate.setHint("تاریخ ورود را انتخاب کنید");
+                etType.setText("درخواست ورود");
+                break;
+            case "Exit":
+                etEndDate.setVisibility(View.GONE);
+                etStartDate.setHint("تاریخ خروج را انتخاب کنید");
+                etType.setText("درخواست خروج");
+                break;
+            case "Mission":
+                etType.setText("درخواست ماموریت");
+                etTime.setVisibility(View.GONE);
+                break;
+            case "Vacation":
+                etType.setText("درخواست مرخصی");
+                break;
+        }
+
     }
 
     private void submitRequest() {
         requestModel.setDescription(etDescription.getText().toString() + " ");
         requestModel.setStart(requestModel.getStart() + requestModel.getTime());
+        if(requestModel.getEnd() == 0){
+            requestModel.setEnd(requestModel.getStart());
+        }
         requestModel.setTime(0);
         repository.submitRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
             @Override

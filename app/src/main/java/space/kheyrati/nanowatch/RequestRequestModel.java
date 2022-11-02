@@ -91,7 +91,6 @@ public class RequestRequestModel implements Serializable {
         if(type == null) return false;
         if(company == null) return false;
         if(start == 0) return false;
-        if(end == 0) return false;
         if(user == null) return false;
         return true;
     }

@@ -85,19 +85,19 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
         fabVacation.setOnClickListener(view1 ->
                 getChildFragmentManager()
                         .beginTransaction()
-                        .add(R.id.root, new RequestFragment(this))
+                        .add(R.id.root, new RequestFragment(this, "vacation"))
                         .addToBackStack(RequestFragment.class.getSimpleName())
                         .commit());
         fabMission.setOnClickListener(view1 ->
                 getChildFragmentManager()
                         .beginTransaction()
-                        .add(R.id.root, new RequestFragment(this))
+                        .add(R.id.root, new RequestFragment(this, "mission"))
                         .addToBackStack(RequestFragment.class.getSimpleName())
                         .commit());
         fabTraffic.setOnClickListener(view1 ->
                 getChildFragmentManager()
                         .beginTransaction()
-                        .add(R.id.root, new RequestFragment(this))
+                        .add(R.id.root, new RequestFragment(this, "traffic"))
                         .addToBackStack(RequestFragment.class.getSimpleName())
                         .commit());
     }
