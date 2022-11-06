@@ -80,39 +80,69 @@ public class CartableFragment extends Fragment implements RequestCallback {
 
     @Override
     public void onAccept(RequestResponseModel model) {
-        progress.setVisibility(View.VISIBLE);
-        repository.acceptRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback(){
-
+        new AreYouShortDialog(getContext(), null, null, null, new AreYouShortCallback() {
             @Override
-            public void apiFailed(Object o) {
-                progress.setVisibility(View.GONE);
-                MAlerter.show(getActivity(), "خطا", "در قبول درخواست خطایی رخ داد");
+            public void accept() {
+                progress.setVisibility(View.VISIBLE);
+                repository.acceptRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback(){
+
+                    @Override
+                    public void apiFailed(Object o) {
+                        progress.setVisibility(View.GONE);
+                        MAlerter.show(getActivity(), "خطا", "در قبول درخواست خطایی رخ داد");
+                    }
+
+                    @Override
+                    public void apiSucceeded(Object o) {
+                        progress.setVisibility(View.GONE);
+                        getItems();
+                    }
+                });
             }
 
             @Override
-            public void apiSucceeded(Object o) {
-                progress.setVisibility(View.GONE);
-                getItems();
+            public void reject() {
+
             }
-        });
+
+            @Override
+            public void dismiss() {
+
+            }
+        }).show();
     }
 
     @Override
     public void onReject(RequestResponseModel model) {
-        progress.setVisibility(View.VISIBLE);
-        repository.rejectRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback(){
-
+        new AreYouShortDialog(getContext(), null, null, null, new AreYouShortCallback() {
             @Override
-            public void apiFailed(Object o) {
-                progress.setVisibility(View.GONE);
-                MAlerter.show(getActivity(), "خطا", "در رد درخواست خطایی رخ داد");
+            public void accept() {
+                progress.setVisibility(View.VISIBLE);
+                repository.rejectRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback(){
+
+                    @Override
+                    public void apiFailed(Object o) {
+                        progress.setVisibility(View.GONE);
+                        MAlerter.show(getActivity(), "خطا", "در رد درخواست خطایی رخ داد");
+                    }
+
+                    @Override
+                    public void apiSucceeded(Object o) {
+                        progress.setVisibility(View.GONE);
+                        getItems();
+                    }
+                });
             }
 
             @Override
-            public void apiSucceeded(Object o) {
-                progress.setVisibility(View.GONE);
-                getItems();
+            public void reject() {
+
             }
-        });
+
+            @Override
+            public void dismiss() {
+
+            }
+        }).show();
     }
 }

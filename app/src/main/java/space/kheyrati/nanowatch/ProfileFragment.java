@@ -61,9 +61,25 @@ public class ProfileFragment extends Fragment {
         getMyLogs();
         logout.setOnClickListener(v -> {
             if (getContext() == null || getActivity() == null) return;
-            MSharedPreferences.getInstance().removeToken(getContext());
-            startActivity(new Intent(getContext(), SplashActivity.class));
-            getActivity().finishAffinity();
+            new AreYouShortDialog(getContext(), null, null, null, new AreYouShortCallback() {
+
+                @Override
+                public void accept() {
+                    MSharedPreferences.getInstance().removeToken(getContext());
+                    startActivity(new Intent(getContext(), SplashActivity.class));
+                    getActivity().finishAffinity();
+                }
+
+                @Override
+                public void reject() {
+
+                }
+
+                @Override
+                public void dismiss() {
+
+                }
+            }).show();
         });
         view.findViewById(R.id.changeCompany).setOnClickListener(new View.OnClickListener() {
             @Override
