@@ -79,6 +79,6 @@ public class MSharedPreferences {
 
     public void saveLastTrafficEvent(Context context, String event){
         SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
-        pref.edit().putString("last_event", event).apply();
+        pref.edit().putString("last_event", event).commit();
     }
 }

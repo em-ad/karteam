@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class RequestRequestModel implements Serializable {
 
+    @SerializedName("_id")
+    private String id;
     @SerializedName("user")
     private String user;
     @SerializedName("company")
@@ -22,6 +24,14 @@ public class RequestRequestModel implements Serializable {
     private String description;
 
     private long time;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public long getTime() {
         return time;

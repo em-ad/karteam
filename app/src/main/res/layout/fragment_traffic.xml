@@ -152,7 +152,7 @@
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:fontFamily="@font/app_font"
         android:text="موقیت من کجاست؟"
-        android:drawableBottom="@drawable/maps"
+        android:drawableBottom="@drawable/ic_maps"
         android:textColor="@color/primary"
         android:textStyle="bold"
         android:textSize="24sp"

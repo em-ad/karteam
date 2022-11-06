@@ -31,6 +31,8 @@ public class RequestFragment extends Fragment {
     private FloatingActionButton fabDone;
     private TextView etStartDate;
     private TextView etEndDate;
+    private TextView etStartTime;
+    private TextView etEndTime;
     private TextView etTime;
     private EditText etDescription;
     private TextView etType;
@@ -72,6 +74,7 @@ public class RequestFragment extends Fragment {
         etEndDate.setText(new PersianCalendar(end).getPersianLongDate());
         etDescription.setText(item.getDescription());
 
+        requestModel.setId(item.getId());
         requestModel.setEnd(end);
         requestModel.setStart(start);
         requestModel.setStatus(item.getStatus());
@@ -228,18 +231,33 @@ public class RequestFragment extends Fragment {
             requestModel.setEnd(requestModel.getStart());
         }
         requestModel.setTime(0);
-        repository.submitRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
-            @Override
-            public void apiFailed(Object o) {
-                MAlerter.show(getActivity(), "خطا", "در ثبت درخواست خطایی رخ داد");
-            }
+        if(requestModel.getId() != null && !requestModel.getId().isEmpty()){
+            repository.submitRequestPut(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
+                @Override
+                public void apiFailed(Object o) {
+                    MAlerter.show(getActivity(), "خطا", "در ثبت درخواست خطایی رخ داد");
+                }
 
-            @Override
-            public void apiSucceeded(Object o) {
-                callback.refresh();
-                getParentFragmentManager().popBackStackImmediate();
-            }
-        });
+                @Override
+                public void apiSucceeded(Object o) {
+                    callback.refresh();
+                    getParentFragmentManager().popBackStackImmediate();
+                }
+            });
+        } else {
+            repository.submitRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
+                @Override
+                public void apiFailed(Object o) {
+                    MAlerter.show(getActivity(), "خطا", "در ثبت درخواست خطایی رخ داد");
+                }
+
+                @Override
+                public void apiSucceeded(Object o) {
+                    callback.refresh();
+                    getParentFragmentManager().popBackStackImmediate();
+                }
+            });
+        }
     }
 
     @Override
@@ -254,6 +272,8 @@ public class RequestFragment extends Fragment {
         fabDone = view.findViewById(R.id.fabDone);
         etStartDate = view.findViewById(R.id.etStartDate);
         etEndDate = view.findViewById(R.id.etEndDate);
+        etStartTime = view.findViewById(R.id.etStartTime);
+        etEndTime = view.findViewById(R.id.etEndTime);
         etTime = view.findViewById(R.id.etTime);
         etType = view.findViewById(R.id.etType);
         etDescription = view.findViewById(R.id.etDescription);

@@ -9,6 +9,7 @@ public class MyApplication extends Application {
 
     public static Location lastLocation;
     public static CompanyResponseModel company;
+    public static boolean isIn;
 
     public static boolean locationValid() {
         if (lastLocation == null || company == null || company.getLocation() == null || company.getLocation().isEmpty()) return false;
@@ -21,6 +22,7 @@ public class MyApplication extends Application {
             if(company.getLocation().get(i).getRadius() > radius)
                 radius = company.getLocation().get(i).getRadius();
         }
+        Log.e("TAG", "locationValid: " + distance + " " + radius * 10000 );
         return distance < radius * 10000;
     }
 
@@ -36,5 +38,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        isIn = MSharedPreferences.getInstance().whatIsLastTrafficEvent(this).equals("enter");
     }
 }

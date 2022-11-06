@@ -8,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface KheyratiApi {
@@ -42,5 +43,9 @@ public interface KheyratiApi {
     @POST("request")
     Call<ResponseBody> submitRequest(@Header("Authorization") String authHeader,
                                     @Body RequestRequestModel fcmRequestModel);
+
+    @PUT("request")
+    Call<ResponseBody> submitRequestPut(@Header("Authorization") String authHeader,
+                                     @Body RequestRequestModel request);
 
 }

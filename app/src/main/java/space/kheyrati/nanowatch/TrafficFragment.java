@@ -3,6 +3,7 @@ package space.kheyrati.nanowatch;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
@@ -45,20 +48,21 @@ public class TrafficFragment extends Fragment {
     private LottieAnimationView pbProgress;
     private FrameLayout flEdge;
     private volatile boolean isTimerRunning;
+    private AtomicBoolean apiCalling = new AtomicBoolean(false);
     private KheyratiRepository repository;
+    private String lastApi = null;
 
     private Handler attendanceHandler;
     private final Runnable attendanceRunnable = () -> {
-        boolean isIn = viewModel.isIn.getValue() != null && viewModel.isIn.getValue();
-        if (isIn) {
-            viewModel.isIn.postValue(false);
-        } else {
+        boolean isIn = MyApplication.isIn;
+        if (!isIn) {
             PersianCalendar date = new PersianCalendar(System.currentTimeMillis());
             PreferencesManager.getInstance(getContext()).edit().putLong("last_enter", date.getTimeInMillis()).commit();
             vibratePhone();
             ivFinger.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
-            viewModel.isIn.postValue(true);
         }
+        MyApplication.isIn = !MyApplication.isIn;
+        attendanceStateUpdated(MyApplication.isIn);
     };
 
     private final CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {
@@ -116,53 +120,62 @@ public class TrafficFragment extends Fragment {
         initComponents();
         setTouchListener();
         viewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(AttendanceViewModel.class);
-        viewModel.isIn.observe(getViewLifecycleOwner(), this::attendanceStateUpdated);
         tvTitle.setText("عبور و مرور در " + MyApplication.company.getCompany().getName());
     }
 
     private void attendanceStateUpdated(Boolean entered) {
         if (entered == null || repository == null || getContext() == null) return;
         if (entered) {
-            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter"))
+            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter")) {
                 callEnter();
-            else changeUiForEnter();
+            } else changeUiForEnter();
         } else {
-            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit"))
+            if (MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter")) {
                 callExit();
-            else changeUiForExit();
+            }else changeUiForExit();
         }
     }
 
     private void callExit() {
+        if(apiCalling.get()) return;
+        apiCalling.set(true);
         EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getCompany().getId(), MyApplication.company.getLocation().get(0).getId(), "Exit");
         repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
+                apiCalling.set(false);
                 MAlerter.show(getActivity(), "خطا", "خطایی در ثبت خروج پیش آمد");
             }
 
             @Override
             public void apiSucceeded(Object o) {
+                apiCalling.set(false);
                 if (getContext() != null)
                     MSharedPreferences.getInstance().saveLastTrafficEvent(getContext(), "exit");
                 changeUiForExit();
+                MAlerter.show(getActivity(), "خارج شدید", "خروج شما با موفقیت ثبت شد");
             }
         });
     }
 
     private void callEnter() {
+        if(apiCalling.get()) return;
+        apiCalling.set(true);
         EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getCompany().getId(), MyApplication.company.getLocation().get(0).getId(), "Enter");
         repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
                 MAlerter.show(getActivity(), "خطا", "خطایی در ثبت ورود پیش آمد");
+                apiCalling.set(false);
             }
 
             @Override
             public void apiSucceeded(Object o) {
+                apiCalling.set(false);
                 if (getContext() != null)
                     MSharedPreferences.getInstance().saveLastTrafficEvent(getContext(), "enter");
                 changeUiForEnter();
+                MAlerter.show(getActivity(), "وارد شدید", "ورود شما با موفقیت ثبت شد");
             }
         });
     }
@@ -191,8 +204,12 @@ public class TrafficFragment extends Fragment {
         super.onResume();
         repository = new KheyratiRepository();
         startTimerFromScratch();
-        if (viewModel != null)
-            attendanceStateUpdated(viewModel.isIn.getValue());
+        if (viewModel != null){
+            boolean val = viewModel.isIn != null && Boolean.TRUE.equals(viewModel.isIn.getValue());
+            if(val){
+                changeUiForEnter();
+            } else changeUiForExit();
+        }
         handleMapAccessVisibility();
     }
 
@@ -214,6 +231,11 @@ public class TrafficFragment extends Fragment {
         ivFinger.setOnTouchListener((view1, motionEvent) -> {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+                    if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                        MAlerter.show(getActivity(), "جی پی اس خاموش است", "از روشن بودن جی پی اس خود اطمینان حاصل کنید");
+                        return true;
+                    }
                     if (!MyApplication.locationValid()) {
                         MAlerter.show(getActivity(), "در حال جستجوی لوکیشن", "برای ثبت ورود و خروج باید در محدوده دانشگاه باشید");
                         if (getActivity() != null) {
