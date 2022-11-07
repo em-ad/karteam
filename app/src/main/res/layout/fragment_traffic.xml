@@ -31,9 +31,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/lav_thumbUp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_stopwatch"
+        app:srcCompat="@drawable/ic_keycdn"
         android:alpha="0.2"
-        android:tint="@color/primary_very_dark"
         />
 
     <TextView

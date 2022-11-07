@@ -92,7 +92,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_thumbs_down"
+        app:srcCompat="@drawable/ic_times_circle"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:alpha="0.8"
         />
@@ -106,7 +106,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/ivReject"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_thumbs_up"
+        app:srcCompat="@drawable/ic_check_circle"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:alpha="0.8"
         />

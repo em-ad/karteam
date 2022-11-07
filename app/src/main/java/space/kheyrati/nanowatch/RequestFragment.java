@@ -35,7 +35,6 @@ public class RequestFragment extends Fragment {
     private TextView etEndDate;
     private TextView etStartTime;
     private TextView etEndTime;
-//    private TextView etTime;
     private EditText etDescription;
     private TextView etType;
     private TextView title;
