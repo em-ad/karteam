@@ -24,9 +24,27 @@ public class RequestRequestModel implements Serializable {
     private String description;
 
     private long time;
+    private long startTime;
+    private long endTime;
 
     public String getId() {
         return id;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public void setId(String id) {

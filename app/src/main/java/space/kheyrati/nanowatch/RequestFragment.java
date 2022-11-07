@@ -1,6 +1,7 @@
 package space.kheyrati.nanowatch;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.Date;
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
+import ir.hamsaa.persiandatepicker.date.PersianDateImpl;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
 public class RequestFragment extends Fragment {
@@ -33,7 +35,7 @@ public class RequestFragment extends Fragment {
     private TextView etEndDate;
     private TextView etStartTime;
     private TextView etEndTime;
-    private TextView etTime;
+//    private TextView etTime;
     private EditText etDescription;
     private TextView etType;
     private TextView title;
@@ -120,7 +122,12 @@ public class RequestFragment extends Fragment {
                             if (requestModel.getEnd() == 0) {
                                 requestModel.setEnd(persianPickerDate.getTimestamp());
                             }
-                            requestModel.setStart(persianPickerDate.getTimestamp());
+                            PersianCalendar cal = new PersianCalendar();
+                            cal.setPersianDate(persianPickerDate.getPersianYear(), persianPickerDate.getPersianMonth(), persianPickerDate.getPersianDay());
+                            cal.set(PersianCalendar.HOUR, 0);
+                            cal.set(PersianCalendar.MINUTE, 0);
+                            cal.set(PersianCalendar.SECOND, 0);
+                            requestModel.setStart(cal.getTimeInMillis());
                         }
 
                         @Override
@@ -140,6 +147,7 @@ public class RequestFragment extends Fragment {
                         @Override
                         public void onDateSelected(PersianPickerDate persianPickerDate) {
                             etEndDate.setText(persianPickerDate.getPersianLongDate());
+                            persianPickerDate.setDate(persianPickerDate.getPersianYear(), persianPickerDate.getPersianMonth(), persianPickerDate.getPersianDay());
                             requestModel.setEnd(persianPickerDate.getTimestamp());
                         }
 
@@ -153,7 +161,7 @@ public class RequestFragment extends Fragment {
                     .show();
         });
 
-        etTime.setOnClickListener(view -> {
+        etStartTime.setOnClickListener(view -> {
             MaterialTimePicker picker = new MaterialTimePicker.Builder()
                     .setTimeFormat(TimeFormat.CLOCK_24H)
                     .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
@@ -163,8 +171,24 @@ public class RequestFragment extends Fragment {
                     .build();
             picker.addOnPositiveButtonClickListener(view1 -> {
                 String selectedTime = String.format("%02d", picker.getHour()) + ":" + String.format("%02d", picker.getMinute());
-                etTime.setText(selectedTime);
-                requestModel.setTime(picker.getHour() * 3600 * 1000 + picker.getMinute() * 60 * 1000);
+                etStartTime.setText(selectedTime);
+                requestModel.setStartTime(picker.getHour() * 3600 * 1000 + picker.getMinute() * 60 * 1000);
+            });
+            picker.show(getChildFragmentManager(), "picker");
+        });
+
+        etEndTime.setOnClickListener(view -> {
+            MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                    .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                    .setTitleText("انتخاب زمان")
+                    .setPositiveButtonText("تایید")
+                    .setNegativeButtonText("انصراف")
+                    .build();
+            picker.addOnPositiveButtonClickListener(view1 -> {
+                String selectedTime = String.format("%02d", picker.getHour()) + ":" + String.format("%02d", picker.getMinute());
+                etEndTime.setText(selectedTime);
+                requestModel.setEndTime(picker.getHour() * 3600 * 1000 + picker.getMinute() * 60 * 1000);
             });
             picker.show(getChildFragmentManager(), "picker");
         });
@@ -200,22 +224,23 @@ public class RequestFragment extends Fragment {
     private void handleType(String type) {
         requestModel.setType(type);
         etEndDate.setVisibility(View.VISIBLE);
-        etTime.setVisibility(View.VISIBLE);
+        etEndTime.setVisibility(View.VISIBLE);
         etStartDate.setHint("تاریخ شروع را انتخاب کنید");
         switch (type) {
             case "Enter":
                 etEndDate.setVisibility(View.GONE);
+                etEndTime.setVisibility(View.GONE);
                 etStartDate.setHint("تاریخ ورود را انتخاب کنید");
                 etType.setText("درخواست ورود");
                 break;
             case "Exit":
                 etEndDate.setVisibility(View.GONE);
+                etEndTime.setVisibility(View.GONE);
                 etStartDate.setHint("تاریخ خروج را انتخاب کنید");
                 etType.setText("درخواست خروج");
                 break;
             case "Mission":
                 etType.setText("درخواست ماموریت");
-                etTime.setVisibility(View.GONE);
                 break;
             case "Vacation":
                 etType.setText("درخواست مرخصی");
@@ -226,11 +251,11 @@ public class RequestFragment extends Fragment {
 
     private void submitRequest() {
         requestModel.setDescription(etDescription.getText().toString() + " ");
-        requestModel.setStart(requestModel.getStart() + requestModel.getTime());
+        requestModel.setStart(requestModel.getStart() + requestModel.getStartTime());
+        requestModel.setEnd(requestModel.getEnd() + requestModel.getEndTime());
         if(requestModel.getEnd() == 0){
             requestModel.setEnd(requestModel.getStart());
         }
-        requestModel.setTime(0);
         if(requestModel.getId() != null && !requestModel.getId().isEmpty()){
             repository.submitRequestPut(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
                 @Override
@@ -274,7 +299,7 @@ public class RequestFragment extends Fragment {
         etEndDate = view.findViewById(R.id.etEndDate);
         etStartTime = view.findViewById(R.id.etStartTime);
         etEndTime = view.findViewById(R.id.etEndTime);
-        etTime = view.findViewById(R.id.etTime);
+//        etTime = view.findViewById(R.id.etTime);
         etType = view.findViewById(R.id.etType);
         etDescription = view.findViewById(R.id.etDescription);
         title = view.findViewById(R.id.title);

@@ -1,5 +1,6 @@
 package space.kheyrati.nanowatch;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
             Date endDate = new Date();
             PersianCalendar cal = null;
             long time = 0;
+            long rawtime = 0;
             try{
                 startDate = format.parse(item.getStart());
                 endDate = format.parse(item.getEnd());
@@ -88,7 +90,8 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
                 if(tvTime.getText().toString().equals("0 ساعت"))
                     tvTime.setText("کمتر از یک ساعت");
             } else {
-                tvTime.setText(cal.getPersianShortDateTime().substring(cal.getPersianShortDateTime().indexOf(" ")));
+                String rawTime = cal.getPersianShortDateTime().substring(cal.getPersianShortDateTime().indexOf(" "));
+                tvTime.setText(reduceTwelveHours(rawTime));
             }
 
             switch (item.getStatus().toLowerCase()){
@@ -110,6 +113,7 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
                 case "enter":
                     tvTitle.setText("درخواست ورود");
                     ivType.setImageResource(R.drawable.ic_fingerprint_primary);
+
                     break;
                 case "exit":
                     tvTitle.setText("درخواست خروج");
@@ -121,6 +125,18 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
                     break;
             }
             itemView.setOnClickListener(view -> callback.itemClicked(item));
+        }
+
+        private String reduceTwelveHours(String rawTime) {
+//            String hour = rawTime.substring(0, rawTime.indexOf(":")).trim();
+//            String rest = rawTime.substring(rawTime.indexOf(":") + 1).trim();
+//            Log.e("TAG", "reduceTwelveHours: " + hour );
+//            int h = Integer.parseInt(hour);
+//            h -= 12;
+//            if(h < 0)
+//                h += 24;
+//            return String.valueOf(h) + ":" + rest;
+            return rawTime;
         }
     }
 }

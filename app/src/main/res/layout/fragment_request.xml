@@ -154,6 +154,7 @@
                 android:fontFamily="@font/app_font"
                 android:gravity="right"
                 android:paddingLeft="12dp"
+                android:visibility="gone"
                 android:paddingTop="14dp"
                 android:paddingRight="12dp"
                 android:paddingBottom="14dp"
