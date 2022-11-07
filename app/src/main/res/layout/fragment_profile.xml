@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:text="خروج"
         android:fontFamily="@font/app_font"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,17 +38,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:drawableLeft="@drawable/ic_sign_out_dark"
         android:drawablePadding="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/rounded_grey"
         android:paddingLeft="6dp"
-        android:paddingRight="6dp"
+        android:paddingRight="10dp"
         android:id="@+id/logout"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="تغییر شرکت"
         android:fontFamily="@font/app_font"
         app:layout_constraintTop_toTopOf="parent"
@@ -60,8 +62,10 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="8dp"
         android:background="@drawable/rounded_grey"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
         android:id="@+id/changeCompany"
         />
 
@@ -82,6 +86,20 @@
         android:id="@+id/recycler"
         tools:itemCount="10"
         tools:listitem="@layout/item_traffic"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/recycler"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="-28dp"
+        android:layout_marginLeft="12dp"
+        android:src="@drawable/ic_calendar_white"
+        app:tint="@color/white"
+        android:backgroundTint="@color/primary"
+        app:fabSize="normal"
+        android:id="@+id/fab"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

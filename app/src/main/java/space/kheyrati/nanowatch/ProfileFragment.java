@@ -146,6 +146,7 @@ public class ProfileFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         logout = view.findViewById(R.id.logout);
         chart = view.findViewById(R.id.chart);
+        view.findViewById(R.id.fab).setOnClickListener(view1 -> MAlerter.show(getActivity(), "در حال پیاده سازی", "این قابلیت هنوز آماده نشده است"));
     }
 
 

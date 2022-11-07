@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
@@ -38,6 +39,7 @@ public class RequestFragment extends Fragment {
     private EditText etDescription;
     private TextView etType;
     private TextView title;
+    private AppCompatImageView delete;
     private KheyratiRepository repository;
     private RefreshCallback callback;
     private RequestResponseModel item = null;
@@ -83,6 +85,26 @@ public class RequestFragment extends Fragment {
         requestModel.setType(item.getType());
         requestModel.setCompany(item.getCompany() != null ? item.getCompany().getId() : "");
         requestModel.setUser(item.getUser().getId());
+
+        if(item.getId() != null && !item.getId().isEmpty() && getContext() != null){
+            delete.setVisibility(View.VISIBLE);
+            delete.setOnClickListener(view -> new AreYouShortDialog(getContext(), "آیا از حذف درخواست خود اطمینان دارید؟", null, null, new AreYouShortCallback() {
+                @Override
+                public void accept() {
+                    MAlerter.show(getActivity(), "در حال پیاده سازی", "این قابلیت هنوز آماده نشده است");
+                }
+
+                @Override
+                public void reject() {
+
+                }
+
+                @Override
+                public void dismiss() {
+
+                }
+            }).show());
+        }
     }
 
     @Override
@@ -298,7 +320,7 @@ public class RequestFragment extends Fragment {
         etEndDate = view.findViewById(R.id.etEndDate);
         etStartTime = view.findViewById(R.id.etStartTime);
         etEndTime = view.findViewById(R.id.etEndTime);
-//        etTime = view.findViewById(R.id.etTime);
+        delete = view.findViewById(R.id.delete);
         etType = view.findViewById(R.id.etType);
         etDescription = view.findViewById(R.id.etDescription);
         title = view.findViewById(R.id.title);
