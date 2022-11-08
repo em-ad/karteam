@@ -257,4 +257,23 @@ public class KheyratiRepository {
                 });
     }
 
+    public void deleteRequest(String headerToken, String requestId, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .deleteRequest(headerToken, requestId)
+                .enqueue(new Callback<RequestDeleteResponseModel>() {
+                    @Override
+                    public void onResponse(Call<RequestDeleteResponseModel> call, Response<RequestDeleteResponseModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<RequestDeleteResponseModel> call, Throwable t) {
+
+                    }
+                });
+    }
+
 }

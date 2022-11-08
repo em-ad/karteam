@@ -91,7 +91,18 @@ public class RequestFragment extends Fragment {
             delete.setOnClickListener(view -> new AreYouShortDialog(getContext(), "آیا از حذف درخواست خود اطمینان دارید؟", null, null, new AreYouShortCallback() {
                 @Override
                 public void accept() {
-                    MAlerter.show(getActivity(), "در حال پیاده سازی", "این قابلیت هنوز آماده نشده است");
+                    repository.deleteRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), item.getId(), new ApiCallback() {
+                        @Override
+                        public void apiFailed(Object o) {
+                            MAlerter.show(getActivity(), "خطا", "در حذف درخواست خطایی رخ داد");
+                        }
+
+                        @Override
+                        public void apiSucceeded(Object o) {
+                            callback.refresh();
+                            getParentFragmentManager().popBackStackImmediate();
+                        }
+                    });
                 }
 
                 @Override

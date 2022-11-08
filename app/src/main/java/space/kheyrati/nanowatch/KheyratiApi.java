@@ -5,6 +5,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -50,5 +51,9 @@ public interface KheyratiApi {
 
     @GET("version")
     Call<List<VersionResponseModel>> getVersion();
+
+    @DELETE("request/{requestId}")
+    Call<RequestDeleteResponseModel> deleteRequest(@Header("Authorization") String authHeader,
+                                                   @Path("requestId") String companyId);
 
 }
