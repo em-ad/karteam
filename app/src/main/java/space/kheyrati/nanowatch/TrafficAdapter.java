@@ -1,5 +1,6 @@
 package space.kheyrati.nanowatch;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import ir.hamsaa.persiandatepicker.util.PersianHelper;
 public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHolder> {
 
     ArrayList<UserLogResponseItem> dataset;
+    long start;
+    long end;
 
     public void setDataset(ArrayList<UserLogResponseItem> dataset) {
         this.dataset = dataset;
@@ -36,6 +39,11 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(position == -1) return;
         UserLogResponseItem item = dataset.get(position);
+        if(start > 0 && end > 0){
+            Log.e("TAG", "onBindViewHolder: " + start + " " + dataset.get(position).getDate() + " " + end );
+            if(dataset.get(position).getDate() > end) return;
+            if(dataset.get(position).getDate() < start) return;
+        }
         if(item.getType() == null){
             holder.ivStatus.setImageResource(android.R.drawable.ic_menu_info_details);
         } else if(item.getType().equalsIgnoreCase("enter")){
@@ -53,6 +61,11 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
     @Override
     public int getItemCount() {
         return dataset == null ? 0 : dataset.size();
+    }
+
+    public void setRange(long start, long end) {
+        this.start = start;
+        this.end = end;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
