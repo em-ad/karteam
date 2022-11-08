@@ -36,8 +36,20 @@ public class MyCompanyAdapter extends RecyclerView.Adapter<MyCompanyAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (position < 0)
             return;
-        holder.companyNameTextView.setText(dataSet.get(position).getCompany().getName());
+        holder.companyNameTextView.setText(dataSet.get(position).getCompany().getName() + " (" + getPersianRole(dataSet.get(position).getRole()) + ")");
         holder.itemView.setOnClickListener(view -> callback.companyClicked(dataSet.get(holder.getAdapterPosition())));
+    }
+
+    private String getPersianRole(String role) {
+        switch (role.toLowerCase()){
+            case "admin":
+                return "مدیر";
+            case "employee":
+                return "کارمند";
+            case "manager":
+                return "مدیر داخلی";
+        }
+        return "نامشخص";
     }
 
     @Override

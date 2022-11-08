@@ -9,6 +9,7 @@ public class MyApplication extends Application {
 
     public static Location lastLocation;
     public static CompanyResponseModel company;
+    public static String role = "employee";
     public static boolean isIn;
 
     public static boolean locationValid() {

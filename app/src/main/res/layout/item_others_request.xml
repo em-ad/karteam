@@ -45,7 +45,7 @@
         android:layout_marginRight="14dp"
         app:layout_constraintRight_toLeftOf="@id/ivType"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        android:drawableRight="@drawable/ic_calendar_check"
+        android:drawableRight="@drawable/ic_calendar_check_primary"
         tools:text="12/02/1400"
         android:textColor="@color/grey_6"
         android:drawablePadding="6dp"

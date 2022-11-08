@@ -23,6 +23,7 @@ public class CartableFragment extends Fragment implements RequestCallback {
     private RecyclerView recyclerView;
     private OthersRequestListAdapter adapter;
     private ProgressBar progress;
+    private View blocker;
     private KheyratiRepository repository = new KheyratiRepository();
 
     public CartableFragment() {
@@ -48,6 +49,7 @@ public class CartableFragment extends Fragment implements RequestCallback {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler);
         progress = view.findViewById(R.id.progress);
+        blocker = view.findViewById(R.id.blocker);
         adapter = new OthersRequestListAdapter(this);
         recyclerView.setAdapter(adapter);
     }
@@ -59,6 +61,12 @@ public class CartableFragment extends Fragment implements RequestCallback {
     }
 
     private void getItems() {
+        if(MyApplication.role != null){
+            if(MyApplication.role.equalsIgnoreCase("employee")){
+                blocker.setVisibility(View.VISIBLE);
+                return;
+            } else blocker.setVisibility(View.GONE);
+        }
         progress.setVisibility(View.VISIBLE);
         repository.getMyRequests(MSharedPreferences.getInstance().getTokenHeader(getContext()), new ApiCallback() {
             @Override

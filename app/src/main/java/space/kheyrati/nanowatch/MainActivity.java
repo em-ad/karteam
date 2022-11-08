@@ -3,9 +3,7 @@ package space.kheyrati.nanowatch;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -16,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -28,7 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
@@ -39,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private TrafficFragment trafficFragment;
     private RequestListFragment requestListFragment;
     private CartableFragment cartableFragment;
+    private AttendeesFragment attendeesFragment;
     private AttendanceViewModel attendanceViewModel;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("TAG", "ACCESS TOKEN IS = " + MSharedPreferences.getInstance().getToken(this) );
+        Log.e("TAG", "ACCESS TOKEN IS = " + MSharedPreferences.getInstance().getToken(this));
         bottomNav = findViewById(R.id.bottom_navigation_view);
         bottomNav.setSelectedItemId(R.id.trafficFragment);
         bottomNav.setOnItemSelectedListener(navListener);
@@ -81,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
             requestListFragment = new RequestListFragment();
         if (trafficFragment == null)
             trafficFragment = new TrafficFragment();
-        if(cartableFragment == null)
+        if (cartableFragment == null)
             cartableFragment = new CartableFragment();
+        if (attendeesFragment == null)
+            attendeesFragment = new AttendeesFragment();
     }
 
     @Override
@@ -159,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.requestFragment:
                             selectedFragment = requestListFragment;
+                            break;
+                        case R.id.attendeesFragment:
+                            selectedFragment = attendeesFragment;
                             break;
                     }
                     if (selectedFragment != null) {
