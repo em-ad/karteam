@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+
 public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.ViewHolder> {
 
     List<AttendeesResponseModel> dataSet;
@@ -30,10 +32,10 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         if(position < 0) return;
         AttendeesResponseModel item = dataSet.get(position);
         holder.tvName.setText(item.getFirstName() + " " + item.getLastname());
-        holder.tvStatus.setText(item.getExit() == 0 ? "حاضر" : "خارج شده");
+        holder.tvStatus.setText(item.getEnter() == 0 ? "وارد نشده" : item.getExit() == 0 ? "حاضر" : "خارج شده");
         holder.tvStatus.setTextColor(item.getExit() == 0 ? holder.itemView.getContext().getColor(R.color.green_sharp) : holder.itemView.getContext().getColor(R.color.red));
-        holder.tvEnter.setText(String.valueOf(item.getEnter()));
-        holder.tvExit.setText(String.valueOf(item.getExit()));
+        holder.tvExit.setText("خروج " + new PersianCalendar(item.getEnter()).getPersianShortDateTime().substring(new PersianCalendar(item.getEnter()).getPersianShortDateTime().indexOf(" ") + 1));
+        holder.tvEnter.setText("ورود " + new PersianCalendar(item.getExit()).getPersianShortDateTime().substring(new PersianCalendar(item.getExit()).getPersianShortDateTime().indexOf(" ") + 1));
     }
 
     @Override
