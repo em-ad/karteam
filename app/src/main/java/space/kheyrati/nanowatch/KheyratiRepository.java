@@ -276,4 +276,23 @@ public class KheyratiRepository {
                 });
     }
 
+    public void getAttendees(String headerToken, AttendeesRequestModel model, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getAttendees(headerToken, model)
+                .enqueue(new Callback<List<AttendeesResponseModel>>() {
+                    @Override
+                    public void onResponse(Call<List<AttendeesResponseModel>> call, Response<List<AttendeesResponseModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<AttendeesResponseModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
 }

@@ -56,4 +56,8 @@ public interface KheyratiApi {
     Call<RequestDeleteResponseModel> deleteRequest(@Header("Authorization") String authHeader,
                                                    @Path("requestId") String companyId);
 
+    @POST("EnterExit/date")
+    Call<List<AttendeesResponseModel>> getAttendees(@Header("Authorization") String authHeader,
+                                                    @Body AttendeesRequestModel requestModel);
+
 }
