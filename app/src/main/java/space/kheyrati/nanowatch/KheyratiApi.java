@@ -48,4 +48,7 @@ public interface KheyratiApi {
     Call<ResponseBody> submitRequestPut(@Header("Authorization") String authHeader,
                                      @Body RequestRequestModel request);
 
+    @GET("version")
+    Call<List<VersionResponseModel>> getVersion();
+
 }

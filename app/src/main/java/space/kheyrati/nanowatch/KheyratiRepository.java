@@ -98,7 +98,7 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<FcmResponseModel> call, Throwable t) {
-
+                        Log.e("TAG", "onFailure: " + t.getMessage() );
                     }
                 });
     }
@@ -233,6 +233,25 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void getVersion(ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getVersion()
+                .enqueue(new Callback<List<VersionResponseModel>>() {
+                    @Override
+                    public void onResponse(Call<List<VersionResponseModel>> call, Response<List<VersionResponseModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body().get(0));
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<VersionResponseModel>> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });

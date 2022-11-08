@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         String token = task.getResult().getToken();
+                        Log.e("TAG", "onComplete: " + token );
                         new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
                     }
                 });
