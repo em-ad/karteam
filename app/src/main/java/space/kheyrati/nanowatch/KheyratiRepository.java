@@ -181,7 +181,7 @@ public class KheyratiRepository {
 
     public void submitRequestPut(String headerToken, RequestRequestModel requestModel, ApiCallback apiCallback){
         RetrofitClient.getInstance().getKheyratiApi()
-                .submitRequestPut(headerToken, requestModel)
+                .submitRequestPut(headerToken,requestModel.getId(),requestModel)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

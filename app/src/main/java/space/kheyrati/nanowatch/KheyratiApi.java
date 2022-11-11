@@ -45,8 +45,9 @@ public interface KheyratiApi {
     Call<ResponseBody> submitRequest(@Header("Authorization") String authHeader,
                                     @Body RequestRequestModel fcmRequestModel);
 
-    @PUT("request")
+    @PUT("request/{requestId}")
     Call<ResponseBody> submitRequestPut(@Header("Authorization") String authHeader,
+                                        @Path("requestId") String requestId,
                                      @Body RequestRequestModel request);
 
     @GET("version")
@@ -54,7 +55,7 @@ public interface KheyratiApi {
 
     @DELETE("request/{requestId}")
     Call<RequestDeleteResponseModel> deleteRequest(@Header("Authorization") String authHeader,
-                                                   @Path("requestId") String companyId);
+                                                   @Path("requestId") String requestId);
 
     @POST("EnterExit/date")
     Call<List<AttendeesResponseModel>> getAttendees(@Header("Authorization") String authHeader,

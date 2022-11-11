@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         repository.getVersion(new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
-                continueApp();
+                new Handler().postDelayed(() -> continueApp(), 1000);
             }
 
             @Override
@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(Long.parseLong(model.getName()) > currentCode){
                     new UpdateDialog(SplashActivity.this, model.getName()).show();
                 } else {
-                    continueApp();
+                    new Handler().postDelayed(() -> continueApp(), 1000);
                 }
             }
         });

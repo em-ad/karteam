@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
+    android:animateLayoutChanges="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_gradient"
     android:clickable="true"
@@ -11,11 +12,28 @@
     tools:context=".TrafficFragment">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvTitle"
         android:text="سالن ورود"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="18dp"
+        android:gravity="center"
+        android:textColor="@color/primary_dark"
+        android:textSize="18sp"
+        android:fontFamily="@font/app_font"
+        android:layout_marginTop="18dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvName"
+        android:text="نام کاربر"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="18dp"
         android:gravity="center"
         android:textColor="@color/primary_dark"
         android:textSize="18sp"
@@ -77,7 +95,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="شما در ساعت 12:35 وارد شدید\nبرای خروج دکمه اثر انگشت را نگه دارید"
         tools:visibility="visible"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:textSize="16sp"
         android:textColor="@color/secondary_very_light"
         android:fontFamily="@font/app_font"
@@ -103,20 +121,6 @@
         android:visibility="gone"
         />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivFingerprint"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:srcCompat="@drawable/ic_fingerprint_primary"
-        android:scaleType="centerInside"
-        android:background="@drawable/button_state"
-        android:padding="14dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="44dp"
-        />
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progress"
         android:layout_width="190dp"
@@ -137,7 +141,7 @@
 
     <TextView
         android:id="@+id/tvLocationSearch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         tools:visibility="visible"
@@ -146,16 +150,57 @@
         android:alpha="0.9"
         app:layout_constraintTop_toBottomOf="@id/flEdge"
         android:layout_marginTop="12dp"
+        android:layout_marginRight="18dp"
+         android:layout_marginLeft="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:fontFamily="@font/app_font"
-        android:text="موقیت من کجاست؟"
-        android:drawableBottom="@drawable/ic_maps"
+        android:text="برای تنظیم دقیق موقعیت کلیک کنید"
+        android:drawableLeft="@drawable/ic_maps"
         android:textColor="@color/primary"
         android:textStyle="bold"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:padding="12dp"
+        />
+
+    <TextView
+        android:id="@+id/tvCompanyLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:gravity="center"
+        android:background="@drawable/rounded_white"
+        android:alpha="0.9"
+        app:layout_constraintTop_toBottomOf="@id/tvLocationSearch"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:fontFamily="@font/app_font"
+        android:text="برای نمایش مکان شرکت کلیک کنید"
+        android:drawableLeft="@drawable/ic_maps"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:padding="12dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivFingerprint"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/ic_fingerprint_primary"
+        android:scaleType="centerInside"
+        android:background="@drawable/button_state"
+        android:padding="14dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="44dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

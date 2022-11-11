@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +32,8 @@ public class ProfileFragment extends Fragment {
     private KheyratiRepository repository;
     private TextView logout;
     private BarChart chart;
+    private ProgressBar progress;
+    private FloatingActionButton fab;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -91,15 +95,19 @@ public class ProfileFragment extends Fragment {
 
     private void getMyLogs() {
         if (getContext() == null) return;
+        progress.setVisibility(View.VISIBLE);
         repository.getLogs(MSharedPreferences.getInstance().getTokenHeader(getContext()),
                 new ApiCallback() {
                     @Override
                     public void apiFailed(Object o) {
+                        progress.setVisibility(View.GONE);
                         MAlerter.show(getActivity(), "خطا", "در دریافت لیست رفت و آمدها خطایی رخ داد!");
                     }
 
                     @Override
                     public void apiSucceeded(Object o) {
+                        progress.setVisibility(View.GONE);
+                        fab.setVisibility(View.VISIBLE);
                         List<UserLogResponseItem> data = (List<UserLogResponseItem>) o;
                         Collections.reverse(data);
                         try {
@@ -141,16 +149,14 @@ public class ProfileFragment extends Fragment {
 
     private void findViews(View view) {
         recycler = view.findViewById(R.id.recycler);
+        progress = view.findViewById(R.id.progress);
+        fab = view.findViewById(R.id.fab);
         adapter = new TrafficAdapter();
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         logout = view.findViewById(R.id.logout);
         chart = view.findViewById(R.id.chart);
-        view.findViewById(R.id.fab).setOnClickListener(view1 -> {
-//                    MAlerter.show(getActivity(), "در حال پیاده سازی", "این قابلیت هنوز آماده نشده است");
-                    startActivity(new Intent(getContext(), RangedLogActivity.class));
-                }
-        );
+        fab.setOnClickListener(view1 -> startActivity(new Intent(getContext(), RangedLogActivity.class)));
     }
 
 

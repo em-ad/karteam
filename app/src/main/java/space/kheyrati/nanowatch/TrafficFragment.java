@@ -41,6 +41,7 @@ public class TrafficFragment extends Fragment {
     private MediaPlayer mPlayer;
     private TextView tvTitle;
     private TextView tvTime;
+    private TextView tvName;
     private TextView tvEntered;
     private TextView tvLocationSearch;
     private AttendanceViewModel viewModel;
@@ -76,7 +77,7 @@ public class TrafficFragment extends Fragment {
         @Override
         public void onFinish() {
             isTimerRunning = false;
-            tvTime.setVisibility(View.INVISIBLE);
+            tvTime.setVisibility(View.GONE);
         }
     };
 
@@ -181,9 +182,9 @@ public class TrafficFragment extends Fragment {
     }
 
     private void changeUiForExit() {
-        lav.setVisibility(View.INVISIBLE);
-        tvEntered.setVisibility(View.INVISIBLE);
-        flEdge.setVisibility(View.INVISIBLE);
+        lav.setVisibility(View.GONE);
+        tvEntered.setVisibility(View.GONE);
+        flEdge.setVisibility(View.GONE);
         tvTime.setVisibility(View.VISIBLE);
         PreferencesManager.getInstance(getContext()).edit().remove("last_enter").commit();
     }
@@ -204,6 +205,9 @@ public class TrafficFragment extends Fragment {
         super.onResume();
         repository = new KheyratiRepository();
         startTimerFromScratch();
+        if(tvName != null){
+            tvName.setText(MSharedPreferences.getInstance().getNameFromToken(getContext()));
+        }
         if (viewModel != null){
             boolean val = viewModel.isIn != null && Boolean.TRUE.equals(viewModel.isIn.getValue());
             if(val){
@@ -237,7 +241,7 @@ public class TrafficFragment extends Fragment {
                         return true;
                     }
                     if (!MyApplication.locationValid()) {
-                        MAlerter.show(getActivity(), "در حال جستجوی لوکیشن", "برای ثبت ورود و خروج باید در محدوده دانشگاه باشید");
+                        MAlerter.show(getActivity(), "موقعیت تایید نشد", "برای ثبت ورود و خروج باید در محدوده تعیین شده شرکت باشید");
                         if (getActivity() != null) {
                             ((MainActivity) getActivity()).findUserLocation();
                         }
@@ -275,6 +279,7 @@ public class TrafficFragment extends Fragment {
         ivFinger = view.findViewById(R.id.ivFingerprint);
         pbProgress = view.findViewById(R.id.progress);
         tvTime = view.findViewById(R.id.tvTime);
+        tvName = view.findViewById(R.id.tvName);
         tvEntered = view.findViewById(R.id.tvEntered);
         lav = view.findViewById(R.id.lav_thumbUp);
         flEdge = view.findViewById(R.id.flEdge);
@@ -286,6 +291,23 @@ public class TrafficFragment extends Fragment {
                 startActivity(intent);
             } catch (Exception e) {
                 MAlerter.show(getActivity(), "خطا", "در باز کردن نقشه خطایی رخ داد. از نصب بودن نقشه گوگل روی گوشی مطمئن شوید");
+            }
+        });
+
+        view.findViewById(R.id.tvCompanyLocation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String uri = MyApplication.getNearestCompanyLocationUri();
+                    if(uri == null){
+                        MAlerter.show(getActivity(), "صبر کنید", "مکان مُجازی برای شرکت پیدا نشد");
+                        return;
+                    }
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    MAlerter.show(getActivity(), "خطا", "در باز کردن نقشه خطایی رخ داد. از نصب بودن نقشه گوگل روی گوشی مطمئن شوید");
+                }
             }
         });
     }

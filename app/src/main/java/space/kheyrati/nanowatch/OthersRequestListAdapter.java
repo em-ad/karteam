@@ -6,13 +6,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
@@ -44,9 +47,23 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (position < 0) return;
-        if(getItem(position).getStatus() == null || !getItem(position).getStatus().toLowerCase().equals("pending"))
-            return;
         holder.bind(getItem(position));
+    }
+
+    @Override
+    public void submitList(@Nullable List<RequestResponseModel> list) {
+        super.submitList(removeNotPendings(list));
+    }
+
+    private List<RequestResponseModel> removeNotPendings(List<RequestResponseModel> list) {
+        List<RequestResponseModel> res = new ArrayList<>();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getStatus() != null && list.get(i).getStatus().toLowerCase().equals("pending"))
+                    res.add(list.get(i));
+            }
+        }
+        return res;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

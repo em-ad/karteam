@@ -4,12 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class AttendeesFragment extends Fragment {
     private RecyclerView recycler;
     private AttendeesAdapter adapter;
     private KheyratiRepository repository;
+    private AppCompatImageView refresh;
+    private ProgressBar progress;
 
     public AttendeesFragment() {
     }
@@ -41,16 +45,30 @@ public class AttendeesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(MyApplication.role != null){
-            if(MyApplication.role.equalsIgnoreCase("employee")){
+        if (MyApplication.role != null) {
+            if (MyApplication.role.equalsIgnoreCase("employee")) {
                 view.findViewById(R.id.blocker).setVisibility(View.VISIBLE);
                 return;
             } else view.findViewById(R.id.blocker).setVisibility(View.GONE);
         }
         repository = new KheyratiRepository();
         recycler = view.findViewById(R.id.recycler);
+        refresh = view.findViewById(R.id.refresh);
+        progress = view.findViewById(R.id.progress);
         adapter = new AttendeesAdapter();
         recycler.setAdapter(adapter);
+        refresh.setOnClickListener(view1 -> getApi());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getApi();
+    }
+
+    private void getApi() {
+        progress.setVisibility(View.VISIBLE);
+        refresh.setVisibility(View.GONE);
         AttendeesRequestModel model = new AttendeesRequestModel();
         model.setCompany(MyApplication.company.getCompany().getId());
         model.setDate(System.currentTimeMillis());
@@ -58,12 +76,19 @@ public class AttendeesFragment extends Fragment {
                     @Override
                     public void apiFailed(Object o) {
                         MAlerter.show(getActivity(), "خطا", "در دریافت لیست حاضرین خطایی رخ داد");
+                        refresh.setVisibility(View.VISIBLE);
+                        progress.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void apiSucceeded(Object o) {
                         List<AttendeesResponseModel> data = ((List<AttendeesResponseModel>) o);
+                        if (data.size() == 0) {
+                            refresh.setVisibility(View.VISIBLE);
+                            MAlerter.show(getActivity(), "خطا", "هنوز فردی ورود خود را امروز ثبت نکرده است");
+                        } else refresh.setVisibility(View.GONE);
                         adapter.setDataSet(data);
+                        progress.setVisibility(View.GONE);
                     }
                 }
         );

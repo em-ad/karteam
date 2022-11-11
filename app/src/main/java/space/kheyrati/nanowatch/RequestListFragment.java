@@ -113,8 +113,12 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
     }
 
     private void requestClicked(RequestResponseModel item) {
-        if(!item.getStatus().equalsIgnoreCase("pending")){
-            MAlerter.show(getActivity(), "خطا", "تنها درخواست های در حال بررسی قابل ویرایش هستند");
+        if(item.getStatus().equalsIgnoreCase("accept")){
+            MAlerter.show(getActivity(), "خطا", "این درخواست تایید شده و امکان ویرایش آن وجود ندارد");
+            return;
+        }
+        if(item.getStatus().equalsIgnoreCase("reject")){
+            MAlerter.show(getActivity(), "خطا", "این درخواست رد شده و امکان ویرایش آن وجود ندارد");
             return;
         }
         getChildFragmentManager()
