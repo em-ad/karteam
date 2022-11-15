@@ -201,7 +201,7 @@ public class KheyratiRepository {
     public void acceptRequest(String headerToken, RequestResponseModel model, ApiCallback apiCallback) {
         RequestRequestModel requestModel = model.accept();
         RetrofitClient.getInstance().getKheyratiApi()
-                .submitRequest(headerToken, requestModel)
+                .submitRequestPut(headerToken, requestModel.getId(), requestModel)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -221,7 +221,7 @@ public class KheyratiRepository {
     public void rejectRequest(String headerToken, RequestResponseModel model, ApiCallback apiCallback) {
         RequestRequestModel requestModel = model.reject();
         RetrofitClient.getInstance().getKheyratiApi()
-                .submitRequest(headerToken, requestModel)
+                .submitRequestPut(headerToken, requestModel.getId(), requestModel)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
