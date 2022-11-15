@@ -93,6 +93,7 @@ public class RequestResponseModel implements Serializable {
 
     public RequestRequestModel accept() {
         RequestRequestModel model = new RequestRequestModel();
+        model.setId(id);
         model.setTime(0);
         model.setEnd(Utils.getTimeStamp(end));
         model.setStart(Utils.getTimeStamp(start));
@@ -106,6 +107,7 @@ public class RequestResponseModel implements Serializable {
 
     public RequestRequestModel reject() {
         RequestRequestModel model = new RequestRequestModel();
+        model.setId(id);
         model.setTime(0);
         model.setEnd(Utils.getTimeStamp(end));
         model.setStart(Utils.getTimeStamp(start));
