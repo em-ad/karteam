@@ -38,8 +38,9 @@ public interface KheyratiApi {
     Call<FcmResponseModel> sendFcmToken(@Header("Authorization") String authHeader,
                                 @Body FcmRequestModel fcmRequestModel );
 
-    @GET("request")
-    Call<List<RequestResponseModel>> getRequests(@Header("Authorization") String authHeader);
+    @GET("request/company/{companyId}")
+    Call<List<RequestResponseModel>> getRequests(@Header("Authorization") String authHeader,
+                                                 @Path("companyId") String companyId);
 
     @POST("request")
     Call<ResponseBody> submitRequest(@Header("Authorization") String authHeader,

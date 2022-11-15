@@ -143,7 +143,7 @@ public class KheyratiRepository {
 
     public void getMyRequests(String headerToken, ApiCallback apiCallback){
         RetrofitClient.getInstance().getKheyratiApi()
-                .getRequests(headerToken)
+                .getRequests(headerToken, MyApplication.company.getCompany().getId())
                 .enqueue(new Callback<List<RequestResponseModel>>() {
                     @Override
                     public void onResponse(Call<List<RequestResponseModel>> call, Response<List<RequestResponseModel>> response) {

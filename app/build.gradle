@@ -14,8 +14,8 @@ android {
         applicationId "space.kheyrati.nanowatch"
         minSdk 23
         targetSdk 32
-        versionCode 6
-        versionName "1.6"
+        versionCode 8
+        versionName "1.8"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
