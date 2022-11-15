@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
@@ -131,7 +132,7 @@ public class TrafficFragment extends Fragment {
                 callEnter();
             } else changeUiForEnter();
         } else {
-            if (MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("enter")) {
+            if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit")) {
                 callExit();
             }else changeUiForExit();
         }
@@ -195,8 +196,7 @@ public class TrafficFragment extends Fragment {
         tvEntered.setVisibility(View.VISIBLE);
         flEdge.setVisibility(View.VISIBLE);
         tvTime.setVisibility(View.GONE);
-        PersianCalendar date = new PersianCalendar(PreferencesManager
-                .getInstance(getContext()).getLong("last_enter", System.currentTimeMillis()));
+        PersianCalendar date = new PersianCalendar(viewModel.enterTime);
         tvEntered.setText("شما در " + date.getPersianShortDateTime().replace(" ", " در ساعت ") + " وارد شدید" + "\n\n" + getString(R.string.hold_to_exit));
     }
 
@@ -209,10 +209,12 @@ public class TrafficFragment extends Fragment {
             tvName.setText(MSharedPreferences.getInstance().getNameFromToken(getContext()));
         }
         if (viewModel != null){
-            boolean val = viewModel.isIn != null && Boolean.TRUE.equals(viewModel.isIn.getValue());
-            if(val){
-                changeUiForEnter();
-            } else changeUiForExit();
+            viewModel.isIn.observe(getViewLifecycleOwner(), aBoolean -> {
+                if(aBoolean == null) return;
+                if(aBoolean){
+                    changeUiForEnter();
+                } else changeUiForExit();
+            });
         }
         handleMapAccessVisibility();
     }
@@ -294,20 +296,17 @@ public class TrafficFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.tvCompanyLocation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    String uri = MyApplication.getNearestCompanyLocationUri();
-                    if(uri == null){
-                        MAlerter.show(getActivity(), "صبر کنید", "مکان مُجازی برای شرکت پیدا نشد");
-                        return;
-                    }
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    MAlerter.show(getActivity(), "خطا", "در باز کردن نقشه خطایی رخ داد. از نصب بودن نقشه گوگل روی گوشی مطمئن شوید");
+        view.findViewById(R.id.tvCompanyLocation).setOnClickListener(view12 -> {
+            try {
+                String uri = MyApplication.getNearestCompanyLocationUri();
+                if(uri == null){
+                    MAlerter.show(getActivity(), "صبر کنید", "مکان مُجازی برای شرکت پیدا نشد");
+                    return;
                 }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            } catch (Exception e) {
+                MAlerter.show(getActivity(), "خطا", "در باز کردن نقشه خطایی رخ داد. از نصب بودن نقشه گوگل روی گوشی مطمئن شوید");
             }
         });
     }

@@ -50,8 +50,8 @@ public class MSharedPreferences {
 
    public boolean hasToken(Context context) {
       SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
-//      return pref.contains("token") && pref.getString("token", null) != null;
-       return true;
+      return pref.contains("token") && pref.getString("token", null) != null;
+//       return true;
    }
 
    public String getToken(Context context) {
@@ -59,20 +59,20 @@ public class MSharedPreferences {
    }
 
    public String getTokenHeader(Context context) {
-//      return "Bearer " + context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", null);
-      return "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
+      return "Bearer " + context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", null);
+//      return "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
    }
 
    public String getUserIdFromToken(Context context){
-//      String rawToken = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
-      String rawToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
+      String rawToken = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
+//      String rawToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
       JWT jwt = new JWT(rawToken);
       return jwt.getClaims().get("uid").asString();
    }
 
     public String getNameFromToken(Context context){
-//      String rawToken = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
-        String rawToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
+      String rawToken = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
+//        String rawToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
         JWT jwt = new JWT(rawToken);
         return jwt.getClaims().get("firstName").asString() + " " + jwt.getClaims().get("lastName").asString();
     }

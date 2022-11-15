@@ -67,8 +67,10 @@ public class AttendeesFragment extends Fragment {
     }
 
     private void getApi() {
-        progress.setVisibility(View.VISIBLE);
-        refresh.setVisibility(View.GONE);
+        if (progress != null)
+            progress.setVisibility(View.VISIBLE);
+        if (refresh != null)
+            refresh.setVisibility(View.GONE);
         AttendeesRequestModel model = new AttendeesRequestModel();
         model.setCompany(MyApplication.company.getCompany().getId());
         model.setDate(System.currentTimeMillis());

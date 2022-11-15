@@ -25,6 +25,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.gson.Gson;
+
+import java.util.Collections;
+import java.util.List;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private AttendeesFragment attendeesFragment;
     private AttendanceViewModel attendanceViewModel;
     private FusedLocationProviderClient fusedLocationClient;
+    private KheyratiRepository repository = new KheyratiRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +54,32 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(navListener);
         attendanceViewModel = new ViewModelProvider(this).get(AttendanceViewModel.class);
         PersianCalendar currentDate = new PersianCalendar(System.currentTimeMillis());
-        boolean isIn;
-        if (!PreferencesManager.getInstance(this).contains("last_enter"))
-            isIn = false;
-        else {
-            PersianCalendar oldDate = new PersianCalendar(PreferencesManager.
-                    getInstance(this).getLong("last_enter", System.currentTimeMillis()));
-            isIn = oldDate.getPersianShortDate().equals(currentDate.getPersianShortDate());
-        }
-        attendanceViewModel.isIn.postValue(isIn);
+        repository.getLogs(MSharedPreferences.getInstance().getTokenHeader(this), new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                MAlerter.show(MainActivity.this, "خطا", "در دریافت اطلاعات ورود شما خطایی رخ داد");
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                List<UserLogResponseItem> data = (List<UserLogResponseItem>) o;
+                Collections.reverse(data);
+                for (UserLogResponseItem item: data) {
+                    if(item.getUser().getId().equals(MSharedPreferences.getInstance().getUserIdFromToken(MainActivity.this))){
+                        // user peyda shod
+                        Log.e("TAG", "apiSucceeded: " + item.getType());
+                        if(item.getType().equalsIgnoreCase("enter")){
+                            attendanceViewModel.isIn.postValue(true);
+                            attendanceViewModel.enterTime = item.getDate();
+                        } else {
+                            attendanceViewModel.isIn.postValue(false);
+                        }
+                        break;
+                    }
+                }
+
+            }
+        });
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override

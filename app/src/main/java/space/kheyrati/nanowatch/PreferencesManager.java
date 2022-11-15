@@ -9,7 +9,7 @@ public class PreferencesManager {
 
    public static SharedPreferences getInstance(Context context){
       if(manager == null)
-         manager = context.getSharedPreferences(MConstants.Strings.APP_NAME, Context.MODE_PRIVATE);
+         manager = context.getSharedPreferences(MSharedPreferences.PREF_KEY, Context.MODE_PRIVATE);
       return manager;
    }
 

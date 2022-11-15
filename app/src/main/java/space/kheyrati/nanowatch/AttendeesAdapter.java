@@ -34,8 +34,8 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         holder.tvName.setText(item.getFirstName() + " " + item.getLastname());
         holder.tvStatus.setText(item.getEnter() == 0 ? "وارد نشده" : item.getExit() == 0 ? "حاضر" : "خارج شده");
         holder.tvStatus.setTextColor(item.getExit() == 0 ? holder.itemView.getContext().getColor(R.color.green_sharp) : holder.itemView.getContext().getColor(R.color.red));
-        holder.tvExit.setText("خروج " + new PersianCalendar(item.getEnter()).getPersianShortDateTime().substring(new PersianCalendar(item.getEnter()).getPersianShortDateTime().indexOf(" ") + 1));
-        holder.tvEnter.setText("ورود " + new PersianCalendar(item.getExit()).getPersianShortDateTime().substring(new PersianCalendar(item.getExit()).getPersianShortDateTime().indexOf(" ") + 1));
+        holder.tvExit.setText("خروج " + new PersianCalendar(item.getExit()).getPersianShortDateTime().substring(new PersianCalendar(item.getExit()).getPersianShortDateTime().indexOf(" ") + 1));
+        holder.tvEnter.setText("ورود " + new PersianCalendar(item.getEnter()).getPersianShortDateTime().substring(new PersianCalendar(item.getEnter()).getPersianShortDateTime().indexOf(" ") + 1));
     }
 
     @Override
