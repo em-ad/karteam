@@ -39,6 +39,7 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 public class TrafficFragment extends Fragment {
 
     private AppCompatImageView ivFinger;
+    private AppCompatImageView news;
     private MediaPlayer mPlayer;
     private TextView tvTitle;
     private TextView tvTime;
@@ -122,7 +123,7 @@ public class TrafficFragment extends Fragment {
         initComponents();
         setTouchListener();
         viewModel = new ViewModelProvider(getActivity() != null ? getActivity() : this).get(AttendanceViewModel.class);
-        tvTitle.setText("عبور و مرور در " + MyApplication.company.getCompany().getName());
+        tvTitle.setText("شرکت " + MyApplication.company.getCompany().getName());
     }
 
     private void attendanceStateUpdated(Boolean entered) {
@@ -206,7 +207,7 @@ public class TrafficFragment extends Fragment {
         repository = new KheyratiRepository();
         startTimerFromScratch();
         if(tvName != null){
-            tvName.setText(MSharedPreferences.getInstance().getNameFromToken(getContext()));
+            tvName.setText("(" + MSharedPreferences.getInstance().getNameFromToken(getContext()) + ")");
         }
         if (viewModel != null){
             viewModel.isIn.observe(getViewLifecycleOwner(), aBoolean -> {
@@ -279,6 +280,7 @@ public class TrafficFragment extends Fragment {
     private void findViews(View view) {
         tvTitle = view.findViewById(R.id.tvTitle);
         ivFinger = view.findViewById(R.id.ivFingerprint);
+        news = view.findViewById(R.id.news);
         pbProgress = view.findViewById(R.id.progress);
         tvTime = view.findViewById(R.id.tvTime);
         tvName = view.findViewById(R.id.tvName);
@@ -286,6 +288,12 @@ public class TrafficFragment extends Fragment {
         lav = view.findViewById(R.id.lav_thumbUp);
         flEdge = view.findViewById(R.id.flEdge);
         tvLocationSearch = view.findViewById(R.id.tvLocationSearch);
+        news.setOnClickListener(view13 ->
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.root, NewsFragment.newInstance())
+                        .addToBackStack("an")
+                        .commit());
         tvLocationSearch.setOnClickListener(view1 -> {
             try {
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", MyApplication.lastLocation.getLatitude(), MyApplication.lastLocation.getLongitude());

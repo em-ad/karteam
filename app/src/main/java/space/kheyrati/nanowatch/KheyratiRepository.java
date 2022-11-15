@@ -93,12 +93,12 @@ public class KheyratiRepository {
                 .enqueue(new Callback<FcmResponseModel>() {
                     @Override
                     public void onResponse(Call<FcmResponseModel> call, Response<FcmResponseModel> response) {
-                        Log.e("TAG", "onResponse: " + response.isSuccessful() );
+                        Log.e("TAG", "FCM TOKEN SENT? " + response.isSuccessful() );
                     }
 
                     @Override
                     public void onFailure(Call<FcmResponseModel> call, Throwable t) {
-                        Log.e("TAG", "onFailure: " + t.getMessage() );
+                        Log.e("TAG", "FCM TOKEN NOT SENT! " + t.getMessage() );
                     }
                 });
     }
@@ -295,4 +295,42 @@ public class KheyratiRepository {
                 });
     }
 
+    public void getNews(String headerToken, String companyId, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getNews(headerToken, companyId)
+                .enqueue(new Callback<List<NewsResponseModel>>() {
+                    @Override
+                    public void onResponse(Call<List<NewsResponseModel>> call, Response<List<NewsResponseModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<NewsResponseModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void sendNews(String tokenHeader, String message, String companyId, ApiCallback apiCallback) {
+        NewsRequestModel model = new NewsRequestModel(message, companyId);
+        RetrofitClient.getInstance().getKheyratiApi()
+                .sendNews(tokenHeader, model)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        apiCallback.apiFailed(new Throwable(t.getMessage()));
+                    }
+                });
+    }
 }

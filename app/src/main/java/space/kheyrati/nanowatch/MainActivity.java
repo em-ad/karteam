@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 Collections.reverse(data);
                 for (UserLogResponseItem item: data) {
                     if(item.getUser().getId().equals(MSharedPreferences.getInstance().getUserIdFromToken(MainActivity.this))){
-                        // user peyda shod
-                        Log.e("TAG", "apiSucceeded: " + item.getType());
                         if(item.getType().equalsIgnoreCase("enter")){
                             attendanceViewModel.isIn.postValue(true);
                             attendanceViewModel.enterTime = item.getDate();

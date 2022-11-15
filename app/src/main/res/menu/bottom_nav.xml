@@ -10,13 +10,13 @@
         android:id="@+id/cartableFragment"
         android:icon="@drawable/ic_window_restore"/>
 
-    <item android:title="درخواست ها"
-        android:id="@+id/requestFragment"
-        android:icon="@drawable/ic_list_alt"/>
-
     <item android:title="تردد"
         android:id="@+id/trafficFragment"
         android:icon="@drawable/ic_fingerprint_white"/>
+
+    <item android:title="درخواست ها"
+        android:id="@+id/requestFragment"
+        android:icon="@drawable/ic_list_alt"/>
 
     <item android:title="پروفایل"
         android:id="@+id/profileFragment"

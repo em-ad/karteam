@@ -22,6 +22,7 @@ public class CompanyChooserActivity extends AppCompatActivity {
     private ProgressBar progress;
     private AppCompatImageView ivEmpty;
     private TextView tvEmpty;
+    private TextView tvLogout;
     private KheyratiRepository repository;
 
     @Override
@@ -70,8 +71,14 @@ public class CompanyChooserActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         ivEmpty = findViewById(R.id.ivEmpty);
         tvEmpty = findViewById(R.id.tvEmpty);
+        tvLogout = findViewById(R.id.tvLogout);
         adapter = new MyCompanyAdapter(this::companyItemClicked);
         recycler.setAdapter(adapter);
+        tvLogout.setOnClickListener(view -> {
+            MSharedPreferences.getInstance().removeToken(CompanyChooserActivity.this);
+            startActivity(new Intent(CompanyChooserActivity.this, SplashActivity.class));
+            finishAffinity();
+        });
     }
 
     private void companyItemClicked(CompanyResponseModel company) {

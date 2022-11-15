@@ -8,6 +8,16 @@
     android:paddingLeft="12dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/door"
+        app:srcCompat="@drawable/ic_door_open"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +26,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/door"
+        android:layout_marginRight="8dp"
         tools:text="عماد جان عزیز"
         android:fontFamily="@font/app_font"
         />
@@ -26,7 +37,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvStatus"
         android:textColor="@color/grey_3"
-        android:textSize="14sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -39,9 +51,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvEnter"
         android:textColor="@color/grey_3"
+        android:layout_marginRight="8dp"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tvName"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/door"
         tools:text="ورود: ساعت 12"
         android:fontFamily="@font/app_font"
         />
@@ -65,8 +78,6 @@
         android:id="@+id/separator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvExit"
-        android:layout_marginRight="12dp"
-        android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"
         android:background="#bfbfbf"
         />
