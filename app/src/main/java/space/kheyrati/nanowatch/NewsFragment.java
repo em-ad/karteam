@@ -69,6 +69,12 @@ public class NewsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getNews();
+        if (MyApplication.role != null) {
+            if (MyApplication.role.equalsIgnoreCase("employee")) {
+                fab.setVisibility(View.GONE);
+                return;
+            } else fab.setVisibility(View.VISIBLE);
+        }
     }
 
     private void getNews() {

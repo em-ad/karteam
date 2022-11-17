@@ -67,8 +67,15 @@ public class MainActivity extends AppCompatActivity {
                 for (UserLogResponseItem item: data) {
                     if(item.getUser().getId().equals(MSharedPreferences.getInstance().getUserIdFromToken(MainActivity.this))){
                         if(item.getType().equalsIgnoreCase("enter")){
-                            attendanceViewModel.isIn.postValue(true);
-                            attendanceViewModel.enterTime = item.getDate();
+                            long time = item.getDate();
+                            PersianCalendar itemDate = new PersianCalendar(time);
+                            PersianCalendar currentDate = new PersianCalendar(System.currentTimeMillis());
+                            if(itemDate.getPersianShortDate().equals(currentDate.getPersianShortDate())) {
+                                attendanceViewModel.isIn.postValue(true);
+                                attendanceViewModel.enterTime = item.getDate();
+                            } else {
+                                attendanceViewModel.isIn.postValue(false);
+                            }
                         } else {
                             attendanceViewModel.isIn.postValue(false);
                         }
@@ -79,16 +86,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            return;
-                        }
-                        String token = task.getResult().getToken();
-                        Log.e("TAG", "FCM TOKEN: " + token );
-                        new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        return;
                     }
+                    String token = task.getResult().getToken();
+                    Log.e("TAG", "FCM TOKEN: " + token );
+                    new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
                 });
     }
 

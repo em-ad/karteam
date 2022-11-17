@@ -12,8 +12,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import ng.max.slideview.SlideView;
 
 public class TrafficFragment extends Fragment {
 
@@ -50,6 +51,8 @@ public class TrafficFragment extends Fragment {
     private LottieAnimationView lav;
     private LottieAnimationView pbProgress;
     private FrameLayout flEdge;
+    private SlideView enterSlideView;
+    private SlideView exitSlideView;
     private volatile boolean isTimerRunning;
     private AtomicBoolean apiCalling = new AtomicBoolean(false);
     private KheyratiRepository repository;
@@ -157,6 +160,7 @@ public class TrafficFragment extends Fragment {
                     MSharedPreferences.getInstance().saveLastTrafficEvent(getContext(), "exit");
                 changeUiForExit();
                 MAlerter.show(getActivity(), "خارج شدید", "خروج شما با موفقیت ثبت شد");
+                exitSlideView.setVisibility(View.GONE);
             }
         });
     }
@@ -177,8 +181,10 @@ public class TrafficFragment extends Fragment {
                 apiCalling.set(false);
                 if (getContext() != null)
                     MSharedPreferences.getInstance().saveLastTrafficEvent(getContext(), "enter");
+                viewModel.enterTime = System.currentTimeMillis();
                 changeUiForEnter();
                 MAlerter.show(getActivity(), "وارد شدید", "ورود شما با موفقیت ثبت شد");
+                exitSlideView.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -189,6 +195,7 @@ public class TrafficFragment extends Fragment {
         flEdge.setVisibility(View.GONE);
         tvTime.setVisibility(View.VISIBLE);
         PreferencesManager.getInstance(getContext()).edit().remove("last_enter").commit();
+        exitSlideView.setVisibility(View.GONE);
     }
 
     private void changeUiForEnter() {
@@ -197,6 +204,7 @@ public class TrafficFragment extends Fragment {
         tvEntered.setVisibility(View.VISIBLE);
         flEdge.setVisibility(View.VISIBLE);
         tvTime.setVisibility(View.GONE);
+        exitSlideView.setVisibility(View.VISIBLE);
         PersianCalendar date = new PersianCalendar(viewModel.enterTime);
         tvEntered.setText("شما در " + date.getPersianShortDateTime().replace(" ", " در ساعت ") + " وارد شدید" + "\n\n" + getString(R.string.hold_to_exit));
     }
@@ -235,32 +243,69 @@ public class TrafficFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setTouchListener() {
-        ivFinger.setOnTouchListener((view1, motionEvent) -> {
-            switch (motionEvent.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-                    if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-                        MAlerter.show(getActivity(), "جی پی اس خاموش است", "از روشن بودن جی پی اس خود اطمینان حاصل کنید");
-                        return true;
-                    }
-                    if (!MyApplication.locationValid()) {
-                        MAlerter.show(getActivity(), "موقعیت تایید نشد", "برای ثبت ورود و خروج باید در محدوده تعیین شده شرکت باشید");
-                        if (getActivity() != null) {
-                            ((MainActivity) getActivity()).findUserLocation();
-                        }
-                        tvLocationSearch.setVisibility(View.VISIBLE);
-                        return true;
-                    } else {
-                        tvLocationSearch.setVisibility(View.GONE);
-                    }
-                    initAttendance();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    stopAttendance();
-                    break;
+
+    enterSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
+    exitSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
+
+        enterSlideView.setOnSlideCompleteListener(slideView -> {
+            LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                MAlerter.show(getActivity(), "جی پی اس خاموش است", "از روشن بودن جی پی اس خود اطمینان حاصل کنید");
+                return;
             }
-            return true;
+            if (!MyApplication.locationValid()) {
+                MAlerter.show(getActivity(), "موقعیت تایید نشد", "برای ثبت ورود و خروج باید در محدوده تعیین شده شرکت باشید");
+                if (getActivity() != null) {
+                    ((MainActivity) getActivity()).findUserLocation();
+                }
+                tvLocationSearch.setVisibility(View.VISIBLE);
+                return;
+            } else {
+                tvLocationSearch.setVisibility(View.GONE);
+            }
+            boolean isIn = MyApplication.isIn;
+            if (!isIn) {
+                PersianCalendar date = new PersianCalendar(System.currentTimeMillis());
+                PreferencesManager.getInstance(getContext()).edit().putLong("last_enter", date.getTimeInMillis()).commit();
+            }
+            MyApplication.isIn = !MyApplication.isIn;
+            attendanceStateUpdated(MyApplication.isIn);
+            exitSlideView.setVisibility(View.VISIBLE);
+            if(getContext() != null) {
+                Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(500);
+            }
         });
+
+        exitSlideView.setOnSlideCompleteListener(slideView -> {
+            LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                MAlerter.show(getActivity(), "جی پی اس خاموش است", "از روشن بودن جی پی اس خود اطمینان حاصل کنید");
+                return;
+            }
+            if (!MyApplication.locationValid()) {
+                MAlerter.show(getActivity(), "موقعیت تایید نشد", "برای ثبت ورود و خروج باید در محدوده تعیین شده شرکت باشید");
+                if (getActivity() != null) {
+                    ((MainActivity) getActivity()).findUserLocation();
+                }
+                tvLocationSearch.setVisibility(View.VISIBLE);
+                return;
+            } else {
+                tvLocationSearch.setVisibility(View.GONE);
+            }
+            boolean isIn = MyApplication.isIn;
+            if (!isIn) {
+                PersianCalendar date = new PersianCalendar(System.currentTimeMillis());
+                PreferencesManager.getInstance(getContext()).edit().putLong("last_enter", date.getTimeInMillis()).commit();
+            }
+            MyApplication.isIn = !MyApplication.isIn;
+            attendanceStateUpdated(MyApplication.isIn);
+            if(getContext() != null) {
+                Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(500);
+            }
+        });
+
     }
 
     private void stopAttendance() {
@@ -283,6 +328,8 @@ public class TrafficFragment extends Fragment {
         news = view.findViewById(R.id.news);
         pbProgress = view.findViewById(R.id.progress);
         tvTime = view.findViewById(R.id.tvTime);
+        enterSlideView = view.findViewById(R.id.enterSlideView);
+        exitSlideView = view.findViewById(R.id.exitSlideView);
         tvName = view.findViewById(R.id.tvName);
         tvEntered = view.findViewById(R.id.tvEntered);
         lav = view.findViewById(R.id.lav_thumbUp);

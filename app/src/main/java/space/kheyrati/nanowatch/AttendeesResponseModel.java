@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class AttendeesResponseModel implements Serializable {
 
+    @SerializedName("id")
+    private String id;
     @SerializedName("firstName")
     private String firstName;
     @SerializedName("lastname")
@@ -14,6 +16,14 @@ public class AttendeesResponseModel implements Serializable {
     private long enter;
     @SerializedName("exit")
     private long exit;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

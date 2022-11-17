@@ -31,6 +31,9 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     public void onBindViewHolder(@NonNull AttendeesAdapter.ViewHolder holder, int position) {
         if(position < 0) return;
         AttendeesResponseModel item = dataSet.get(position);
+        if(item.getExit() < item.getEnter()){
+            item.setExit(0);
+        }
         holder.tvName.setText(item.getFirstName() + " " + item.getLastname());
         holder.tvStatus.setText(item.getEnter() == 0 ? "غایب" : item.getExit() == 0 ? "حاضر" : "خارج شده");
         holder.tvStatus.setTextColor(item.getExit() == 0 ? item.getEnter() > 0 ? holder.itemView.getContext().getColor(R.color.green_sharp) : holder.itemView.getContext().getColor(R.color.red) : holder.itemView.getContext().getColor(R.color.red));

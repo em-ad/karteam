@@ -138,7 +138,8 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
             } else {
                 tvDescription.setVisibility(View.GONE);
             }
-            tvTitle.setText(tvTitle.getText() + " از " + item.getUser().getFirstName() + " " + item.getUser().getLastName());
+            if(item.getUser() != null)
+                tvTitle.setText(tvTitle.getText() + " از " + item.getUser().getFirstName() + " " + item.getUser().getLastName());
             ivAccept.setOnClickListener(view -> callback.onAccept(getItem(getAdapterPosition())));
             ivReject.setOnClickListener(view -> callback.onReject(getItem(getAdapterPosition())));
         }

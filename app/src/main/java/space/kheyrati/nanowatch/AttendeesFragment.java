@@ -69,6 +69,8 @@ public class AttendeesFragment extends Fragment {
     }
 
     private void getApi() {
+        if (repository == null)
+            return;
         if (progress != null)
             progress.setVisibility(View.VISIBLE);
         if (refresh != null)
