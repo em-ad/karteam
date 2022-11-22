@@ -86,7 +86,8 @@ public class TrafficFragment extends Fragment {
         }
     };
 
-    public TrafficFragment() {}
+    public TrafficFragment() {
+    }
 
     public static TrafficFragment newInstance() {
         TrafficFragment fragment = new TrafficFragment();
@@ -138,12 +139,12 @@ public class TrafficFragment extends Fragment {
         } else {
             if (!MSharedPreferences.getInstance().whatIsLastTrafficEvent(getContext()).equals("exit")) {
                 callExit();
-            }else changeUiForExit();
+            } else changeUiForExit();
         }
     }
 
     private void callExit() {
-        if(apiCalling.get()) return;
+        if (apiCalling.get()) return;
         apiCalling.set(true);
         EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getCompany().getId(), MyApplication.company.getLocation().get(0).getId(), "Exit");
         repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
@@ -166,7 +167,7 @@ public class TrafficFragment extends Fragment {
     }
 
     private void callEnter() {
-        if(apiCalling.get()) return;
+        if (apiCalling.get()) return;
         apiCalling.set(true);
         EnterExitRequestModel enterExitRequestModel = new EnterExitRequestModel(MyApplication.company.getCompany().getId(), MyApplication.company.getLocation().get(0).getId(), "Enter");
         repository.enterOrExit(MSharedPreferences.getInstance().getTokenHeader(requireContext()), enterExitRequestModel, new ApiCallback() {
@@ -214,18 +215,39 @@ public class TrafficFragment extends Fragment {
         super.onResume();
         repository = new KheyratiRepository();
         startTimerFromScratch();
-        if(tvName != null){
+        if (tvName != null) {
             tvName.setText("(" + MSharedPreferences.getInstance().getNameFromToken(getContext()) + ")");
         }
-        if (viewModel != null){
+        if (viewModel != null) {
             viewModel.isIn.observe(getViewLifecycleOwner(), aBoolean -> {
-                if(aBoolean == null) return;
-                if(aBoolean){
+                if (aBoolean == null) return;
+                if (aBoolean) {
                     changeUiForEnter();
                 } else changeUiForExit();
             });
         }
         handleMapAccessVisibility();
+        if(getContext() == null){
+            return;
+        }
+        repository.getLastState(MSharedPreferences.getInstance().getTokenHeader(getContext()), MyApplication.company.getCompany().getId(), new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                if (getActivity() != null)
+                    MAlerter.show(getActivity(), "خطا", "در دریافت اطلاعات ورود شما خطایی رخ داد");
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                StateResponseModel responseModel = ((StateResponseModel) o);
+                if (responseModel.getType().equalsIgnoreCase("enter")) {
+                    viewModel.enterTime = responseModel.getDate();
+                    viewModel.isIn.postValue(true);
+                } else {
+                    viewModel.isIn.postValue(false);
+                }
+            }
+        });
     }
 
     private void handleMapAccessVisibility() {
@@ -244,12 +266,12 @@ public class TrafficFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void setTouchListener() {
 
-    enterSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
-    exitSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
+        enterSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
+        exitSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
 
         enterSlideView.setOnSlideCompleteListener(slideView -> {
             LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-            if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 MAlerter.show(getActivity(), "جی پی اس خاموش است", "از روشن بودن جی پی اس خود اطمینان حاصل کنید");
                 return;
             }
@@ -271,7 +293,7 @@ public class TrafficFragment extends Fragment {
             MyApplication.isIn = !MyApplication.isIn;
             attendanceStateUpdated(MyApplication.isIn);
             exitSlideView.setVisibility(View.VISIBLE);
-            if(getContext() != null) {
+            if (getContext() != null) {
                 Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(500);
             }
@@ -279,7 +301,7 @@ public class TrafficFragment extends Fragment {
 
         exitSlideView.setOnSlideCompleteListener(slideView -> {
             LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-            if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 MAlerter.show(getActivity(), "جی پی اس خاموش است", "از روشن بودن جی پی اس خود اطمینان حاصل کنید");
                 return;
             }
@@ -300,7 +322,7 @@ public class TrafficFragment extends Fragment {
             }
             MyApplication.isIn = !MyApplication.isIn;
             attendanceStateUpdated(MyApplication.isIn);
-            if(getContext() != null) {
+            if (getContext() != null) {
                 Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(500);
             }
@@ -354,7 +376,7 @@ public class TrafficFragment extends Fragment {
         view.findViewById(R.id.tvCompanyLocation).setOnClickListener(view12 -> {
             try {
                 String uri = MyApplication.getNearestCompanyLocationUri();
-                if(uri == null){
+                if (uri == null) {
                     MAlerter.show(getActivity(), "صبر کنید", "مکان مُجازی برای شرکت پیدا نشد");
                     return;
                 }
