@@ -16,6 +16,16 @@ public class AttendeesResponseModel implements Serializable {
     private long enter;
     @SerializedName("exit")
     private long exit;
+    @SerializedName("lastState")
+    private String lastState;
+
+    public String getLastState() {
+        return lastState;
+    }
+
+    public void setLastState(String lastState) {
+        this.lastState = lastState;
+    }
 
     public String getId() {
         return id;

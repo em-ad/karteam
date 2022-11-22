@@ -35,8 +35,16 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
             item.setExit(0);
         }
         holder.tvName.setText(item.getFirstName() + " " + item.getLastname());
-        holder.tvStatus.setText(item.getEnter() == 0 ? "غایب" : item.getExit() == 0 ? "حاضر" : "خارج شده");
-        holder.tvStatus.setTextColor(item.getExit() == 0 ? item.getEnter() > 0 ? holder.itemView.getContext().getColor(R.color.green_sharp) : holder.itemView.getContext().getColor(R.color.red) : holder.itemView.getContext().getColor(R.color.red));
+        if(item.getLastState().equalsIgnoreCase("enter")){
+            holder.tvStatus.setText("حاضر");
+            holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.green_sharp));
+        } else if(item.getLastState().equalsIgnoreCase("absent")){
+            holder.tvStatus.setText("غایب");
+            holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.red));
+        } else {
+            holder.tvStatus.setText("خارج شده");
+            holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.grey_6));
+        }
         if(item.getExit() == 0){
             holder.tvExit.setText("خارج نشده");
         } else holder.tvExit.setText("خروج " + new PersianCalendar(item.getExit()).getPersianShortDateTime().substring(new PersianCalendar(item.getExit()).getPersianShortDateTime().indexOf(" ") + 1));

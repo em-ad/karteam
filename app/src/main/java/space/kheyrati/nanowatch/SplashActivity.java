@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void apiSucceeded(Object o) {
                 VersionResponseModel model = ((VersionResponseModel) o);
-                if(Long.parseLong(model.getName()) > currentCode){
+                if (Long.parseLong(model.getName()) > currentCode) {
                     new UpdateDialog(SplashActivity.this, model.getName()).show();
                 } else {
                     new Handler().postDelayed(() -> continueApp(), 1000);
@@ -39,10 +39,10 @@ public class SplashActivity extends AppCompatActivity {
 
     private void continueApp() {
         if (MSharedPreferences.getInstance().hasToken(this)) {
-                startActivity(new Intent(SplashActivity.this, CompanyChooserActivity.class));
-            } else {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            }
-            finish();
+            startActivity(new Intent(SplashActivity.this, CompanyChooserActivity.class));
+        } else {
+            startActivity(new Intent(SplashActivity.this, IntroActivity.class));
+        }
+        finish();
     }
 }

@@ -69,4 +69,8 @@ public interface KheyratiApi {
     @POST("news")
     Call<ResponseBody> sendNews(@Header("Authorization") String authHeader,
                                     @Body NewsRequestModel requestModel);
+
+    @GET("EnterExit/last/{companyId}")
+    Call<StateResponseModel> getState(@Header("Authorization") String authHeader,
+                                                   @Path("companyId") String companyId);
 }

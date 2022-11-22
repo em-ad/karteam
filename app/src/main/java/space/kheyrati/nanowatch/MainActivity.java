@@ -53,38 +53,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.trafficFragment);
         bottomNav.setOnItemSelectedListener(navListener);
         attendanceViewModel = new ViewModelProvider(this).get(AttendanceViewModel.class);
-        PersianCalendar currentDate = new PersianCalendar(System.currentTimeMillis());
-        repository.getLogs(MSharedPreferences.getInstance().getTokenHeader(this), new ApiCallback() {
-            @Override
-            public void apiFailed(Object o) {
-                MAlerter.show(MainActivity.this, "خطا", "در دریافت اطلاعات ورود شما خطایی رخ داد");
-            }
-
-            @Override
-            public void apiSucceeded(Object o) {
-                List<UserLogResponseItem> data = (List<UserLogResponseItem>) o;
-                Collections.reverse(data);
-                for (UserLogResponseItem item: data) {
-                    if(item.getUser().getId().equals(MSharedPreferences.getInstance().getUserIdFromToken(MainActivity.this))){
-                        if(item.getType().equalsIgnoreCase("enter")){
-                            long time = item.getDate();
-                            PersianCalendar itemDate = new PersianCalendar(time);
-                            PersianCalendar currentDate = new PersianCalendar(System.currentTimeMillis());
-                            if(itemDate.getPersianShortDate().equals(currentDate.getPersianShortDate())) {
-                                attendanceViewModel.isIn.postValue(true);
-                                attendanceViewModel.enterTime = item.getDate();
-                            } else {
-                                attendanceViewModel.isIn.postValue(false);
-                            }
-                        } else {
-                            attendanceViewModel.isIn.postValue(false);
-                        }
-                        break;
-                    }
-                }
-
-            }
-        });
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
@@ -121,6 +89,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             findUserLocation();
         }
+
+        repository.getLastState(MSharedPreferences.getInstance().getTokenHeader(this), MyApplication.company.getCompany().getId(), new ApiCallback() {
+            @Override
+            public void apiFailed(Object o) {
+                MAlerter.show(MainActivity.this, "خطا", "در دریافت اطلاعات ورود شما خطایی رخ داد");
+            }
+
+            @Override
+            public void apiSucceeded(Object o) {
+                StateResponseModel responseModel = ((StateResponseModel) o);
+                if(responseModel.getType().equalsIgnoreCase("enter")){
+                    attendanceViewModel.enterTime = responseModel.getDate();
+                    attendanceViewModel.isIn.postValue(true);
+                } else {
+                    attendanceViewModel.isIn.postValue(false);
+                }
+            }
+        });
     }
 
     private LocationRequest getLocationRequest() {

@@ -333,4 +333,23 @@ public class KheyratiRepository {
                     }
                 });
     }
+
+    public void getLastState(String tokenHeader, String companyId, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getState(tokenHeader, companyId)
+                .enqueue(new Callback<StateResponseModel>() {
+                    @Override
+                    public void onResponse(Call<StateResponseModel> call, Response<StateResponseModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<StateResponseModel> call, Throwable t) {
+                        apiCallback.apiFailed(new Throwable(t.getMessage()));
+                    }
+                });
+    }
 }
