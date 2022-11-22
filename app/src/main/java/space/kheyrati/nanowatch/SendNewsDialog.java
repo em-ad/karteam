@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+
 public class SendNewsDialog extends Dialog {
 
    KheyratiRepository repository = new KheyratiRepository();

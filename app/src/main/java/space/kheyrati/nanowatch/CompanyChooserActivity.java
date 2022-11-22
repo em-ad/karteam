@@ -1,6 +1,5 @@
 package space.kheyrati.nanowatch;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,13 +13,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.CompanyLocationResponseModel;
+import space.kheyrati.nanowatch.model.CompanyResponseModel;
 
 public class CompanyChooserActivity extends AppCompatActivity {
 

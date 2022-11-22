@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import space.kheyrati.nanowatch.model.RequestResponseModel;
 
 class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersRequestListAdapter.ViewHolder> {
 

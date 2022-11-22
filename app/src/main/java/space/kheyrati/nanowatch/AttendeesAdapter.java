@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import space.kheyrati.nanowatch.model.AttendeesResponseModel;
 
 public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.ViewHolder> {
 

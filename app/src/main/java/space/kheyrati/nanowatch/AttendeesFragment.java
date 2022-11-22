@@ -7,15 +7,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-
 import java.util.List;
+
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.AttendeesRequestModel;
+import space.kheyrati.nanowatch.model.AttendeesResponseModel;
 
 public class AttendeesFragment extends Fragment {
 
@@ -24,6 +27,7 @@ public class AttendeesFragment extends Fragment {
     private KheyratiRepository repository;
     private AppCompatImageView refresh;
     private ProgressBar progress;
+    private SwipeRefreshLayout swipe;
 
     public AttendeesFragment() {
     }
@@ -57,9 +61,11 @@ public class AttendeesFragment extends Fragment {
         recycler = view.findViewById(R.id.recycler);
         refresh = view.findViewById(R.id.refresh);
         progress = view.findViewById(R.id.progress);
+        swipe = view.findViewById(R.id.swipe);
         adapter = new AttendeesAdapter();
         recycler.setAdapter(adapter);
         refresh.setOnClickListener(view1 -> getApi());
+        swipe.setOnRefreshListener(this::getApi);
     }
 
     @Override
@@ -69,6 +75,7 @@ public class AttendeesFragment extends Fragment {
     }
 
     private void getApi() {
+        swipe.setRefreshing(true);
         if (repository == null)
             return;
         if (progress != null)
@@ -84,6 +91,7 @@ public class AttendeesFragment extends Fragment {
                         MAlerter.show(getActivity(), "خطا", "در دریافت لیست حاضرین خطایی رخ داد");
                         refresh.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
+                        swipe.setRefreshing(false);
                     }
 
                     @Override
@@ -95,6 +103,7 @@ public class AttendeesFragment extends Fragment {
                         } else refresh.setVisibility(View.GONE);
                         adapter.setDataSet(data);
                         progress.setVisibility(View.GONE);
+                        swipe.setRefreshing(false);
                     }
                 }
         );

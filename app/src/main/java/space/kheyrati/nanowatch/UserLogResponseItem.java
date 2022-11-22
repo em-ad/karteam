@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import space.kheyrati.nanowatch.model.CompanyLocationResponseModel;
+import space.kheyrati.nanowatch.model.UserResponseModel;
+
 public class UserLogResponseItem implements Serializable {
 
     @SerializedName("_id")

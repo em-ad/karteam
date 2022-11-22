@@ -21,7 +21,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +35,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import ng.max.slideview.SlideView;
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.AttendanceViewModel;
+import space.kheyrati.nanowatch.model.EnterExitRequestModel;
+import space.kheyrati.nanowatch.model.StateResponseModel;
 
 public class TrafficFragment extends Fragment {
 

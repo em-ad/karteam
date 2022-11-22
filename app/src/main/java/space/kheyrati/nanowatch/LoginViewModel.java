@@ -7,6 +7,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.SigninResponseModel;
+
 public class LoginViewModel extends AndroidViewModel {
 
     private final MutableLiveData<LoginState> stateLiveData = new MutableLiveData<>(LoginState.LOGIN);

@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+
 public class ProfileFragment extends Fragment {
 
     private RecyclerView recycler;

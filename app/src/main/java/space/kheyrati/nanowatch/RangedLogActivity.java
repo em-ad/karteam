@@ -17,6 +17,7 @@ import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import space.kheyrati.nanowatch.api.KheyratiRepository;
 
 public class RangedLogActivity extends AppCompatActivity {
 

@@ -16,6 +16,9 @@ import com.nambimobile.widgets.efab.FabOption;
 import java.util.Collections;
 import java.util.List;
 
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.RequestResponseModel;
+
 public class RequestListFragment extends Fragment implements RefreshCallback {
 
     private FabOption fabTraffic;

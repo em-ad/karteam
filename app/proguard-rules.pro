@@ -19,3 +19,28 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontpreverify
+
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** w(...);
+    public static *** v(...);
+    public static *** i(...);
+    public static *** e(...);
+}
+
+-dontwarn **
+-keepattributes *Annotation*
+-keepclassmembers class * {
+   public void *(android.view.View);
+}
+-keep public class * extends android.support.v4.app.Fragment
+-keep class sun.misc.Unsafe { *; }
+-keepclassmembers class space.kheyrati.nanowatch.model.**{ *; }
+-keepclassmembers class space.kheyrati.nanowatch.api.**{ *; }
+
+-keep class com.google.gson.examples.android.model.** { *; }
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer

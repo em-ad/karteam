@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import space.kheyrati.nanowatch.model.CompanyResponseModel;
+
 public class MyCompanyAdapter extends RecyclerView.Adapter<MyCompanyAdapter.ViewHolder> {
 
     private List<CompanyResponseModel> dataSet;

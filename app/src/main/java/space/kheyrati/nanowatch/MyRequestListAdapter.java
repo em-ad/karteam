@@ -1,6 +1,5 @@
 package space.kheyrati.nanowatch;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import space.kheyrati.nanowatch.model.RequestResponseModel;
 
 class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestListAdapter.ViewHolder> {
 

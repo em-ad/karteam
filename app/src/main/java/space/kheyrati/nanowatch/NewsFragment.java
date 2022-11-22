@@ -17,6 +17,9 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import java.util.Collections;
 import java.util.List;
 
+import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.NewsResponseModel;
+
 
 public class NewsFragment extends Fragment {
 

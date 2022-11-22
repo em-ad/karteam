@@ -2,9 +2,11 @@ package space.kheyrati.nanowatch;
 
 import android.app.Application;
 import android.location.Location;
-import android.util.Log;
 
 import java.util.Locale;
+
+import space.kheyrati.nanowatch.model.CompanyLocationResponseModel;
+import space.kheyrati.nanowatch.model.CompanyResponseModel;
 
 
 public class MyApplication extends Application {
