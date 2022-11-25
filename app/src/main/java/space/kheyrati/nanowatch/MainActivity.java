@@ -48,15 +48,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.trafficFragment);
         bottomNav.setOnItemSelectedListener(navListener);
         attendanceViewModel = new ViewModelProvider(this).get(AttendanceViewModel.class);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        return;
-                    }
-                    String token = task.getResult().getToken();
-                    Log.e("TAG", "FCM TOKEN: " + token );
-                    new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
-                });
     }
 
     private void initFragmentsIfNeeded() {
@@ -84,24 +75,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             findUserLocation();
         }
-
-        repository.getLastState(MSharedPreferences.getInstance().getTokenHeader(this), MyApplication.company.getCompany().getId(), new ApiCallback() {
-            @Override
-            public void apiFailed(Object o) {
-                MAlerter.show(MainActivity.this, "خطا", "در دریافت اطلاعات ورود شما خطایی رخ داد");
-            }
-
-            @Override
-            public void apiSucceeded(Object o) {
-                StateResponseModel responseModel = ((StateResponseModel) o);
-                if(responseModel.getType().equalsIgnoreCase("enter")){
-                    attendanceViewModel.enterTime = responseModel.getDate();
-                    attendanceViewModel.isIn.postValue(true);
-                } else {
-                    attendanceViewModel.isIn.postValue(false);
-                }
-            }
-        });
     }
 
     private LocationRequest getLocationRequest() {

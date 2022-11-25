@@ -3,6 +3,7 @@ package space.kheyrati.nanowatch;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -36,6 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import ng.max.slideview.SlideView;
 import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.api.MClickListener;
 import space.kheyrati.nanowatch.model.AttendanceViewModel;
 import space.kheyrati.nanowatch.model.EnterExitRequestModel;
 import space.kheyrati.nanowatch.model.StateResponseModel;
@@ -230,27 +233,7 @@ public class TrafficFragment extends Fragment {
             });
         }
         handleMapAccessVisibility();
-        if(getContext() == null){
-            return;
-        }
-        repository.getLastState(MSharedPreferences.getInstance().getTokenHeader(getContext()), MyApplication.company.getCompany().getId(), new ApiCallback() {
-            @Override
-            public void apiFailed(Object o) {
-                if (getActivity() != null)
-                    MAlerter.show(getActivity(), "خطا", "در دریافت اطلاعات ورود شما خطایی رخ داد");
-            }
-
-            @Override
-            public void apiSucceeded(Object o) {
-                StateResponseModel responseModel = ((StateResponseModel) o);
-                if (responseModel.getType().equalsIgnoreCase("enter")) {
-                    viewModel.enterTime = responseModel.getDate();
-                    viewModel.isIn.postValue(true);
-                } else {
-                    viewModel.isIn.postValue(false);
-                }
-            }
-        });
+        new StateCheckDialog(((AppCompatActivity) getActivity())).show();
     }
 
     private void handleMapAccessVisibility() {
@@ -269,8 +252,8 @@ public class TrafficFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void setTouchListener() {
 
-        enterSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
-        exitSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font));
+        enterSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font), Typeface.BOLD);
+        exitSlideView.getTextView().setTypeface(ResourcesCompat.getFont(getContext(), R.font.app_font), Typeface.BOLD);
 
         enterSlideView.setOnSlideCompleteListener(slideView -> {
             LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);

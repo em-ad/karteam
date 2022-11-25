@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">کارتیم</string>
     <string name="hold_to_exit">برای خروج دکمه اثر انگشت را نگه دارید</string>
-    <string name="swipe_to_enter">➨ برای ورود به راست بکشید ➨ </string>
-    <string name="swipe_to_exit">⬅ برای خروج به چپ بکشید ⬅ </string>
+    <string name="swipe_to_enter">❮❮❮ برای ورود به راست بکشید ❮❮❮</string>
+    <string name="swipe_to_exit"> ❯❯❯ برای خروج به چپ بکشید ❯❯❯ </string>
+    <string name="status_error">خطا در بروزرسانی وضعیت حضور</string>
+    <string name="status_loading">در حال بروزرسانی وضعیت…</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

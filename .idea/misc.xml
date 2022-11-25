@@ -60,6 +60,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/oval_red.xml" value="0.1705" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_bordered_primary_dark.xml" value="0.169" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_bordered_primary_dark_mini.xml" value="0.1705" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_dark_big_radius.xml" value="0.154" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_dark_box.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_grey.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_primary.xml" value="0.1705" />
@@ -74,6 +75,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/activity_send_news.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/blocker.xml" value="0.253125" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_api_failure.xml" value="0.18984375" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_are_you_short.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_force_update.xml" value="0.2" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_request_type.xml" value="0.253125" />

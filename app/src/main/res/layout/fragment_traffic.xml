@@ -122,6 +122,8 @@
         tools:text="شما در ساعت 12:35 وارد شدید\nبرای خروج دکمه اثر انگشت را نگه دارید"
         tools:visibility="visible"
         android:visibility="gone"
+        android:drawableLeft="@drawable/ic_sign_out_dark"
+        android:drawableTint="@color/white"
         android:textSize="16sp"
         android:textColor="@color/secondary_very_light"
         android:fontFamily="@font/app_font"
@@ -187,7 +189,7 @@
         android:textColor="@color/primary"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:padding="12dp"
+        android:padding="8dp"
         />
 
     <TextView
@@ -212,7 +214,7 @@
         android:textColor="@color/primary"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:padding="12dp"
+        android:padding="8dp"
         />
 
     <androidx.appcompat.widget.AppCompatImageView

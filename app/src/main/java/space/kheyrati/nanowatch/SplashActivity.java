@@ -14,6 +14,7 @@ public class SplashActivity extends AppCompatActivity {
     public static final long SPLASH_TIME_MILLIS = 2500;
     long currentCode = -1;
     private KheyratiRepository repository;
+    StateCheckDialog apiErrorDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         repository = new KheyratiRepository();
         currentCode = BuildConfig.VERSION_CODE;
+        checkVersion();
+    }
+
+    private void checkVersion() {
         repository.getVersion(new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
