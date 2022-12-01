@@ -15,6 +15,7 @@ import space.kheyrati.nanowatch.TokenModel;
 import space.kheyrati.nanowatch.UserLogResponseItem;
 import space.kheyrati.nanowatch.model.AttendeesRequestModel;
 import space.kheyrati.nanowatch.model.AttendeesResponseModel;
+import space.kheyrati.nanowatch.model.AttendeesWithLogResponseModel;
 import space.kheyrati.nanowatch.model.CompanyLocationResponseModel;
 import space.kheyrati.nanowatch.model.CompanyResponseModel;
 import space.kheyrati.nanowatch.model.EnterExitRequestModel;
@@ -81,6 +82,10 @@ public interface KheyratiApi {
     @POST("EnterExit/date")
     Call<List<AttendeesResponseModel>> getAttendees(@Header("Authorization") String authHeader,
                                                     @Body AttendeesRequestModel requestModel);
+
+    @POST("EnterExit/all-date")
+    Call<List<AttendeesWithLogResponseModel>> getAttendeesWithLog(@Header("Authorization") String authHeader,
+                                                                  @Body AttendeesRequestModel requestModel);
 
     @GET("news/company/{companyId}")
     Call<List<NewsResponseModel>> getNews(@Header("Authorization") String authHeader,

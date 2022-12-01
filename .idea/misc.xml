@@ -6,6 +6,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable-v24/ic_arrow_left.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable-v24/ic_calendar_check_primary.xml" value="0.169" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable-v24/ic_calendar_primary.xml" value="0.169" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable-v24/ic_chevron_left_small.xml" value="0.154" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable-v24/ic_fingerprint_primary_mini_disabled.xml" value="0.1705" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable-v24/ic_fingerprint_white.xml" value="0.142" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable-v24/ic_mission_primary_dark.xml" value="0.176" />
@@ -27,6 +28,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_check_circle.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_check_square.xml" value="0.169" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_checkmark.xml" value="0.1135" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_chevron_left_wide.xml" value="0.154" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_clock.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_coffee.xml" value="0.1135" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_door_open.xml" value="0.1135" />
@@ -77,6 +79,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/blocker.xml" value="0.253125" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_api_failure.xml" value="0.18984375" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_are_you_short.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_attendees_log.xml" value="0.190625" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_force_update.xml" value="0.2" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_request_type.xml" value="0.253125" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_send_news.xml" value="0.20863616930312098" />
@@ -108,6 +111,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_traffic.xml" value="0.253125" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/toolbar.xml" value="0.2" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/menu/bottom_nav.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/menu/bottom_nav_employee.xml" value="0.18984375" />
       </map>
     </option>
   </component>

@@ -14,11 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import java.util.Comparator;
 import java.util.List;
 
 import space.kheyrati.nanowatch.api.KheyratiRepository;
 import space.kheyrati.nanowatch.model.AttendeesRequestModel;
-import space.kheyrati.nanowatch.model.AttendeesResponseModel;
+import space.kheyrati.nanowatch.model.AttendeesWithLogResponseModel;
 
 public class AttendeesFragment extends Fragment {
 
@@ -62,10 +63,14 @@ public class AttendeesFragment extends Fragment {
         refresh = view.findViewById(R.id.refresh);
         progress = view.findViewById(R.id.progress);
         swipe = view.findViewById(R.id.swipe);
-        adapter = new AttendeesAdapter();
+        adapter = new AttendeesAdapter(this::itemClicked);
         recycler.setAdapter(adapter);
         refresh.setOnClickListener(view1 -> getApi());
         swipe.setOnRefreshListener(this::getApi);
+    }
+
+    private void itemClicked(AttendeesWithLogResponseModel item) {
+        new AttendeeLogDetailsDialog(getContext(), item).show();
     }
 
     @Override
@@ -85,7 +90,7 @@ public class AttendeesFragment extends Fragment {
         AttendeesRequestModel model = new AttendeesRequestModel();
         model.setCompany(MyApplication.company.getCompany().getId());
         model.setDate(System.currentTimeMillis());
-        repository.getAttendees(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback() {
+        repository.getAttendeesWithLog(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback() {
                     @Override
                     public void apiFailed(Object o) {
                         MAlerter.show(getActivity(), "خطا", "در دریافت لیست حاضرین خطایی رخ داد");
@@ -96,7 +101,7 @@ public class AttendeesFragment extends Fragment {
 
                     @Override
                     public void apiSucceeded(Object o) {
-                        List<AttendeesResponseModel> data = ((List<AttendeesResponseModel>) o);
+                        List<AttendeesWithLogResponseModel> data = ((List<AttendeesWithLogResponseModel>) o);
                         if (data.size() == 0) {
                             refresh.setVisibility(View.VISIBLE);
                             MAlerter.show(getActivity(), "خطا", "هنوز فردی ورود خود را امروز ثبت نکرده است");

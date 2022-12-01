@@ -1,6 +1,5 @@
 package space.kheyrati.nanowatch;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.date.PersianDateImpl;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
-import ir.hamsaa.persiandatepicker.util.PersianDateParser;
-import ir.hamsaa.persiandatepicker.util.PersianHelper;
 
 public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHolder> {
 
-    ArrayList<UserLogResponseItem> dataset;
-    long start;
-    long end;
+    private ArrayList<UserLogResponseItem> dataset;
+    private long start;
+    private long end;
 
     public void setDataset(ArrayList<UserLogResponseItem> dataset) {
         this.dataset = dataset;
@@ -40,7 +36,6 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
         if(position == -1) return;
         UserLogResponseItem item = dataset.get(position);
         if(start > 0 && end > 0){
-            Log.e("TAG", "onBindViewHolder: " + start + " " + dataset.get(position).getDate() + " " + end );
             if(dataset.get(position).getDate() > end) return;
             if(dataset.get(position).getDate() < start) return;
         }

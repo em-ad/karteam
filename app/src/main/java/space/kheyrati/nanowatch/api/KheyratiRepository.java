@@ -15,6 +15,7 @@ import space.kheyrati.nanowatch.TokenModel;
 import space.kheyrati.nanowatch.UserLogResponseItem;
 import space.kheyrati.nanowatch.model.AttendeesRequestModel;
 import space.kheyrati.nanowatch.model.AttendeesResponseModel;
+import space.kheyrati.nanowatch.model.AttendeesWithLogResponseModel;
 import space.kheyrati.nanowatch.model.CompanyLocationResponseModel;
 import space.kheyrati.nanowatch.model.CompanyResponseModel;
 import space.kheyrati.nanowatch.model.EnterExitRequestModel;
@@ -313,6 +314,25 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<List<AttendeesResponseModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void getAttendeesWithLog(String headerToken, AttendeesRequestModel model, ApiCallback apiCallback){
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getAttendeesWithLog(headerToken, model)
+                .enqueue(new Callback<List<AttendeesWithLogResponseModel>>() {
+                    @Override
+                    public void onResponse(Call<List<AttendeesWithLogResponseModel>> call, Response<List<AttendeesWithLogResponseModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<AttendeesWithLogResponseModel>> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });

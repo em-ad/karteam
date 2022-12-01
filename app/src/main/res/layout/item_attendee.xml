@@ -1,85 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:paddingRight="12dp"
-    android:layout_marginTop="8dp"
-    android:paddingLeft="12dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:cardBackgroundColor="@color/grey_bf"
+    android:id="@+id/rootCardView"
+    android:layout_marginTop="6dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    app:cardCornerRadius="8dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/door"
-        app:srcCompat="@drawable/ic_door_open"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvName"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/door"
-        android:layout_marginRight="8dp"
-        tools:text="عماد جان عزیز"
-        android:fontFamily="@font/app_font"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvStatus"
-        android:textColor="@color/grey_3"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:text="حاضر"
-        android:fontFamily="@font/app_font"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvEnter"
-        android:textColor="@color/grey_3"
-        android:layout_marginRight="8dp"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/tvName"
-        app:layout_constraintRight_toLeftOf="@id/door"
-        tools:text="ورود: ساعت 12"
-        android:fontFamily="@font/app_font"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvExit"
-        android:textColor="@color/grey_3"
-        android:textSize="14sp"
-        android:layout_marginRight="18dp"
-        app:layout_constraintTop_toBottomOf="@id/tvName"
-        app:layout_constraintRight_toLeftOf="@id/tvEnter"
-        tools:text="خروج: 12:35"
-        android:fontFamily="@font/app_font"
-        />
-
-    <View
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/separator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvExit"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="#bfbfbf"
-        />
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/door"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primary_dark"
+            app:srcCompat="@drawable/ic_door_open" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/app_font"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/progressCardView"
+            app:layout_constraintRight_toLeftOf="@id/door"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="عماد جان عزیز" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/app_font"
+            android:textColor="@color/grey_3"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/progressCardView"
+            tools:text="حاضر" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDetails"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="جزئیات"
+            android:textColor="@color/primary_dark"
+            android:fontFamily="@font/app_font"
+            android:layout_marginBottom="4dp"
+            android:textSize="11sp"
+            android:drawableLeft="@drawable/ic_chevron_left_small"
+            android:drawablePadding="4dp"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/progressCardView"
+            android:layout_width="0dp"
+            android:layout_height="7dp"
+            app:cardCornerRadius="6dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/door"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tvDetails"
+            app:cardBackgroundColor="@color/grey_6"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:id="@+id/progressLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layoutDirection="rtl"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:orientation="horizontal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:id="@+id/meterView"
+                android:background="@drawable/timeline_background"
+                />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

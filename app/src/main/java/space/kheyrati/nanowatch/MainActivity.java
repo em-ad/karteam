@@ -5,7 +5,9 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -44,7 +46,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.e("TAG", "ACCESS TOKEN IS = " + MSharedPreferences.getInstance().getToken(this));
-        bottomNav = findViewById(R.id.bottom_navigation_view);
+        if(MyApplication.role == null || !MyApplication.role.equalsIgnoreCase("admin")){
+            bottomNav = findViewById(R.id.bottom_navigation_view_employee);
+            findViewById(R.id.bottom_navigation_view).setVisibility(View.INVISIBLE);
+        } else {
+            bottomNav = findViewById(R.id.bottom_navigation_view);
+            findViewById(R.id.bottom_navigation_view_employee).setVisibility(View.INVISIBLE);
+        }
         bottomNav.setSelectedItemId(R.id.trafficFragment);
         bottomNav.setOnItemSelectedListener(navListener);
         attendanceViewModel = new ViewModelProvider(this).get(AttendanceViewModel.class);

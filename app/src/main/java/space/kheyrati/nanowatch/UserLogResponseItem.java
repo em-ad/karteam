@@ -3,7 +3,10 @@ package space.kheyrati.nanowatch;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import space.kheyrati.nanowatch.model.AttendeesLog;
 import space.kheyrati.nanowatch.model.CompanyLocationResponseModel;
 import space.kheyrati.nanowatch.model.UserResponseModel;
 
@@ -21,6 +24,21 @@ public class UserLogResponseItem implements Serializable {
     private String type;
     @SerializedName("date")
     private long date;
+
+    public static ArrayList<UserLogResponseItem> fromAttendeesLog(List<AttendeesLog> logs) {
+        ArrayList<UserLogResponseItem> res = new ArrayList<>();
+
+        for (int i = 0; i < logs.size(); i++) {
+            UserLogResponseItem item = new UserLogResponseItem();
+            AttendeesLog log = logs.get(i);
+            item.setType(log.getType());
+            item.setId(log.getId());
+            item.setDate(log.getDate());
+            res.add(item);
+        }
+
+        return res;
+    }
 
     public String getId() {
         return id;
