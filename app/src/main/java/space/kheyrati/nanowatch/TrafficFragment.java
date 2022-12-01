@@ -9,15 +9,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -30,6 +21,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.Locale;
@@ -38,10 +37,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import ng.max.slideview.SlideView;
 import space.kheyrati.nanowatch.api.KheyratiRepository;
-import space.kheyrati.nanowatch.api.MClickListener;
 import space.kheyrati.nanowatch.model.AttendanceViewModel;
 import space.kheyrati.nanowatch.model.EnterExitRequestModel;
-import space.kheyrati.nanowatch.model.StateResponseModel;
 
 public class TrafficFragment extends Fragment {
 

@@ -13,11 +13,16 @@ public class IntroAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case 0: return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_1, parent, false));
-            case 1: return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_2, parent, false));
-            case 2: return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_3, parent, false));
-            case 3: return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_4, parent, false));
-            default: return null;
+            case 0:
+                return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_1, parent, false));
+            case 1:
+                return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_2, parent, false));
+            case 2:
+                return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_3, parent, false));
+            case 3:
+                return new IntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_intro_4, parent, false));
+            default:
+                return null;
         }
     }
 

@@ -43,7 +43,7 @@ public class MyCompanyAdapter extends RecyclerView.Adapter<MyCompanyAdapter.View
     }
 
     private String getPersianRole(String role) {
-        switch (role.toLowerCase()){
+        switch (role.toLowerCase()) {
             case "admin":
                 return "مدیر";
             case "employee":

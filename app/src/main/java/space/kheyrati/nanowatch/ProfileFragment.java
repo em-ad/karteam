@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.UserLogResponseModel;
 
 public class ProfileFragment extends Fragment {
 
@@ -110,7 +111,7 @@ public class ProfileFragment extends Fragment {
                     public void apiSucceeded(Object o) {
                         progress.setVisibility(View.GONE);
                         fab.setVisibility(View.VISIBLE);
-                        List<UserLogResponseItem> data = (List<UserLogResponseItem>) o;
+                        List<UserLogResponseModel> data = (List<UserLogResponseModel>) o;
                         Collections.reverse(data);
                         try {
                             adapter.setDataset(new ArrayList<>(data));
@@ -126,7 +127,7 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
-    private void setNewDataToChart(List<UserLogResponseItem> data) {
+    private void setNewDataToChart(List<UserLogResponseModel> data) {
         int limit = 0;
         List<BarEntry> entries = new ArrayList<>();
         List<DailyPresence> presenceList = DailyPresence.fromLogs(data);

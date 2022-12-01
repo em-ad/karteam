@@ -11,8 +11,6 @@ import retrofit2.Response;
 import space.kheyrati.nanowatch.ApiCallback;
 import space.kheyrati.nanowatch.MyApplication;
 import space.kheyrati.nanowatch.RetrofitClient;
-import space.kheyrati.nanowatch.TokenModel;
-import space.kheyrati.nanowatch.UserLogResponseItem;
 import space.kheyrati.nanowatch.model.AttendeesRequestModel;
 import space.kheyrati.nanowatch.model.AttendeesResponseModel;
 import space.kheyrati.nanowatch.model.AttendeesWithLogResponseModel;
@@ -30,6 +28,8 @@ import space.kheyrati.nanowatch.model.RequestResponseModel;
 import space.kheyrati.nanowatch.model.SigninRequestModel;
 import space.kheyrati.nanowatch.model.SigninResponseModel;
 import space.kheyrati.nanowatch.model.StateResponseModel;
+import space.kheyrati.nanowatch.model.TokenModel;
+import space.kheyrati.nanowatch.model.UserLogResponseModel;
 import space.kheyrati.nanowatch.model.VerifyRequestModel;
 import space.kheyrati.nanowatch.model.VersionResponseModel;
 
@@ -73,7 +73,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void enterOrExit(String headerToken, EnterExitRequestModel model, ApiCallback apiCallback){
+    public void enterOrExit(String headerToken, EnterExitRequestModel model, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .enterOrExit(headerToken, model)
                 .enqueue(new Callback<EnterResponseModel>() {
@@ -92,12 +92,12 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getLogs(String headerToken, ApiCallback apiCallback){
+    public void getLogs(String headerToken, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getMyLogs(headerToken)
-                .enqueue(new Callback<List<UserLogResponseItem>>() {
+                .enqueue(new Callback<List<UserLogResponseModel>>() {
                     @Override
-                    public void onResponse(Call<List<UserLogResponseItem>> call, Response<List<UserLogResponseItem>> response) {
+                    public void onResponse(Call<List<UserLogResponseModel>> call, Response<List<UserLogResponseModel>> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             apiCallback.apiSucceeded(response.body());
                         } else
@@ -105,29 +105,29 @@ public class KheyratiRepository {
                     }
 
                     @Override
-                    public void onFailure(Call<List<UserLogResponseItem>> call, Throwable t) {
+                    public void onFailure(Call<List<UserLogResponseModel>> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });
     }
 
-    public void sendToken(String headerToken, String fcmToken){
+    public void sendToken(String headerToken, String fcmToken) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .sendFcmToken(headerToken, new FcmRequestModel(fcmToken))
                 .enqueue(new Callback<FcmResponseModel>() {
                     @Override
                     public void onResponse(Call<FcmResponseModel> call, Response<FcmResponseModel> response) {
-                        Log.e("TAG", "FCM TOKEN SENT? " + response.isSuccessful() );
+                        Log.e("TAG", "FCM TOKEN SENT? " + response.isSuccessful());
                     }
 
                     @Override
                     public void onFailure(Call<FcmResponseModel> call, Throwable t) {
-                        Log.e("TAG", "FCM TOKEN NOT SENT! " + t.getMessage() );
+                        Log.e("TAG", "FCM TOKEN NOT SENT! " + t.getMessage());
                     }
                 });
     }
 
-    public void getMyCompanies(String headerToken, ApiCallback apiCallback){
+    public void getMyCompanies(String headerToken, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getMyCompanies(headerToken)
                 .enqueue(new Callback<List<CompanyResponseModel>>() {
@@ -146,7 +146,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getCompanyLocation(String headerToken, String companyId, ApiCallback apiCallback){
+    public void getCompanyLocation(String headerToken, String companyId, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getCompanyLocations(headerToken, companyId)
                 .enqueue(new Callback<List<CompanyLocationResponseModel>>() {
@@ -165,7 +165,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getMyRequests(String headerToken, ApiCallback apiCallback){
+    public void getMyRequests(String headerToken, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getRequests(headerToken, MyApplication.company.getCompany().getId())
                 .enqueue(new Callback<List<RequestResponseModel>>() {
@@ -184,7 +184,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void submitRequest(String headerToken, RequestRequestModel requestModel, ApiCallback apiCallback){
+    public void submitRequest(String headerToken, RequestRequestModel requestModel, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .submitRequest(headerToken, requestModel)
                 .enqueue(new Callback<ResponseBody>() {
@@ -203,9 +203,9 @@ public class KheyratiRepository {
                 });
     }
 
-    public void submitRequestPut(String headerToken, RequestRequestModel requestModel, ApiCallback apiCallback){
+    public void submitRequestPut(String headerToken, RequestRequestModel requestModel, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
-                .submitRequestPut(headerToken,requestModel.getId(),requestModel)
+                .submitRequestPut(headerToken, requestModel.getId(), requestModel)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -262,7 +262,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getVersion(ApiCallback apiCallback){
+    public void getVersion(ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getVersion()
                 .enqueue(new Callback<List<VersionResponseModel>>() {
@@ -281,7 +281,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void deleteRequest(String headerToken, String requestId, ApiCallback apiCallback){
+    public void deleteRequest(String headerToken, String requestId, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .deleteRequest(headerToken, requestId)
                 .enqueue(new Callback<RequestDeleteResponseModel>() {
@@ -300,7 +300,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getAttendees(String headerToken, AttendeesRequestModel model, ApiCallback apiCallback){
+    public void getAttendees(String headerToken, AttendeesRequestModel model, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getAttendees(headerToken, model)
                 .enqueue(new Callback<List<AttendeesResponseModel>>() {
@@ -319,7 +319,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getAttendeesWithLog(String headerToken, AttendeesRequestModel model, ApiCallback apiCallback){
+    public void getAttendeesWithLog(String headerToken, AttendeesRequestModel model, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getAttendeesWithLog(headerToken, model)
                 .enqueue(new Callback<List<AttendeesWithLogResponseModel>>() {
@@ -338,7 +338,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getNews(String headerToken, String companyId, ApiCallback apiCallback){
+    public void getNews(String headerToken, String companyId, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getNews(headerToken, companyId)
                 .enqueue(new Callback<List<NewsResponseModel>>() {
@@ -377,7 +377,7 @@ public class KheyratiRepository {
                 });
     }
 
-    public void getLastState(String tokenHeader, String companyId, ApiCallback apiCallback){
+    public void getLastState(String tokenHeader, String companyId, ApiCallback apiCallback) {
         RetrofitClient.getInstance().getKheyratiApi()
                 .getState(tokenHeader, companyId)
                 .enqueue(new Callback<StateResponseModel>() {

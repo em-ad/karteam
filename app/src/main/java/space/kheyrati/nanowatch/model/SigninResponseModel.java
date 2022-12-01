@@ -6,24 +6,24 @@ import java.io.Serializable;
 
 public class SigninResponseModel implements Serializable {
 
-   @SerializedName("otp")
-   private String otp;
-   @SerializedName("statusCode")
-   private String statusCode;
+    @SerializedName("otp")
+    private String otp;
+    @SerializedName("statusCode")
+    private String statusCode;
 
-   public String getOtp() {
-      return otp;
-   }
+    public String getOtp() {
+        return otp;
+    }
 
-   public void setOtp(String otp) {
-      this.otp = otp;
-   }
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
 
-   public String getStatusCode() {
-      return statusCode;
-   }
+    public String getStatusCode() {
+        return statusCode;
+    }
 
-   public void setStatusCode(String statusCode) {
-      this.statusCode = statusCode;
-   }
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
 }

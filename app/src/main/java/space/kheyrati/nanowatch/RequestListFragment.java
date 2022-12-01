@@ -1,15 +1,14 @@
 package space.kheyrati.nanowatch;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.nambimobile.widgets.efab.FabOption;
 
@@ -61,7 +60,7 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
     }
 
     private void getItems() {
-        if(getContext() == null || repository == null){
+        if (getContext() == null || repository == null) {
             return;
         }
         repository.getMyRequests(MSharedPreferences.getInstance().getTokenHeader(getContext()), new ApiCallback() {
@@ -116,11 +115,11 @@ public class RequestListFragment extends Fragment implements RefreshCallback {
     }
 
     private void requestClicked(RequestResponseModel item) {
-        if(item.getStatus().equalsIgnoreCase("accept")){
+        if (item.getStatus().equalsIgnoreCase("accept")) {
             MAlerter.show(getActivity(), "خطا", "این درخواست تایید شده و امکان ویرایش آن وجود ندارد");
             return;
         }
-        if(item.getStatus().equalsIgnoreCase("reject")){
+        if (item.getStatus().equalsIgnoreCase("reject")) {
             MAlerter.show(getActivity(), "خطا", "این درخواست رد شده و امکان ویرایش آن وجود ندارد");
             return;
         }

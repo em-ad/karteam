@@ -1,19 +1,16 @@
 package space.kheyrati.nanowatch;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -45,11 +42,11 @@ public class IntroActivity extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (RecyclerView.SCROLL_STATE_IDLE == newState) {
                     int pos = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                    if(pos == 0){
+                    if (pos == 0) {
                         ivNext.setVisibility(View.VISIBLE);
                         ivPrev.setVisibility(View.GONE);
                         tvStart.setVisibility(View.GONE);
-                    } else if (pos == 3){
+                    } else if (pos == 3) {
                         ivNext.setVisibility(View.GONE);
                         ivPrev.setVisibility(View.GONE);
                         tvStart.setVisibility(View.VISIBLE);

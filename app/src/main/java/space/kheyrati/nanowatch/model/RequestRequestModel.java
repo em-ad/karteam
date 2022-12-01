@@ -116,10 +116,10 @@ public class RequestRequestModel implements Serializable {
     }
 
     public boolean isValid() {
-        if(type == null) return false;
-        if(company == null) return false;
-        if(start == 0) return false;
-        if(user == null) return false;
+        if (type == null) return false;
+        if (company == null) return false;
+        if (start == 0) return false;
+        if (user == null) return false;
         return true;
     }
 }

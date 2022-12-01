@@ -1,13 +1,13 @@
 package space.kheyrati.nanowatch;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +18,7 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import space.kheyrati.nanowatch.api.KheyratiRepository;
+import space.kheyrati.nanowatch.model.UserLogResponseModel;
 
 public class RangedLogActivity extends AppCompatActivity {
 
@@ -88,7 +89,7 @@ public class RangedLogActivity extends AppCompatActivity {
                     .show();
         });
         tvSearch.setOnClickListener(view -> {
-            if(end == 0 || start == 0){
+            if (end == 0 || start == 0) {
                 MAlerter.show(this, "خطا", "لطفا هر دو بازه ابتدا و انتها را مشخص کنید");
             } else {
                 progress.setVisibility(View.VISIBLE);
@@ -102,7 +103,7 @@ public class RangedLogActivity extends AppCompatActivity {
                     @Override
                     public void apiSucceeded(Object o) {
                         progress.setVisibility(View.GONE);
-                        List<UserLogResponseItem> data = (List<UserLogResponseItem>) o;
+                        List<UserLogResponseModel> data = (List<UserLogResponseModel>) o;
                         Collections.reverse(data);
                         try {
                             adapter.setRange(start, end);

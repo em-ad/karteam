@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-import space.kheyrati.nanowatch.CompanyModel;
-
 public class CompanyResponseModel implements Serializable {
 
     @SerializedName("_id")

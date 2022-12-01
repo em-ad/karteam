@@ -1,9 +1,5 @@
 package space.kheyrati.nanowatch;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -49,7 +49,7 @@ public class CompanyChooserActivity extends AppCompatActivity {
                         return;
                     }
                     String token = task.getResult().getToken();
-                    Log.e("TAG", "FCM TOKEN: " + token );
+                    Log.e("TAG", "FCM TOKEN: " + token);
                     new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
                 });
     }
@@ -67,10 +67,10 @@ public class CompanyChooserActivity extends AppCompatActivity {
             public void apiSucceeded(Object o) {
                 progress.setVisibility(View.GONE);
                 List<CompanyResponseModel> data = ((List<CompanyResponseModel>) o);
-                if(adapter != null){
+                if (adapter != null) {
                     adapter.setDataSet(data);
                 }
-                if(data == null || data.size() == 0){
+                if (data == null || data.size() == 0) {
                     ivEmpty.setVisibility(View.VISIBLE);
                     tvEmpty.setVisibility(View.VISIBLE);
                 } else {
@@ -111,8 +111,8 @@ public class CompanyChooserActivity extends AppCompatActivity {
             @Override
             public void apiSucceeded(Object o) {
                 progress.setVisibility(View.GONE);
-                if(o == null || ((List<CompanyLocationResponseModel>) o).isEmpty()){
-                    MAlerter.show(CompanyChooserActivity.this, "خطا","برای " + company.getCompany().getName() + " محلی تعیین نشده است");
+                if (o == null || ((List<CompanyLocationResponseModel>) o).isEmpty()) {
+                    MAlerter.show(CompanyChooserActivity.this, "خطا", "برای " + company.getCompany().getName() + " محلی تعیین نشده است");
                     return;
                 }
                 MyApplication.company.setLocation(((List<CompanyLocationResponseModel>) o));

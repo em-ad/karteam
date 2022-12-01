@@ -1,17 +1,16 @@
 package space.kheyrati.nanowatch;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -56,7 +55,7 @@ public class LoginFragment extends Fragment {
         loginEt = view.findViewById(R.id.edittext);
         loginEt.setHint("شماره موبایلت رو وارد کن");
         tvEnter.setOnClickListener(view1 -> {
-            if(loginEt.getText().toString().trim().length() < 10){
+            if (loginEt.getText().toString().trim().length() < 10) {
                 MAlerter.show(getActivity(), "خطا در ورود", "شماره موبایل را به صورت صحیح وارد کنید");
                 return;
             }
@@ -65,8 +64,8 @@ public class LoginFragment extends Fragment {
                 @Override
                 public void apiFailed(Object o) {
                     progress.setVisibility(View.GONE);
-                    if((o instanceof SigninResponseModel && ((SigninResponseModel) o).getStatusCode().equals("404")) ||
-                            (o instanceof Throwable && ((Throwable) o).getMessage().equals("Not Found"))){
+                    if ((o instanceof SigninResponseModel && ((SigninResponseModel) o).getStatusCode().equals("404")) ||
+                            (o instanceof Throwable && ((Throwable) o).getMessage().equals("Not Found"))) {
                         MAlerter.show(getActivity(), "کاربر پیدا نشد", "برای ثبت نام با ادمین تماس بگیرید");
                     } else {
                         MAlerter.show(getActivity(), "خطا در لاگین", "خطایی در ورود به اپ رخ داد");

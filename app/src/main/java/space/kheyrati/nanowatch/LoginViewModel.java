@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import space.kheyrati.nanowatch.api.KheyratiRepository;
 import space.kheyrati.nanowatch.model.SigninResponseModel;
+import space.kheyrati.nanowatch.model.TokenModel;
 
 public class LoginViewModel extends AndroidViewModel {
 

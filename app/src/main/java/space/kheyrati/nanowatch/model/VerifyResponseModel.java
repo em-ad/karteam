@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import space.kheyrati.nanowatch.TokenModel;
-
 public class VerifyResponseModel implements Serializable {
     @SerializedName("token")
     private TokenModel tokenModel;

@@ -13,14 +13,15 @@ import java.util.ArrayList;
 
 import ir.hamsaa.persiandatepicker.date.PersianDateImpl;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import space.kheyrati.nanowatch.model.UserLogResponseModel;
 
 public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHolder> {
 
-    private ArrayList<UserLogResponseItem> dataset;
+    private ArrayList<UserLogResponseModel> dataset;
     private long start;
     private long end;
 
-    public void setDataset(ArrayList<UserLogResponseItem> dataset) {
+    public void setDataset(ArrayList<UserLogResponseModel> dataset) {
         this.dataset = dataset;
         notifyDataSetChanged();
     }
@@ -33,17 +34,17 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(position == -1) return;
-        UserLogResponseItem item = dataset.get(position);
-        if(start > 0 && end > 0){
-            if(dataset.get(position).getDate() > end) return;
-            if(dataset.get(position).getDate() < start) return;
+        if (position == -1) return;
+        UserLogResponseModel item = dataset.get(position);
+        if (start > 0 && end > 0) {
+            if (dataset.get(position).getDate() > end) return;
+            if (dataset.get(position).getDate() < start) return;
         }
-        if(item.getType() == null){
+        if (item.getType() == null) {
             holder.ivStatus.setImageResource(android.R.drawable.ic_menu_info_details);
-        } else if(item.getType().equalsIgnoreCase("enter")){
+        } else if (item.getType().equalsIgnoreCase("enter")) {
             holder.ivStatus.setImageResource(R.drawable.ic_sign_in_alt);
-        } else if(item.getType().equalsIgnoreCase("exit")){
+        } else if (item.getType().equalsIgnoreCase("exit")) {
             holder.ivStatus.setImageResource(R.drawable.ic_sign_out_alt);
         }
         PersianCalendar cal = new PersianCalendar(item.getDate());

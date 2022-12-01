@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import space.kheyrati.nanowatch.model.AttendeesWithLogResponseModel;
+import space.kheyrati.nanowatch.model.UserLogResponseModel;
 
 public class AttendeeLogDetailsDialog extends Dialog {
 
@@ -40,7 +41,7 @@ public class AttendeeLogDetailsDialog extends Dialog {
         recycler.setItemAnimator(new DefaultItemAnimator());
         tvName.setText(model.getFirstName() + " " + model.getLastname());
         tvDate.setText(new PersianCalendar(System.currentTimeMillis()).getPersianShortDate());
-        adapter.setDataset(new ArrayList<>(UserLogResponseItem.fromAttendeesLog(model.getLogs())));
+        adapter.setDataset(new ArrayList<>(UserLogResponseModel.fromAttendeesLog(model.getLogs())));
         if (model.getLogs().size() == 0) {
             findViewById(R.id.tvEmpty).setVisibility(View.VISIBLE);
         } else {

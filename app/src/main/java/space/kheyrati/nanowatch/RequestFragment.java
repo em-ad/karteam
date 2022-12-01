@@ -86,7 +86,7 @@ public class RequestFragment extends Fragment {
         requestModel.setCompany(item.getCompany() != null ? item.getCompany().getId() : "");
         requestModel.setUser(item.getUser().getId());
 
-        if(item.getId() != null && !item.getId().isEmpty() && getContext() != null){
+        if (item.getId() != null && !item.getId().isEmpty() && getContext() != null) {
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(view -> new AreYouShortDialog(getContext(), "آیا از حذف درخواست خود اطمینان دارید؟", null, null, new AreYouShortCallback() {
                 @Override
@@ -137,7 +137,7 @@ public class RequestFragment extends Fragment {
         requestModel.setCompany(MyApplication.company.getCompany().getId());
         requestModel.setUser(MSharedPreferences.getInstance().getUserIdFromToken(getContext()));
         repository = new KheyratiRepository();
-        if(item != null){
+        if (item != null) {
             handleRequestItem(item);
         }
     }
@@ -238,8 +238,8 @@ public class RequestFragment extends Fragment {
             }
         });
 
-        if(type != null){
-            switch (type){
+        if (type != null) {
+            switch (type) {
                 case "mission":
                     handleType("Mission");
                     break;
@@ -285,10 +285,10 @@ public class RequestFragment extends Fragment {
         requestModel.setDescription(etDescription.getText().toString() + " ");
         requestModel.setStart(requestModel.getStart() + requestModel.getStartTime());
         requestModel.setEnd(requestModel.getEnd() + requestModel.getEndTime());
-        if(requestModel.getEnd() == 0){
+        if (requestModel.getEnd() == 0) {
             requestModel.setEnd(requestModel.getStart());
         }
-        if(requestModel.getId() != null && !requestModel.getId().isEmpty()){
+        if (requestModel.getId() != null && !requestModel.getId().isEmpty()) {
             repository.submitRequestPut(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
                 @Override
                 public void apiFailed(Object o) {

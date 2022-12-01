@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import space.kheyrati.nanowatch.model.UserLogResponseModel;
 
 public class DailyPresence {
 
@@ -19,15 +20,15 @@ public class DailyPresence {
     }
 
     //hanoo maghzam kar mikone zaheran
-    public static List<DailyPresence> fromLogs(List<UserLogResponseItem> data) {
+    public static List<DailyPresence> fromLogs(List<UserLogResponseModel> data) {
         List<DailyPresence> result = new ArrayList<>();
         Map<String, Long> presence = new HashMap<>();
         for (int i = data.size() - 1; i >= 0; i--) {
-            UserLogResponseItem log = data.get(i);
+            UserLogResponseModel log = data.get(i);
             PersianCalendar cal = new PersianCalendar(log.getDate());
             String day = cal.getPersianShortDate();
             if (presence.containsKey(day)) continue;
-            List<UserLogResponseItem> dailyLogs = getDailyLogs(data, day);
+            List<UserLogResponseModel> dailyLogs = getDailyLogs(data, day);
             Long totalPresence = 0L;
             for (int j = 0; j < dailyLogs.size(); j++) {
                 PersianCalendar incal = new PersianCalendar(dailyLogs.get(j).getDate());
@@ -58,8 +59,8 @@ public class DailyPresence {
         return result;
     }
 
-    private static List<UserLogResponseItem> getDailyLogs(List<UserLogResponseItem> data, String day) {
-        List<UserLogResponseItem> result = new ArrayList<>();
+    private static List<UserLogResponseModel> getDailyLogs(List<UserLogResponseModel> data, String day) {
+        List<UserLogResponseModel> result = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             if (new PersianCalendar(data.get(i).getDate()).getPersianShortDate().equals(day)) {
                 result.add(data.get(i));

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-    public class CompanyLocationResponseModel implements Serializable {
+public class CompanyLocationResponseModel implements Serializable {
 
     @SerializedName("_id")
     private String id;

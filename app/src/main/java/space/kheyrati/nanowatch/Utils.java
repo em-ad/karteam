@@ -11,12 +11,12 @@ public class Utils {
         return ((sec2 < 10) ? "0" + sec2 : sec2) + " : " + min;
     }
 
-    public static long getTimeStamp(String isoDate){
+    public static long getTimeStamp(String isoDate) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date startDate = new Date();
-        try{
+        try {
             startDate = format.parse(isoDate);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return startDate.getTime();

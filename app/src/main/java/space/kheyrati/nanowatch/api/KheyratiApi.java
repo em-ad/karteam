@@ -11,8 +11,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import space.kheyrati.nanowatch.TokenModel;
-import space.kheyrati.nanowatch.UserLogResponseItem;
 import space.kheyrati.nanowatch.model.AttendeesRequestModel;
 import space.kheyrati.nanowatch.model.AttendeesResponseModel;
 import space.kheyrati.nanowatch.model.AttendeesWithLogResponseModel;
@@ -30,6 +28,8 @@ import space.kheyrati.nanowatch.model.RequestResponseModel;
 import space.kheyrati.nanowatch.model.SigninRequestModel;
 import space.kheyrati.nanowatch.model.SigninResponseModel;
 import space.kheyrati.nanowatch.model.StateResponseModel;
+import space.kheyrati.nanowatch.model.TokenModel;
+import space.kheyrati.nanowatch.model.UserLogResponseModel;
 import space.kheyrati.nanowatch.model.VerifyRequestModel;
 import space.kheyrati.nanowatch.model.VersionResponseModel;
 
@@ -53,11 +53,11 @@ public interface KheyratiApi {
                                          @Body EnterExitRequestModel requestModel);
 
     @GET("EnterExit")
-    Call<List<UserLogResponseItem>> getMyLogs(@Header("Authorization") String authHeader);
+    Call<List<UserLogResponseModel>> getMyLogs(@Header("Authorization") String authHeader);
 
     @POST("user/updateFCM")
     Call<FcmResponseModel> sendFcmToken(@Header("Authorization") String authHeader,
-                                        @Body FcmRequestModel fcmRequestModel );
+                                        @Body FcmRequestModel fcmRequestModel);
 
     @GET("request/company/{companyId}")
     Call<List<RequestResponseModel>> getRequests(@Header("Authorization") String authHeader,
@@ -65,12 +65,12 @@ public interface KheyratiApi {
 
     @POST("request")
     Call<ResponseBody> submitRequest(@Header("Authorization") String authHeader,
-                                    @Body RequestRequestModel fcmRequestModel);
+                                     @Body RequestRequestModel fcmRequestModel);
 
     @PUT("request/{requestId}")
     Call<ResponseBody> submitRequestPut(@Header("Authorization") String authHeader,
                                         @Path("requestId") String requestId,
-                                     @Body RequestRequestModel request);
+                                        @Body RequestRequestModel request);
 
     @GET("version")
     Call<List<VersionResponseModel>> getVersion();
@@ -93,7 +93,7 @@ public interface KheyratiApi {
 
     @POST("news")
     Call<ResponseBody> sendNews(@Header("Authorization") String authHeader,
-                                    @Body NewsRequestModel requestModel);
+                                @Body NewsRequestModel requestModel);
 
     @GET("EnterExit/last/{companyId}")
     Call<StateResponseModel> getState(@Header("Authorization") String authHeader,

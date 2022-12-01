@@ -1,4 +1,4 @@
-package space.kheyrati.nanowatch;
+package space.kheyrati.nanowatch.model;
 
 import com.google.gson.annotations.SerializedName;
 

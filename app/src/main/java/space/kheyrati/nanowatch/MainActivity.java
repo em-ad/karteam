@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -23,11 +22,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import space.kheyrati.nanowatch.api.KheyratiRepository;
 import space.kheyrati.nanowatch.model.AttendanceViewModel;
-import space.kheyrati.nanowatch.model.StateResponseModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.e("TAG", "ACCESS TOKEN IS = " + MSharedPreferences.getInstance().getToken(this));
-        if(MyApplication.role == null || !MyApplication.role.equalsIgnoreCase("admin")){
+        if (MyApplication.role == null || !MyApplication.role.equalsIgnoreCase("admin")) {
             bottomNav = findViewById(R.id.bottom_navigation_view_employee);
             findViewById(R.id.bottom_navigation_view).setVisibility(View.INVISIBLE);
         } else {

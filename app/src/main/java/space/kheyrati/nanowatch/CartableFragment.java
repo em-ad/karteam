@@ -1,16 +1,15 @@
 package space.kheyrati.nanowatch;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import java.util.Collections;
 import java.util.List;
@@ -61,8 +60,8 @@ public class CartableFragment extends Fragment implements RequestCallback {
     }
 
     private void getItems() {
-        if(MyApplication.role != null){
-            if(MyApplication.role.equalsIgnoreCase("employee")){
+        if (MyApplication.role != null) {
+            if (MyApplication.role.equalsIgnoreCase("employee")) {
                 blocker.setVisibility(View.VISIBLE);
                 return;
             } else blocker.setVisibility(View.GONE);
@@ -92,7 +91,7 @@ public class CartableFragment extends Fragment implements RequestCallback {
             @Override
             public void accept() {
                 progress.setVisibility(View.VISIBLE);
-                repository.acceptRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback(){
+                repository.acceptRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback() {
 
                     @Override
                     public void apiFailed(Object o) {
@@ -126,7 +125,7 @@ public class CartableFragment extends Fragment implements RequestCallback {
             @Override
             public void accept() {
                 progress.setVisibility(View.VISIBLE);
-                repository.rejectRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback(){
+                repository.rejectRequest(MSharedPreferences.getInstance().getTokenHeader(getContext()), model, new ApiCallback() {
 
                     @Override
                     public void apiFailed(Object o) {

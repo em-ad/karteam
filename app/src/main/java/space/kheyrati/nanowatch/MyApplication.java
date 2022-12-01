@@ -17,21 +17,22 @@ public class MyApplication extends Application {
     public static boolean isIn;
 
     public static boolean locationValid() {
-        if (lastLocation == null || company == null || company.getLocation() == null || company.getLocation().isEmpty()) return false;
+        if (lastLocation == null || company == null || company.getLocation() == null || company.getLocation().isEmpty())
+            return false;
         double distance = Integer.MAX_VALUE;
         double radius = Integer.MIN_VALUE;
         for (int i = 0; i < company.getLocation().size(); i++) {
-            if(distanceOf(lastLocation, company.getLocation().get(i)) < distance){
+            if (distanceOf(lastLocation, company.getLocation().get(i)) < distance) {
                 distance = distanceOf(lastLocation, company.getLocation().get(i));
             }
-            if(company.getLocation().get(i).getRadius() > radius)
+            if (company.getLocation().get(i).getRadius() > radius)
                 radius = company.getLocation().get(i).getRadius();
         }
         return distance < radius;
     }
 
     public static double distanceOf(Location point1, CompanyLocationResponseModel point2) {
-        if(company == null || company.getLocation() == null || company.getLocation().isEmpty())
+        if (company == null || company.getLocation() == null || company.getLocation().isEmpty())
             return Integer.MAX_VALUE;
         double distance = Math.sqrt(
                 Math.pow(point1.getLatitude() - point2.getLon(), 2) +
@@ -40,11 +41,12 @@ public class MyApplication extends Application {
     }
 
     public static String getNearestCompanyLocationUri() {
-        if (lastLocation == null || company == null || company.getLocation() == null || company.getLocation().isEmpty()) return null;
+        if (lastLocation == null || company == null || company.getLocation() == null || company.getLocation().isEmpty())
+            return null;
         double distance = Integer.MAX_VALUE;
         int answer = 0;
         for (int i = 0; i < company.getLocation().size(); i++) {
-            if(distanceOf(lastLocation, company.getLocation().get(i)) < distance){
+            if (distanceOf(lastLocation, company.getLocation().get(i)) < distance) {
                 distance = distanceOf(lastLocation, company.getLocation().get(i));
                 answer = i;
             }

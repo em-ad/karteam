@@ -84,7 +84,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         }
 
         List<AttendanceState> ranges = getRangesAndApplySeparators(holder.itemView.getContext(), item.getLogs(), holder.meterView, holder.tvStatus);
-        if(ranges.size() > 0){
+        if (ranges.size() > 0) {
             holder.llProgress.removeAllViews();
         }
         for (int i = 0; i < ranges.size(); i++) {
@@ -104,7 +104,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         long lastEnter = 0;
         long firstTime = Long.MAX_VALUE;
         for (int i = 0; i < logs.size(); i++) {
-            if(logs.get(i).getType().equalsIgnoreCase("enter") && logs.get(i).getDate() > lastEnter)
+            if (logs.get(i).getType().equalsIgnoreCase("enter") && logs.get(i).getDate() > lastEnter)
                 lastEnter = logs.get(i).getDate();
             if (logs.get(i).getDate() > lastTime) {
                 lastTime = logs.get(i).getDate();
@@ -114,7 +114,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
             }
         }
         long totalRange;
-        if(logs.size() == 1){
+        if (logs.size() == 1) {
             totalRange = System.currentTimeMillis() - firstTime;
         } else {
             totalRange = lastTime - firstTime;
@@ -134,11 +134,11 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                 }
             }
         }
-        int dashes = (int) (totalRange / (float)(1000 * 3600));
-        Log.e("TAG", "getRanges: " + dashes + " " + totalRange );
-        if(dashes > 24 || dashes < 0)
+        int dashes = (int) (totalRange / (float) (1000 * 3600));
+        Log.e("TAG", "getRanges: " + dashes + " " + totalRange);
+        if (dashes > 24 || dashes < 0)
             dashes = 0;
-        if(dashes > 0) {
+        if (dashes > 0) {
             meterView.setVisibility(View.VISIBLE);
             Drawable drawable = context.getDrawable(R.drawable.timeline_background);
             ((GradientDrawable) drawable).setStroke(dpToPx(6), context.getColor(R.color.white), dpToPx(2), (width / ((float) dashes)));
@@ -146,7 +146,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         } else {
             meterView.setVisibility(View.GONE);
         }
-        if(lastEnter > 0 && lastTime == lastEnter){
+        if (lastEnter > 0 && lastTime == lastEnter) {
             name.setText(name.getText().toString() + " از " + new PersianCalendar(lastEnter).getPersianShortDateTime().substring(new PersianCalendar(lastEnter).getPersianShortDateTime().indexOf(" ")));
         }
         return state;

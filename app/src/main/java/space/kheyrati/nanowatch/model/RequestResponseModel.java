@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import space.kheyrati.nanowatch.CompanyModel;
 import space.kheyrati.nanowatch.Utils;
 
 public class RequestResponseModel implements Serializable {

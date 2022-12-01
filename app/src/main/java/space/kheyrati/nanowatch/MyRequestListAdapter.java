@@ -44,7 +44,7 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(position < 0) return;
+        if (position < 0) return;
         holder.bind(getItem(position));
     }
 
@@ -66,35 +66,35 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
         }
 
         public void bind(RequestResponseModel item) {
-            SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             Date startDate = new Date();
             Date endDate = new Date();
             PersianCalendar cal = null;
             long time = 0;
             long rawtime = 0;
-            try{
+            try {
                 startDate = format.parse(item.getStart());
                 endDate = format.parse(item.getEnd());
                 cal = new PersianCalendar(((long) (startDate.getTime() + (3600 * 3.5 * 1000))));
-                if(endDate.getTime() != startDate.getTime()) {
+                if (endDate.getTime() != startDate.getTime()) {
                     time = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            if(cal != null) {
+            if (cal != null) {
                 tvDate.setText(cal.getPersianShortDate());
             }
-            if(!item.getType().equals("Enter") && !item.getType().equals("Exit")) {
+            if (!item.getType().equals("Enter") && !item.getType().equals("Exit")) {
                 tvTime.setText(time < 24 ? time + " ساعت" : (Math.ceil(((double) time) / 24) + " روز").replace(".0", ""));
-                if(tvTime.getText().toString().equals("0 ساعت"))
+                if (tvTime.getText().toString().equals("0 ساعت"))
                     tvTime.setText("کمتر از یک ساعت");
             } else {
                 String rawTime = cal.getPersianShortDateTime().substring(cal.getPersianShortDateTime().indexOf(" "));
                 tvTime.setText(reduceTwelveHours(rawTime));
             }
 
-            switch (item.getStatus().toLowerCase()){
+            switch (item.getStatus().toLowerCase()) {
                 case "pending":
                     ivStatus.setImageResource(R.drawable.ic_pending);
                     break;
@@ -105,7 +105,7 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
                     ivStatus.setImageResource(R.drawable.ic_failed);
                     break;
             }
-            switch (item.getType().toLowerCase()){
+            switch (item.getType().toLowerCase()) {
                 case "mission":
                     tvTitle.setText("ماموریت");
                     ivType.setImageResource(R.drawable.ic_mission_primary_dark);

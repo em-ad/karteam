@@ -6,14 +6,14 @@ import java.io.Serializable;
 
 public class EnterResponseModel implements Serializable {
 
-   @SerializedName("enter")
-   private TrafficResponseModel enter;
+    @SerializedName("enter")
+    private TrafficResponseModel enter;
 
-   public TrafficResponseModel getEnter() {
-      return enter;
-   }
+    public TrafficResponseModel getEnter() {
+        return enter;
+    }
 
-   public void setEnter(TrafficResponseModel enter) {
-      this.enter = enter;
-   }
+    public void setEnter(TrafficResponseModel enter) {
+        this.enter = enter;
+    }
 }

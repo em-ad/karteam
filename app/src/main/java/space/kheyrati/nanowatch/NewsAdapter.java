@@ -32,7 +32,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             holder.sender.setText("از " + item.getUser().getFirstName() + " " + item.getUser().getLastName());
         else
             holder.sender.setText("از طرف مدیر سیستم");
-        if(item.getDate() != null && item.getDate() != 0){
+        if (item.getDate() != null && item.getDate() != 0) {
             holder.date.setText(new PersianCalendar(item.getDate()).getPersianShortDate());
         } else {
             holder.date.setText("نامشخص");

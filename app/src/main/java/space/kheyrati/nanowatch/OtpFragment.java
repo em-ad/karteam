@@ -1,13 +1,6 @@
 package space.kheyrati.nanowatch;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.widget.ContentLoadingProgressBar;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.material.progressindicator.CircularProgressIndicator;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.textfield.TextInputEditText;
 
 public class OtpFragment extends Fragment {
@@ -32,7 +29,7 @@ public class OtpFragment extends Fragment {
     private CountDownTimer timer = new CountDownTimer(120000, 1000) {
         @Override
         public void onTick(long l) {
-            resend.setText("ارسال مجدد کد تایید" + " " + ((int) l/1000));
+            resend.setText("ارسال مجدد کد تایید" + " " + ((int) l / 1000));
         }
 
         @Override
@@ -63,7 +60,7 @@ public class OtpFragment extends Fragment {
         resend = view.findViewById(R.id.resend);
         timer.start();
         resend.setOnClickListener(view12 -> {
-            if(!resend.getText().toString().trim().equals("ارسال مجدد کد تایید")){
+            if (!resend.getText().toString().trim().equals("ارسال مجدد کد تایید")) {
                 MAlerter.show(getActivity(), "صبر کنید", "برای درخواست مجدد کد تا پایان زمان صبر کنید");
                 return;
             }

@@ -2,7 +2,6 @@ package space.kheyrati.nanowatch;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.auth0.android.jwt.JWT;
 import com.google.gson.Gson;
