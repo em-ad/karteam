@@ -34,8 +34,20 @@ public class IntroActivity extends AppCompatActivity {
         recycler.setAdapter(new IntroAdapter());
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         new PagerSnapHelper().attachToRecyclerView(recycler);
-        ivNext.setOnClickListener(view -> recycler.smoothScrollToPosition(((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() + 1));
-        ivPrev.setOnClickListener(view -> recycler.smoothScrollToPosition(((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() - 1));
+        ivNext.setOnClickListener(view -> {
+            try {
+                recycler.smoothScrollToPosition(((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() + 1);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            });
+        ivPrev.setOnClickListener(view -> {
+            try {
+                recycler.smoothScrollToPosition(((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() - 1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -48,7 +60,7 @@ public class IntroActivity extends AppCompatActivity {
                         tvStart.setVisibility(View.GONE);
                     } else if (pos == 3) {
                         ivNext.setVisibility(View.GONE);
-                        ivPrev.setVisibility(View.GONE);
+                        ivPrev.setVisibility(View.VISIBLE);
                         tvStart.setVisibility(View.VISIBLE);
                     } else {
                         ivNext.setVisibility(View.VISIBLE);

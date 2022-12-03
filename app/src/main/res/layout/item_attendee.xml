@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/grey_bf"
+    app:cardBackgroundColor="@color/grey_de"
     android:id="@+id/rootCardView"
     android:layout_marginTop="6dp"
     android:layout_marginRight="10dp"

@@ -29,6 +29,15 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     private List<AttendeesWithLogResponseModel> dataSet;
     private AttendeeClickCallback callback;
     private int width = -1;
+    private int mode = MODE_ALL;
+
+    public static final int MODE_ALL = 0;
+    public static final int MODE_PRESENT = 1;
+    public static final int MODE_ABSENT = 2;
+
+    private void setMode(int mode){
+        this.mode = mode;
+    }
 
     public AttendeesAdapter(AttendeeClickCallback callback) {
         this.callback = callback;
@@ -72,7 +81,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
             view.setBackgroundColor(holder.itemView.getContext().getColor(R.color.red));
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 30));
             holder.llProgress.addView(view);
-            holder.rootCardView.setCardBackgroundColor(holder.itemView.getContext().getColor(R.color.grey_bf));
+            holder.rootCardView.setCardBackgroundColor(holder.itemView.getContext().getColor(R.color.grey_de));
         } else {
             holder.tvStatus.setText("خارج شده");
             holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.grey_6));
@@ -80,7 +89,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
             view.setBackgroundColor(holder.itemView.getContext().getColor(R.color.grey_6));
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 30));
             holder.llProgress.addView(view);
-            holder.rootCardView.setCardBackgroundColor(holder.itemView.getContext().getColor(R.color.grey_bf));
+            holder.rootCardView.setCardBackgroundColor(holder.itemView.getContext().getColor(R.color.grey_de));
         }
 
         List<AttendanceState> ranges = getRangesAndApplySeparators(holder.itemView.getContext(), item.getLogs(), holder.meterView, holder.tvStatus);
@@ -155,6 +164,10 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     @Override
     public int getItemCount() {
         return dataSet == null ? 0 : dataSet.size();
+    }
+
+    public List<AttendeesWithLogResponseModel> getItems() {
+        return dataSet;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

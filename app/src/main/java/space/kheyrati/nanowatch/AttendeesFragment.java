@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.chip.Chip;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import space.kheyrati.nanowatch.api.KheyratiRepository;
@@ -27,6 +31,9 @@ public class AttendeesFragment extends Fragment {
     private AppCompatImageView refresh;
     private ProgressBar progress;
     private SwipeRefreshLayout swipe;
+    private Chip absentChip;
+    private Chip presentChip;
+    private List<AttendeesWithLogResponseModel> originalList = new ArrayList<>();
 
     public AttendeesFragment() {
     }
@@ -58,6 +65,8 @@ public class AttendeesFragment extends Fragment {
         }
         repository = new KheyratiRepository();
         recycler = view.findViewById(R.id.recycler);
+        presentChip = view.findViewById(R.id.chipPresent);
+        absentChip = view.findViewById(R.id.chipAbsent);
         refresh = view.findViewById(R.id.refresh);
         progress = view.findViewById(R.id.progress);
         swipe = view.findViewById(R.id.swipe);
@@ -65,6 +74,30 @@ public class AttendeesFragment extends Fragment {
         recycler.setAdapter(adapter);
         refresh.setOnClickListener(view1 -> getApi());
         swipe.setOnRefreshListener(this::getApi);
+        presentChip.setOnCheckedChangeListener((compoundButton, b) -> handleListItems());
+        absentChip.setOnCheckedChangeListener((compoundButton, b) -> handleListItems());
+    }
+
+    private void handleListItems() {
+        boolean showPresent = presentChip.isChecked();
+        boolean showAbsent = absentChip.isChecked();
+        if(!showPresent && !showAbsent){
+            showAbsent = true;
+            showPresent = true;
+        }
+        List<AttendeesWithLogResponseModel> list = originalList;
+        if(list == null) list = new ArrayList<>();
+        List<AttendeesWithLogResponseModel> filtered = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            if(showAbsent && (list.get(i).getLastState().equalsIgnoreCase("absent") || list.get(i).getLastState().equalsIgnoreCase("exit"))){
+                filtered.add(list.get(i));
+            }
+            if(showPresent && list.get(i).getLastState().equalsIgnoreCase("enter")){
+                filtered.add(list.get(i));
+            }
+        }
+        adapter.setDataSet(filtered);
     }
 
     private void itemClicked(AttendeesWithLogResponseModel item) {
@@ -100,6 +133,7 @@ public class AttendeesFragment extends Fragment {
                     @Override
                     public void apiSucceeded(Object o) {
                         List<AttendeesWithLogResponseModel> data = ((List<AttendeesWithLogResponseModel>) o);
+                        originalList = data;
                         if (data.size() == 0) {
                             refresh.setVisibility(View.VISIBLE);
                             MAlerter.show(getActivity(), "خطا", "هنوز فردی ورود خود را امروز ثبت نکرده است");
