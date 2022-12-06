@@ -74,7 +74,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/progressCardView"
-            android:layout_width="0dp"
+            android:layout_width="300dp"
             android:layout_height="7dp"
             app:cardCornerRadius="6dp"
             android:layout_marginTop="8dp"
@@ -91,7 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layoutDirection="rtl"
+                android:rotation="180"
+                android:gravity="right"
                 android:paddingTop="1dp"
                 android:paddingBottom="1dp"
                 android:orientation="horizontal" />

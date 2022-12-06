@@ -14,7 +14,9 @@ public class MSharedPreferences {
     private static MSharedPreferences instance;
     public static String PREF_KEY = "karteam_key";
 
-    private boolean TEST = true;
+    private static final String mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
+
+    private final boolean TEST = BuildConfig.FLAVOR.equals("mockToken");
 
     public static MSharedPreferences getInstance() {
         if (instance == null)
@@ -51,9 +53,7 @@ public class MSharedPreferences {
 
     public boolean hasToken(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
-        if (!TEST)
-            return pref.contains("token") && pref.getString("token", null) != null;
-        return true;
+        return TEST || (pref.contains("token") && pref.getString("token", null) != null);
     }
 
     public String getToken(Context context) {
@@ -61,21 +61,21 @@ public class MSharedPreferences {
     }
 
     public String getTokenHeader(Context context) {
-        if (!TEST)
-            return "Bearer " + context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", null);
-        return "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
+        String rawToken = (TEST) ? mockToken :
+                context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
+        return "Bearer " + rawToken;
     }
 
     public String getUserIdFromToken(Context context) {
-        String rawToken = (!TEST) ? context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "") :
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
+        String rawToken = (TEST) ? mockToken :
+                context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
         JWT jwt = new JWT(rawToken);
         return jwt.getClaims().get("uid").asString();
     }
 
     public String getNameFromToken(Context context) {
-        String rawToken = (!TEST) ? context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "") :
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzRhOGIzNjZlNWRmOWVhNjkzMmZlNGMiLCJmaXJzdE5hbWUiOiJlbWFkIiwibGFzdE5hbWUiOiJtb2xsYWVpIiwicGhvbmVOdW1iZXIiOiIwOTEyMDMyNDc0MSIsImlhdCI6MTY2NzkyNTUyNX0.2YBcZaIjXF-6ae7H7xGPQof9lRwoOgJCWimmbqsgJHo";
+        String rawToken = (TEST) ? mockToken :
+                context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE).getString("token", "");
         JWT jwt = new JWT(rawToken);
         return jwt.getClaims().get("firstName").asString() + " " + jwt.getClaims().get("lastName").asString();
     }

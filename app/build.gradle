@@ -14,18 +14,52 @@ android {
         applicationId "space.kheyrati.nanowatch"
         minSdk 23
         targetSdk 32
-        versionCode 12
-        versionName "1.12"
+        versionCode 14
+        versionName "1.14"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'alias'
+            keyPassword '9qKvQJ8VaW'
+            storeFile file('F:\\JKS\\karteam.jks')
+            storePassword '9qKvQJ8VaW'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            signingConfig signingConfigs.release
+            minifyEnabled true
+        }
     }
+
+    flavorDimensions "TOKEN"
+
+    productFlavors {
+        realToken {
+            dimension "TOKEN"
+        }
+        mockToken {
+            dimension "TOKEN"
+            versionNameSuffix "-TEST"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

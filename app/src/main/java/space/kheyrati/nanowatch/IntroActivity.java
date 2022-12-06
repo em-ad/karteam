@@ -35,18 +35,10 @@ public class IntroActivity extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         new PagerSnapHelper().attachToRecyclerView(recycler);
         ivNext.setOnClickListener(view -> {
-            try {
-                recycler.smoothScrollToPosition(((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() + 1);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+                recycler.smoothScrollToPosition(Math.min(3, ((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() + 1));
             });
         ivPrev.setOnClickListener(view -> {
-            try {
-                recycler.smoothScrollToPosition(((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() - 1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                recycler.smoothScrollToPosition(Math.max(0, ( (LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() - 1));
         });
         recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

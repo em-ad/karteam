@@ -64,7 +64,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         AttendeesWithLogResponseModel item = dataSet.get(position);
         holder.llProgress.removeAllViews();
         if (width == -1)
-            width = holder.itemView.getContext().getResources().getDisplayMetrics().widthPixels - dpToPx(30);
+            width = dpToPx(300);
         holder.tvName.setText(item.getFirstName() + " " + item.getLastname());
         if (item.getLastState().equalsIgnoreCase("enter")) {
             holder.tvStatus.setText("حاضر");
@@ -143,8 +143,15 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                 }
             }
         }
+        int total = 0;
+        for (int i = 0; i < state.size(); i++) {
+            total += state.get(i).getPercent();
+        }
+        if(total < 100 && state.size() > 0){
+            state.set(state.size() - 1, new AttendanceState(state.get(state.size() - 1).getColor(), 100 - total ));
+        }
         int dashes = (int) (totalRange / (float) (1000 * 3600));
-        Log.e("TAG", "getRanges: " + dashes + " " + totalRange);
+        Log.e("TAG", "getRanges dashes and total range: " + dashes + " " + totalRange);
         if (dashes > 24 || dashes < 0)
             dashes = 0;
         if (dashes > 0) {
