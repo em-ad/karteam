@@ -27,6 +27,16 @@ public class RequestRequestModel implements Serializable {
     private long startTime;
     private long endTime;
 
+    private String vacationType = "";
+
+    public String getVacationType() {
+        return vacationType;
+    }
+
+    public void setVacationType(String vacationType) {
+        this.vacationType = vacationType;
+    }
+
     public String getId() {
         return id;
     }
@@ -120,6 +130,7 @@ public class RequestRequestModel implements Serializable {
         if (company == null) return false;
         if (start == 0) return false;
         if (user == null) return false;
+        if(type.equalsIgnoreCase("vacation") && vacationType.isEmpty()) return false;
         return true;
     }
 }

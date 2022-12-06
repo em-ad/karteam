@@ -34,6 +34,7 @@ public class RequestFragment extends Fragment {
     private FloatingActionButton fabDone;
     private TextView etStartDate;
     private TextView etEndDate;
+    private TextView etVacationType;
     private TextView etStartTime;
     private TextView etEndTime;
     private EditText etDescription;
@@ -66,7 +67,7 @@ public class RequestFragment extends Fragment {
         long end = 0;
         try {
             Date startDate = format.parse(item.getStart());
-            Date endDate = format.parse(item.getStart());
+            Date endDate = format.parse(item.getEnd());
             start = startDate.getTime();
             end = endDate.getTime();
         } catch (ParseException e) {
@@ -138,11 +139,19 @@ public class RequestFragment extends Fragment {
         requestModel.setUser(MSharedPreferences.getInstance().getUserIdFromToken(getContext()));
         repository = new KheyratiRepository();
         if (item != null) {
+            title.setText("ویرایش درخواست");
             handleRequestItem(item);
+        } else {
+            title.setText("ثبت درخواست");
         }
     }
 
     private void setupEditTexts() {
+
+        etVacationType.setOnClickListener(view -> {
+            VacationTypeDialog dialog = new VacationTypeDialog(getContext(), RequestFragment.this::handleVacationType);
+            dialog.show();
+        });
 
         etStartDate.setOnClickListener(view -> {
             if (getContext() == null) return;
@@ -151,15 +160,15 @@ public class RequestFragment extends Fragment {
                         @Override
                         public void onDateSelected(PersianPickerDate persianPickerDate) {
                             etStartDate.setText(persianPickerDate.getPersianLongDate());
-                            if (requestModel.getEnd() == 0) {
-                                requestModel.setEnd(persianPickerDate.getTimestamp());
-                            }
                             PersianCalendar cal = new PersianCalendar();
                             cal.setPersianDate(persianPickerDate.getPersianYear(), persianPickerDate.getPersianMonth(), persianPickerDate.getPersianDay());
                             cal.set(PersianCalendar.HOUR, 0);
                             cal.set(PersianCalendar.MINUTE, 0);
                             cal.set(PersianCalendar.SECOND, 0);
                             requestModel.setStart(cal.getTimeInMillis());
+                            if (requestModel.getEnd() == 0) {
+                                requestModel.setEnd(requestModel.getStart());
+                            }
                         }
 
                         @Override
@@ -169,6 +178,7 @@ public class RequestFragment extends Fragment {
                     .setPickerBackgroundDrawable(R.drawable.bottom_rounded_purple)
                     .setTypeFace(ResourcesCompat.getFont(getContext(), R.font.app_font))
                     .setInitDate(System.currentTimeMillis())
+                    .setMinYear(1400)
                     .show();
         });
 
@@ -179,8 +189,12 @@ public class RequestFragment extends Fragment {
                         @Override
                         public void onDateSelected(PersianPickerDate persianPickerDate) {
                             etEndDate.setText(persianPickerDate.getPersianLongDate());
-                            persianPickerDate.setDate(persianPickerDate.getPersianYear(), persianPickerDate.getPersianMonth(), persianPickerDate.getPersianDay());
-                            requestModel.setEnd(persianPickerDate.getTimestamp());
+                            PersianCalendar cal = new PersianCalendar();
+                            cal.setPersianDate(persianPickerDate.getPersianYear(), persianPickerDate.getPersianMonth(), persianPickerDate.getPersianDay());
+                            cal.set(PersianCalendar.HOUR, 0);
+                            cal.set(PersianCalendar.MINUTE, 0);
+                            cal.set(PersianCalendar.SECOND, 0);
+                            requestModel.setEnd(cal.getTimeInMillis());
                         }
 
                         @Override
@@ -190,6 +204,7 @@ public class RequestFragment extends Fragment {
                     .setPickerBackgroundDrawable(R.drawable.bottom_rounded_purple)
                     .setTypeFace(ResourcesCompat.getFont(getContext(), R.font.app_font))
                     .setInitDate(System.currentTimeMillis())
+                    .setMinYear(1400)
                     .show();
         });
 
@@ -253,11 +268,17 @@ public class RequestFragment extends Fragment {
         }
     }
 
+    private void handleVacationType(String s) {
+        requestModel.setVacationType(s);
+        etVacationType.setText(s);
+    }
+
     private void handleType(String type) {
         requestModel.setType(type);
         etEndDate.setVisibility(View.VISIBLE);
         etEndTime.setVisibility(View.VISIBLE);
         etStartDate.setHint("تاریخ شروع را انتخاب کنید");
+        etVacationType.setVisibility(View.GONE);
         switch (type) {
             case "Enter":
                 etEndDate.setVisibility(View.GONE);
@@ -276,17 +297,22 @@ public class RequestFragment extends Fragment {
                 break;
             case "Vacation":
                 etType.setText("درخواست مرخصی");
+                etVacationType.setVisibility(View.VISIBLE);
                 break;
         }
 
     }
 
     private void submitRequest() {
-        requestModel.setDescription(etDescription.getText().toString() + " ");
+        requestModel.setDescription(requestModel.getVacationType() + " " + etDescription.getText().toString());
         requestModel.setStart(requestModel.getStart() + requestModel.getStartTime());
         requestModel.setEnd(requestModel.getEnd() + requestModel.getEndTime());
         if (requestModel.getEnd() == 0) {
             requestModel.setEnd(requestModel.getStart());
+        }
+        if(requestModel.getEnd() < requestModel.getStart()){
+            MAlerter.show(getActivity(), "خطا", "انتهای بازه باید پس از شروع آن باشد");
+            return;
         }
         if (requestModel.getId() != null && !requestModel.getId().isEmpty()) {
             repository.submitRequestPut(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
@@ -317,18 +343,13 @@ public class RequestFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        title.setText("ثبت درخواست");
-    }
-
     private void findViews(View view) {
         view.findViewById(R.id.arrow).setOnClickListener(v ->
                 getParentFragmentManager().popBackStackImmediate());
         fabDone = view.findViewById(R.id.fabDone);
         etStartDate = view.findViewById(R.id.etStartDate);
         etEndDate = view.findViewById(R.id.etEndDate);
+        etVacationType = view.findViewById(R.id.etVacationType);
         etStartTime = view.findViewById(R.id.etStartTime);
         etEndTime = view.findViewById(R.id.etEndTime);
         delete = view.findViewById(R.id.delete);

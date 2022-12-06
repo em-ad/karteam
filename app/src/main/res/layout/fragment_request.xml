@@ -163,6 +163,24 @@
                 android:textCursorDrawable="@color/black"
                 android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/etVacationType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_white_mini"
+                android:fontFamily="@font/app_font"
+                android:gravity="right"
+                android:paddingLeft="12dp"
+                android:visibility="gone"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:text="انتخاب نوع مرخصی"
+                android:textColor="#333"
+                android:textCursorDrawable="@color/black"
+                android:textSize="15sp" />
+
             <EditText
                 android:id="@+id/etDescription"
                 android:layout_marginTop="16dp"
@@ -176,6 +194,7 @@
                 android:paddingRight="12dp"
                 android:paddingBottom="14dp"
                 android:layoutDirection="rtl"
+                android:maxLength="120"
                 android:background="@drawable/rounded_white_mini"
                 android:textColor="#333"
                 android:textColorHint="#333"

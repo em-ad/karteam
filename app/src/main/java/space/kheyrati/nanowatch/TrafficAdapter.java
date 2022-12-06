@@ -22,8 +22,20 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
     private long end;
 
     public void setDataset(ArrayList<UserLogResponseModel> dataset) {
-        this.dataset = dataset;
+        this.dataset = cleanDataSet(dataset);
         notifyDataSetChanged();
+    }
+
+    private ArrayList<UserLogResponseModel> cleanDataSet(ArrayList<UserLogResponseModel> dataset) {
+        ArrayList<UserLogResponseModel> res = new ArrayList<>();
+        for (int i = 0; i < dataset.size(); i++) {
+            if (start > 0 && end > 0) {
+                if (dataset.get(i).getDate() > end) continue;
+                if (dataset.get(i).getDate() < start) continue;
+                res.add(dataset.get(i));
+            }
+        }
+        return res;
     }
 
     @NonNull
@@ -36,10 +48,6 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (position == -1) return;
         UserLogResponseModel item = dataset.get(position);
-        if (start > 0 && end > 0) {
-            if (dataset.get(position).getDate() > end) return;
-            if (dataset.get(position).getDate() < start) return;
-        }
         if (item.getType() == null) {
             holder.ivStatus.setImageResource(android.R.drawable.ic_menu_info_details);
         } else if (item.getType().equalsIgnoreCase("enter")) {

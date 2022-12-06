@@ -138,7 +138,7 @@ public class AttendeesFragment extends Fragment {
                             refresh.setVisibility(View.VISIBLE);
                             MAlerter.show(getActivity(), "خطا", "هنوز فردی ورود خود را امروز ثبت نکرده است");
                         } else refresh.setVisibility(View.GONE);
-                        adapter.setDataSet(data);
+                        handleListItems();
                         progress.setVisibility(View.GONE);
                         swipe.setRefreshing(false);
                     }

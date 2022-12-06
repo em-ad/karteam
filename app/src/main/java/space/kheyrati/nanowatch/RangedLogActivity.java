@@ -90,7 +90,9 @@ public class RangedLogActivity extends AppCompatActivity {
         });
         tvSearch.setOnClickListener(view -> {
             if (end == 0 || start == 0) {
-                MAlerter.show(this, "خطا", "لطفا هر دو بازه ابتدا و انتها را مشخص کنید");
+                MAlerter.show(this, "خطا!", "لطفا هر دو بازه ابتدا و انتها را مشخص کنید");
+            } if (end < start) {
+                MAlerter.show(this, "خطا!", "ابتدای بازه باید قبل ");
             } else {
                 progress.setVisibility(View.VISIBLE);
                 repository.getLogs(MSharedPreferences.getInstance().getTokenHeader(this), new ApiCallback() {

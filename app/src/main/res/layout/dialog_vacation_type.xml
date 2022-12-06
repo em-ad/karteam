@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="نوع درخواست:\n"
+        android:text="نوع مرخصی:\n"
         android:textColor="@color/black"
         android:fontFamily="@font/app_font"
         android:textSize="16sp"
@@ -25,8 +25,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvEnter"
-        android:text="ثبت ورود"
+        android:id="@+id/tvHoured"
+        android:text="استحقاقی - ساعتی"
         android:textColor="@color/primary_very_dark"
         android:textSize="14sp"
         android:paddingTop="4dp"
@@ -49,8 +49,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvExit"
-        android:text="ثبت خروج"
+        android:id="@+id/tvDayed"
+        android:text="استحقاقی - روزانه"
         android:textColor="@color/primary_very_dark"
         android:textSize="14sp"
         android:paddingTop="4dp"
@@ -73,8 +73,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvVacation"
-        android:text="مرخصی"
+        android:id="@+id/tvMedical"
+        android:text="استعلاجی"
         android:textColor="@color/primary_very_dark"
         android:textSize="14sp"
         android:paddingTop="4dp"
@@ -97,8 +97,32 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvMission"
-        android:text="مأموریت"
+        android:id="@+id/tvPayless"
+        android:text="بدون حقوق"
+        android:textColor="@color/primary_very_dark"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:fontFamily="@font/app_font"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:background="#bfbfbf"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvOthers"
+        android:text="سایر (فوت بستگان، ازدواج، حج و ...)"
         android:textColor="@color/primary_very_dark"
         android:textSize="14sp"
         android:paddingTop="4dp"
