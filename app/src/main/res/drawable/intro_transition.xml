@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:endColor="@color/green"
+                android:startColor="@color/green_dark" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:endColor="@color/design_blue_light"
+                android:startColor="@color/design_blue" />
+        </shape>
+    </item>
+</transition>

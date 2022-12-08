@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:focusable="true"
-    tools:background="@drawable/blue_gradient">
+    android:focusable="true">
 
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/oval_horizontal"
+        android:alpha="0.2"
         android:id="@+id/oval"
         app:layout_constraintHeight_percent="0.18"
         app:layout_constraintLeft_toLeftOf="parent"

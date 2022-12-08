@@ -18,6 +18,7 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/button_state.xml" value="0.1" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/chip_background.xml" value="0.154" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/finger_reverse.xml" value="0.1705" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/green_gradient.xml" value="0.18" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_arrow_alt_circle_down.xml" value="0.1665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_arrow_left.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_arrow_right.xml" value="0.1135" />
@@ -58,9 +59,12 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_vacation.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_vacation_primary_dark.xml" value="0.176" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_window_restore.xml" value="0.176" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/intro_transition.xml" value="0.18" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/oval_horizontal.xml" value="0.1585" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/oval_primary.xml" value="0.142" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/oval_red.xml" value="0.1705" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/purple_gradient.xml" value="0.18" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/red_gradient.xml" value="0.18" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_bordered_primary_dark.xml" value="0.169" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_bordered_primary_dark_mini.xml" value="0.1705" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_dark_big_radius.xml" value="0.154" />

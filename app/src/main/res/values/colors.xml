@@ -11,6 +11,7 @@
     <color name="primary">#187df1</color>
     <color name="red">#ff484a</color>
     <color name="yellow">#ECD511</color>
+    <color name="yellow_light">#E3DB96</color>
     <color name="primary_dark">#0D4587</color>
     <color name="green">#A1E8AC</color>
     <color name="green_light">#D9F0DD</color>
