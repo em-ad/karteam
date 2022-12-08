@@ -15,6 +15,14 @@ public class AttendeesLog implements Serializable {
     @SerializedName("date")
     private long date;
 
+    public AttendeesLog() {
+    }
+
+    public AttendeesLog(String type, long date) {
+        this.type = type;
+        this.date = date;
+    }
+
     public String getId() {
         return id;
     }

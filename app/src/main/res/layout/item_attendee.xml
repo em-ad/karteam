@@ -101,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="7dp"
                 android:id="@+id/meterView"
+                android:rotation="180"
                 android:background="@drawable/timeline_background"
                 />
 

@@ -54,7 +54,7 @@ public class DailyPresence {
                 Map.Entry<String, Long> entry = iterator.next();
                 result.add(new DailyPresence(Float.parseFloat(entry.getKey().split("/")[2]), entry.getValue()));
             }
-            presence.put(day, totalPresence);
+//            presence.put(day, totalPresence);
         }
         return result;
     }

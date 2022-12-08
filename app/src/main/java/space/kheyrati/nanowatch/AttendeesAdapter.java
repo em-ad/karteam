@@ -91,8 +91,8 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
             holder.llProgress.addView(view);
             holder.rootCardView.setCardBackgroundColor(holder.itemView.getContext().getColor(R.color.grey_de));
         }
-
-        List<AttendanceState> ranges = getRangesAndApplySeparators(holder.itemView.getContext(), item.getLogs(), holder.meterView, holder.tvStatus);
+        List<AttendeesLog> logs = item.getLogs();
+        List<AttendanceState> ranges = getRangesAndApplySeparators(holder.itemView.getContext(), logs, holder.meterView, holder.tvStatus);
         if (ranges.size() > 0) {
             holder.llProgress.removeAllViews();
         }
@@ -148,10 +148,14 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
             total += state.get(i).getPercent();
         }
         if(total < 100 && state.size() > 0){
-            state.set(state.size() - 1, new AttendanceState(state.get(state.size() - 1).getColor(), 100 - total ));
+            AttendanceState state1 = state.get(state.size() - 1);
+            state.remove(state1);
+            AttendanceState state2 = new AttendanceState();
+            state2.setColor(state1.getColor());
+            state2.setPercent(100 - total + state1.getPercent());
+            state.add(state2);
         }
-        int dashes = (int) (totalRange / (float) (1000 * 3600));
-        Log.e("TAG", "getRanges dashes and total range: " + dashes + " " + totalRange);
+        int dashes = (int) Math.ceil(totalRange / (float) (1000 * 3600));
         if (dashes > 24 || dashes < 0)
             dashes = 0;
         if (dashes > 0) {

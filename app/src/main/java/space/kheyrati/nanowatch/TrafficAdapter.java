@@ -32,8 +32,8 @@ public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHold
             if (start > 0 && end > 0) {
                 if (dataset.get(i).getDate() > end) continue;
                 if (dataset.get(i).getDate() < start) continue;
-                res.add(dataset.get(i));
             }
+            res.add(dataset.get(i));
         }
         return res;
     }

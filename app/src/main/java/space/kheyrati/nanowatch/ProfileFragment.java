@@ -119,6 +119,7 @@ public class ProfileFragment extends Fragment {
                             MAlerter.show(getActivity(), "خطا", "در دریافت لیست رفت و آمدها خطایی رخ داد!");
                         }
                         try {
+                            Collections.reverse(data);
                             setNewDataToChart(data);
                         } catch (Exception e) {
                             MAlerter.show(getActivity(), "خطا", "در دریافت لیست رفت و آمدها خطایی رخ داد!");
@@ -139,7 +140,7 @@ public class ProfileFragment extends Fragment {
             limit++;
             if (limit == 30) break;
         }
-        BarDataSet set = new BarDataSet(entries, "مجموع میزان حضور در مجموعه در یک ماه اخیر (ساعت)");
+        BarDataSet set = new BarDataSet(entries, "مجموع میزان حضور در مجموعه در یک ماه اخیر (ساعت)             ");
         set.setColors(R.color.green_dark);
         set.setValueTextColor(R.color.black);
         set.setDrawValues(false);
