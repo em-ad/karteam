@@ -14,8 +14,8 @@ android {
         applicationId "space.kheyrati.nanowatch"
         minSdk 23
         targetSdk 32
-        versionCode 16
-        versionName "1.16"
+        versionCode 17
+        versionName "1.17"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true

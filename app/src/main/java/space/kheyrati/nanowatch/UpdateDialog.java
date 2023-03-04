@@ -1,5 +1,7 @@
 package space.kheyrati.nanowatch;
 
+import static space.kheyrati.nanowatch.RetrofitClient.KHEYRATI_BASE_URL;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +29,7 @@ public class UpdateDialog extends Dialog {
             ((TextView) findViewById(R.id.tvDownload)).setText("دانلود نسخه " + version);
         }
         findViewById(R.id.tvDownload).setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://karteam.kheyrati.space/version/download"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(KHEYRATI_BASE_URL + "version/download"));
             getContext().startActivity(intent);
         });
     }

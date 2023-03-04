@@ -310,10 +310,10 @@ public class RequestFragment extends Fragment {
         if (requestModel.getEnd() == 0) {
             requestModel.setEnd(requestModel.getStart());
         }
-        if(requestModel.getEnd() < requestModel.getStart()){
-            MAlerter.show(getActivity(), "خطا", "انتهای بازه باید پس از شروع آن باشد");
-            return;
-        }
+//        if(requestModel.getEnd() < requestModel.getStart()){
+//            MAlerter.show(getActivity(), "خطا", "انتهای بازه باید پس از شروع آن باشد");
+//            return;
+//        }
         if (requestModel.getId() != null && !requestModel.getId().isEmpty()) {
             repository.submitRequestPut(MSharedPreferences.getInstance().getTokenHeader(getContext()), requestModel, new ApiCallback() {
                 @Override
