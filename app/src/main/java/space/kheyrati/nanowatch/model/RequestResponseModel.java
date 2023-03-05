@@ -24,6 +24,8 @@ public class RequestResponseModel implements Serializable {
     private String type;
     @SerializedName("description")
     private String description;
+    @SerializedName("lastUpdate")
+    private String lastUpdate;
 
     public String getId() {
         return id;
@@ -73,6 +75,14 @@ public class RequestResponseModel implements Serializable {
         this.type = type;
     }
 
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,7 +96,10 @@ public class RequestResponseModel implements Serializable {
         if (start != null ? !start.equals(that.start) : that.start != null) return false;
         if (end != null ? !end.equals(that.end) : that.end != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        return type != null ? type.equals(that.type) : that.type == null;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null)
+            return false;
+        return lastUpdate != null ? lastUpdate.equals(that.lastUpdate) : that.lastUpdate == null;
     }
 
     public RequestRequestModel accept() {

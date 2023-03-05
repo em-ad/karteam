@@ -1,5 +1,6 @@
 package space.kheyrati.nanowatch;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
         List<RequestResponseModel> res = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getStatus() != null && list.get(i).getStatus().toLowerCase().equals("pending"))
+                if (list.get(i).getStatus() != null && list.get(i).getStatus().equalsIgnoreCase("pending"))
                     res.add(list.get(i));
             }
         }
@@ -89,7 +90,14 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
         }
 
         public void bind(RequestResponseModel item) {
+            @SuppressLint("SimpleDateFormat")
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            Date lastUpdateDate = null;
+            if(item.getLastUpdate() != null && !item.getLastUpdate().isEmpty()){
+                try {
+                    lastUpdateDate = format.parse(item.getLastUpdate());
+                } catch (Exception ignored){}
+            }
             Date startDate = new Date();
             Date endDate = new Date();
             PersianCalendar cal = null;
@@ -97,7 +105,7 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
             try {
                 startDate = format.parse(item.getStart());
                 endDate = format.parse(item.getEnd());
-                cal = new PersianCalendar(((long) (startDate.getTime() + (3600 * 3.5 * 1000))));
+                cal = new PersianCalendar(((long) (startDate.getTime())));
                 if (endDate.getTime() != startDate.getTime()) {
                     time = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
                 }
@@ -143,6 +151,9 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
                 tvTitle.setText(tvTitle.getText() + " از " + item.getUser().getFirstName() + " " + item.getUser().getLastName());
             ivAccept.setOnClickListener(view -> callback.onAccept(getItem(getAdapterPosition())));
             ivReject.setOnClickListener(view -> callback.onReject(getItem(getAdapterPosition())));
+            if(lastUpdateDate != null){
+                tvTitle.setText(tvTitle.getText() + " - ثبت شده در " + new PersianCalendar(lastUpdateDate.getTime()).getPersianShortDateTime());
+            }
         }
     }
 }
