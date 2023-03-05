@@ -2,7 +2,9 @@ package space.kheyrati.nanowatch;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,7 +28,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import space.kheyrati.nanowatch.api.KheyratiRepository;
 import space.kheyrati.nanowatch.model.AttendanceViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity
+        extends AppCompatActivity
+        implements LocationAssistant.Listener {
 
     private BottomNavigationView bottomNav;
     private ProfileFragment profileFragment;
@@ -37,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private AttendanceViewModel attendanceViewModel;
     private FusedLocationProviderClient fusedLocationClient;
     private KheyratiRepository repository = new KheyratiRepository();
+
+    private LocationAssistant assistant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.trafficFragment);
         bottomNav.setOnItemSelectedListener(navListener);
         attendanceViewModel = new ViewModelProvider(this).get(AttendanceViewModel.class);
+        assistant = new LocationAssistant(this, this, LocationAssistant.Accuracy.HIGH, 1000, false);
     }
 
     private void initFragmentsIfNeeded() {
@@ -71,15 +78,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            locationPermissionRequest.launch(new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-            });
-        } else {
-            findUserLocation();
-        }
+        assistant.start();
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+//                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            locationPermissionRequest.launch(new String[]{
+//                    Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION
+//            });
+//        } else {
+//            findUserLocation();
+//        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        assistant.stop();
     }
 
     private LocationRequest getLocationRequest() {
@@ -92,17 +106,17 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     public void findUserLocation() {
-        if (fusedLocationClient == null)
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationClient.requestLocationUpdates(getLocationRequest(), new LocationCallback() {
-            @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                if (locationResult.getLocations().size() > 0) {
-                    MyApplication.lastLocation = locationResult.getLocations().get(locationResult.getLocations().size() - 1);
-                }
-            }
-        }, getMainLooper());
+//        if (fusedLocationClient == null)
+//            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        fusedLocationClient.requestLocationUpdates(getLocationRequest(), new LocationCallback() {
+//            @Override
+//            public void onLocationResult(@NonNull LocationResult locationResult) {
+//                super.onLocationResult(locationResult);
+//                if (locationResult.getLocations().size() > 0) {
+//                    MyApplication.lastLocation = locationResult.getLocations().get(locationResult.getLocations().size() - 1);
+//                }
+//            }
+//        }, getMainLooper());
     }
 
     ActivityResultLauncher<String[]> locationPermissionRequest =
@@ -156,4 +170,51 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    @Override
+    public void onNeedLocationPermission() {
+        locationPermissionRequest.launch(new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        });
+    }
+
+    @Override
+    public void onExplainLocationPermission() {
+        MAlerter.show(this, "نیاز به دسترسی", "کارتیم نیاز به دسترسی موقعیت شما دارد");
+    }
+
+    @Override
+    public void onLocationPermissionPermanentlyDeclined(View.OnClickListener fromView, DialogInterface.OnClickListener fromDialog) {
+        MAlerter.show(this, "خطایی رخ داد", "دسترسی مکان برای ثبت ورود و خروج ضروری است");
+    }
+
+    @Override
+    public void onNeedLocationSettingsChange() {
+        locationPermissionRequest.launch(new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        });
+    }
+
+    @Override
+    public void onFallBackToSystemSettings(View.OnClickListener fromView, DialogInterface.OnClickListener fromDialog) {
+        MAlerter.show(this, "خطایی رخ داد", "دسترسی مکان برای ثبت ورود و خروج ضروری است");
+    }
+
+    @Override
+    public void onNewLocationAvailable(Location location) {
+        Log.e("TAG", "onNewLocationAvailable: " + location.getLatitude() + " " + location.getLongitude() );
+        MyApplication.lastLocation = location;
+    }
+
+    @Override
+    public void onMockLocationsDetected(View.OnClickListener fromView, DialogInterface.OnClickListener fromDialog) {
+        Log.e("TAG", "onMockLocationsDetected: " );
+        MAlerter.show(this, "خطایی رخ داد", "FAKE LOCATION DETECTED");
+    }
+
+    @Override
+    public void onError(LocationAssistant.ErrorType type, String message) {
+        MAlerter.show(this, "خطایی رخ داد", "دسترسی مکان برای ثبت ورود و خروج ضروری است");
+    }
 }
