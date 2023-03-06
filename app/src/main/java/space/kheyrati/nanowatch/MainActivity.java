@@ -207,10 +207,14 @@ public class MainActivity
         MyApplication.lastLocation = location;
     }
 
+    long lastFohsh;
+
     @Override
     public void onMockLocationsDetected(View.OnClickListener fromView, DialogInterface.OnClickListener fromDialog) {
-        Log.e("TAG", "onMockLocationsDetected: " );
-        MAlerter.show(this, "خطایی رخ داد", "FAKE LOCATION DETECTED");
+        if(System.currentTimeMillis() - lastFohsh > 3000){
+            MAlerter.show(this, "خطا در تشخیص موقعیت", "لوکیشن دستگاه تقلبی تشخیص داده شد. اپلیکیشن های تغییر لوکیشن خود را پاک کنید.");
+            lastFohsh = System.currentTimeMillis();
+        }
     }
 
     @Override
