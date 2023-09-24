@@ -63,6 +63,9 @@ public interface KheyratiApi {
     Call<List<RequestResponseModel>> getRequests(@Header("Authorization") String authHeader,
                                                  @Path("companyId") String companyId);
 
+    @GET("request")
+    Call<List<RequestResponseModel>> getMyRequests(@Header("Authorization") String authHeader);
+
     @POST("request")
     Call<ResponseBody> submitRequest(@Header("Authorization") String authHeader,
                                      @Body RequestRequestModel fcmRequestModel);

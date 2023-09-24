@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.installations.FirebaseInstallations;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class CompanyChooserActivity extends AppCompatActivity {
         super.onResume();
         repository = new KheyratiRepository();
         getMyCompanies();
-        FirebaseInstanceId.getInstance().getInstanceId()
+        FirebaseInstallations.getInstance().getToken(true)
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
                         return;
@@ -52,6 +52,15 @@ public class CompanyChooserActivity extends AppCompatActivity {
                     Log.e("TAG", "FCM TOKEN: " + token);
                     new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
                 });
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener(task -> {
+//                    if (!task.isSuccessful()) {
+//                        return;
+//                    }
+//                    String token = task.getResult().getToken();
+//                    Log.e("TAG", "FCM TOKEN: " + token);
+//                    new KheyratiRepository().sendToken(MSharedPreferences.getInstance().getTokenHeader(getApplication()), token);
+//                });
     }
 
     private void getMyCompanies() {

@@ -67,7 +67,7 @@ public class CartableFragment extends Fragment implements RequestCallback {
             } else blocker.setVisibility(View.GONE);
         }
         progress.setVisibility(View.VISIBLE);
-        repository.getMyRequests(MSharedPreferences.getInstance().getTokenHeader(getContext()), new ApiCallback() {
+        repository.getAllRequests(MSharedPreferences.getInstance().getTokenHeader(getContext()), new ApiCallback() {
             @Override
             public void apiFailed(Object o) {
                 progress.setVisibility(View.GONE);

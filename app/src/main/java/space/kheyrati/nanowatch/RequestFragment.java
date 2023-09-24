@@ -44,6 +44,7 @@ public class RequestFragment extends Fragment {
     private KheyratiRepository repository;
     private RefreshCallback callback;
     private RequestResponseModel item = null;
+    private boolean isEditMode = false;
 
     private String type;
 
@@ -139,6 +140,7 @@ public class RequestFragment extends Fragment {
         requestModel.setUser(MSharedPreferences.getInstance().getUserIdFromToken(getContext()));
         repository = new KheyratiRepository();
         if (item != null) {
+            isEditMode = true;
             title.setText("ویرایش درخواست");
             handleRequestItem(item);
         } else {
@@ -166,7 +168,7 @@ public class RequestFragment extends Fragment {
                             cal.set(PersianCalendar.MINUTE, 0);
                             cal.set(PersianCalendar.SECOND, 0);
                             requestModel.setStart(cal.getTimeInMillis());
-                            if (requestModel.getEnd() == 0) {
+                            if (etEndDate.getVisibility() == View.GONE) {
                                 requestModel.setEnd(requestModel.getStart());
                             }
                         }
@@ -307,7 +309,7 @@ public class RequestFragment extends Fragment {
         requestModel.setDescription(requestModel.getVacationType() + " " + etDescription.getText().toString());
         requestModel.setStart(requestModel.getStart() + requestModel.getStartTime());
         requestModel.setEnd(requestModel.getEnd() + requestModel.getEndTime());
-        if (requestModel.getEnd() == 0) {
+        if (etEndDate.getVisibility() == View.GONE) {
             requestModel.setEnd(requestModel.getStart());
         }
 //        if(requestModel.getEnd() < requestModel.getStart()){

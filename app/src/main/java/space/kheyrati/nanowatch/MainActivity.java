@@ -211,10 +211,7 @@ public class MainActivity
 
     @Override
     public void onMockLocationsDetected(View.OnClickListener fromView, DialogInterface.OnClickListener fromDialog) {
-        if(System.currentTimeMillis() - lastFohsh > 3000){
-            MAlerter.show(this, "خطا در تشخیص موقعیت", "لوکیشن دستگاه تقلبی تشخیص داده شد. اپلیکیشن های تغییر لوکیشن خود را پاک کنید.");
-            lastFohsh = System.currentTimeMillis();
-        }
+        MAlerter.show(this, "خطا در تشخیص موقعیت", "لوکیشن دستگاه تقلبی تشخیص داده شد. اپلیکیشن های تغییر لوکیشن خود را پاک کنید.");
     }
 
     @Override

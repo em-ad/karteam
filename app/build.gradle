@@ -101,8 +101,7 @@ dependencies {
     implementation "com.google.firebase:firebase-iid:21.1.0"
 
     implementation 'com.auth0.android:jwtdecode:2.0.1'
-
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
-
+    implementation 'androidx.slidingpanelayout:slidingpanelayout:1.2.0'
     implementation 'com.github.MAXDeliveryNG:slideview:1.1.0'
 }

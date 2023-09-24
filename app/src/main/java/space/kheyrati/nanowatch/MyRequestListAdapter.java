@@ -75,7 +75,7 @@ class MyRequestListAdapter extends ListAdapter<RequestResponseModel, MyRequestLi
             try {
                 startDate = format.parse(item.getStart());
                 endDate = format.parse(item.getEnd());
-                cal = new PersianCalendar(((long) (startDate.getTime() + (3600 * 3.5 * 1000))));
+                cal = new PersianCalendar(((long) (startDate.getTime())));
                 if (endDate.getTime() != startDate.getTime()) {
                     time = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
                 }
