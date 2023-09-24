@@ -10,10 +10,26 @@ public class NewsRequestModel implements Serializable {
     private String text;
     @SerializedName("company")
     private String company;
+    @SerializedName("user")
+    private String user;
 
     public NewsRequestModel(String text, String company) {
         this.text = text;
         this.company = company;
+    }
+
+    public NewsRequestModel(String text, String company, String user) {
+        this.text = text;
+        this.company = company;
+        this.user = user;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getText() {

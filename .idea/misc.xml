@@ -6,7 +6,19 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_fingerprint_primary_mini.xml" value="0.1265" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_map_marked_alt.xml" value="0.1265" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/ic_map_marker_alt.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_bordered_primary_dark.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_bordered_primary_dark_mini.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_dark_big_radius.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_dark_box.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_grey.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_primary.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_white.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_white_box.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_send_news.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_send_reply.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_news.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_traffic.xml" value="0.23489583333333333" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_news.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

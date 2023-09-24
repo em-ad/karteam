@@ -37,6 +37,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         } else {
             holder.date.setText("نامشخص");
         }
+        if(MyApplication.role != null && MyApplication.role.equalsIgnoreCase("admin")){
+            holder.reply.setVisibility(View.VISIBLE);
+        } else {
+            holder.reply.setVisibility(View.GONE);
+        }
+        holder.reply.setOnClickListener(view ->
+                new SendReplyDialog(view.getContext(), item.getText(), item.getUser().getId()).show());
     }
 
     public void setData(List<NewsResponseModel> data) {
@@ -54,12 +61,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         private TextView sender;
         private TextView text;
         private TextView date;
+        private TextView reply;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.text);
             sender = itemView.findViewById(R.id.sender);
             date = itemView.findViewById(R.id.date);
+            reply = itemView.findViewById(R.id.reply);
         }
     }
 }
