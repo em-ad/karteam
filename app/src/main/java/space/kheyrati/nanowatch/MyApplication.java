@@ -17,19 +17,19 @@ public class MyApplication extends Application {
     public static boolean isIn;
 
     public static boolean locationValid() {
-//        if (lastLocation == null || company == null || company.getLocation() == null || company.getLocation().isEmpty())
-//            return false;
-//        double distance = Integer.MAX_VALUE;
-//        double radius = Integer.MIN_VALUE;
-//        for (int i = 0; i < company.getLocation().size(); i++) {
-//            if (distanceOf(lastLocation, company.getLocation().get(i)) < distance) {
-//                distance = distanceOf(lastLocation, company.getLocation().get(i));
-//            }
-//            if (company.getLocation().get(i).getRadius() > radius)
-//                radius = company.getLocation().get(i).getRadius();
-//        }
-//        return distance < radius;
-        return true;
+        if (lastLocation == null || company == null || company.getLocation() == null || company.getLocation().isEmpty())
+            return false;
+        double distance = Integer.MAX_VALUE;
+        double radius = Integer.MIN_VALUE;
+        for (int i = 0; i < company.getLocation().size(); i++) {
+            if (distanceOf(lastLocation, company.getLocation().get(i)) < distance) {
+                distance = distanceOf(lastLocation, company.getLocation().get(i));
+            }
+            if (company.getLocation().get(i).getRadius() > radius)
+                radius = company.getLocation().get(i).getRadius();
+        }
+        return distance < radius;
+//        return true;
     }
 
     public static double distanceOf(Location point1, CompanyLocationResponseModel point2) {
