@@ -22,11 +22,13 @@ public class SendReplyDialog extends Dialog {
     ProgressBar progress;
     String textToReply;
     String userId;
+    String itemId;
 
-    public SendReplyDialog(@NonNull Context context, String textToReply, String userId) {
+    public SendReplyDialog(@NonNull Context context, String textToReply, String userId, String itemId) {
         super(context);
         this.textToReply = textToReply;
         this.userId = userId;
+        this.itemId = itemId;
     }
 
     @Override
@@ -51,9 +53,10 @@ public class SendReplyDialog extends Dialog {
         progress.setVisibility(View.VISIBLE);
         repository.sendReply(
                 MSharedPreferences.getInstance().getTokenHeader(getContext()),
-                etMessage.getText().toString().trim(),
+                textToReply + "\n" + "پاسخ مدیر: " + etMessage.getText().toString().trim(),
                 MyApplication.company.getCompany().getId(),
                 userId,
+                itemId,
                 new ApiCallback() {
                     @Override
                     public void apiFailed(Object o) {

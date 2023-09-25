@@ -396,10 +396,10 @@ public class KheyratiRepository {
                 });
     }
 
-    public void sendReply(String tokenHeader, String message, String companyId, String userId, ApiCallback apiCallback) {
+    public void sendReply(String tokenHeader, String message, String companyId, String userId, String itemId, ApiCallback apiCallback) {
         NewsRequestModel model = new NewsRequestModel(message, companyId, userId);
         RetrofitClient.getInstance().getKheyratiApi()
-                .sendReply(tokenHeader, model)
+                .sendReply(tokenHeader, model, itemId)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

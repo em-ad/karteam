@@ -43,7 +43,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             holder.reply.setVisibility(View.GONE);
         }
         holder.reply.setOnClickListener(view ->
-                new SendReplyDialog(view.getContext(), item.getText(), item.getUser().getId()).show());
+                new SendReplyDialog(view.getContext(), item.getText(), item.getUser().getId(), item.getId()).show());
     }
 
     public void setData(List<NewsResponseModel> data) {
