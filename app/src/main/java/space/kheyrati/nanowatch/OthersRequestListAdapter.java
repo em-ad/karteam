@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +66,7 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
                     res.add(list.get(i));
             }
         }
+        Collections.reverse(res);
         return res;
     }
 
@@ -113,12 +115,12 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
                 e.printStackTrace();
             }
             if (cal != null) {
-                tvDate.setText(cal.getPersianShortDate());
+                tvDate.setText("درخواست برای " + cal.getPersianShortDateTime().replace(" ", " | "));
             }
             if (!item.getType().equals("Enter") && !item.getType().equals("Exit")) {
-                tvTime.setText(time < 24 ? time + " ساعت" : (Math.ceil(((double) time) / 24) + " روز").replace(".0", ""));
+                tvTime.setText("مدت: " + (time < 24 ? time + " ساعت" : (Math.ceil(((double) time) / 24) + " روز").replace(".0", "")));
                 if (tvTime.getText().toString().equals("0 ساعت"))
-                    tvTime.setText("کمتر از یک ساعت");
+                    tvTime.setText("به مدت کمتر از یک ساعت");
             } else {
                 tvTime.setText(cal.getPersianShortDateTime().substring(cal.getPersianShortDateTime().indexOf(" ")));
             }
@@ -136,7 +138,7 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
                     ivType.setImageResource(R.drawable.ic_fingerprint_primary);
                     break;
                 case "vacation":
-                    tvTitle.setText("درخواست مرخصی");
+                    tvTitle.setText("مرخصی");
                     ivType.setImageResource(R.drawable.ic_vacation_primary_dark);
                     break;
 
@@ -152,7 +154,7 @@ class OthersRequestListAdapter extends ListAdapter<RequestResponseModel, OthersR
             ivAccept.setOnClickListener(view -> callback.onAccept(getItem(getAdapterPosition())));
             ivReject.setOnClickListener(view -> callback.onReject(getItem(getAdapterPosition())));
             if(lastUpdateDate != null){
-                tvTitle.setText(tvTitle.getText() + " - ثبت شده در " + new PersianCalendar(lastUpdateDate.getTime()).getPersianShortDateTime());
+                tvTitle.setText(tvTitle.getText() + " - زمان ثبت درخواست: " + new PersianCalendar(lastUpdateDate.getTime()).getPersianShortDateTime().replace(" ", " | "));
             }
         }
     }

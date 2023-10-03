@@ -164,9 +164,10 @@ public class RequestFragment extends Fragment {
                             etStartDate.setText(persianPickerDate.getPersianLongDate());
                             PersianCalendar cal = new PersianCalendar();
                             cal.setPersianDate(persianPickerDate.getPersianYear(), persianPickerDate.getPersianMonth(), persianPickerDate.getPersianDay());
-                            cal.set(PersianCalendar.HOUR, 0);
+                            cal.set(PersianCalendar.HOUR_OF_DAY, 0);
                             cal.set(PersianCalendar.MINUTE, 0);
                             cal.set(PersianCalendar.SECOND, 0);
+                            cal.set(PersianCalendar.MILLISECOND, 0);
                             requestModel.setStart(cal.getTimeInMillis());
                             if (etEndDate.getVisibility() == View.GONE) {
                                 requestModel.setEnd(requestModel.getStart());
@@ -193,9 +194,10 @@ public class RequestFragment extends Fragment {
                             etEndDate.setText(persianPickerDate.getPersianLongDate());
                             PersianCalendar cal = new PersianCalendar();
                             cal.setPersianDate(persianPickerDate.getPersianYear(), persianPickerDate.getPersianMonth(), persianPickerDate.getPersianDay());
-                            cal.set(PersianCalendar.HOUR, 0);
+                            cal.set(PersianCalendar.HOUR_OF_DAY, 0);
                             cal.set(PersianCalendar.MINUTE, 0);
                             cal.set(PersianCalendar.SECOND, 0);
+                            cal.set(PersianCalendar.MILLISECOND, 0);
                             requestModel.setEnd(cal.getTimeInMillis());
                         }
 
