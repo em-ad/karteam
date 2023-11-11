@@ -14,7 +14,7 @@ public class RetrofitClient {
 
     private static RetrofitClient instance = null;
     private final KheyratiApi kheyratiApi;
-    public static final String KHEYRATI_BASE_URL = "https://api.karteam.app/";
+    public static final String KHEYRATI_BASE_URL = "https://api.karteam.icaisharif.ir/";
     public static final String API_CONTENT_TYPE_VALUE = "application/json";
     public static final String API_CONTENT_TYPE = "Content-Type";
 
