@@ -22,6 +22,7 @@ import space.kheyrati.nanowatch.model.FcmRequestModel;
 import space.kheyrati.nanowatch.model.FcmResponseModel;
 import space.kheyrati.nanowatch.model.NewsRequestModel;
 import space.kheyrati.nanowatch.model.NewsResponseModel;
+import space.kheyrati.nanowatch.model.PersonalMessageRequestModel;
 import space.kheyrati.nanowatch.model.RequestDeleteResponseModel;
 import space.kheyrati.nanowatch.model.RequestRequestModel;
 import space.kheyrati.nanowatch.model.RequestResponseModel;
@@ -378,6 +379,26 @@ public class KheyratiRepository {
 
     public void sendNews(String tokenHeader, String message, String companyId, ApiCallback apiCallback) {
         NewsRequestModel model = new NewsRequestModel(message, companyId);
+        RetrofitClient.getInstance().getKheyratiApi()
+                .sendNews(tokenHeader, model)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        apiCallback.apiFailed(new Throwable(t.getMessage()));
+                    }
+                });
+    }
+
+    public void sendNewsForUser(String tokenHeader, String message, String companyId, String userId, ApiCallback apiCallback) {
+        PersonalMessageRequestModel model = new PersonalMessageRequestModel(message, companyId, userId);
         RetrofitClient.getInstance().getKheyratiApi()
                 .sendNews(tokenHeader, model)
                 .enqueue(new Callback<ResponseBody>() {

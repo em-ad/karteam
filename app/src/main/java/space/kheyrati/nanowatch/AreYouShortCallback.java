@@ -5,5 +5,7 @@ interface AreYouShortCallback {
 
     void reject();
 
+    default void sendMessage(String text){}
+
     void dismiss();
 }

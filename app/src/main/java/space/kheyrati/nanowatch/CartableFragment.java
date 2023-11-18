@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,7 +88,7 @@ public class CartableFragment extends Fragment implements RequestCallback {
 
     @Override
     public void onAccept(RequestResponseModel model) {
-        new AreYouShortDialog(getContext(), null, null, null, new AreYouShortCallback() {
+        new AreYouShortDialogWithMessage(getContext(), null, null, null, new AreYouShortCallback() {
             @Override
             public void accept() {
                 progress.setVisibility(View.VISIBLE);
@@ -116,12 +117,39 @@ public class CartableFragment extends Fragment implements RequestCallback {
             public void dismiss() {
 
             }
+
+            @Override
+            public void sendMessage(String text) {
+                sendInboxMessage(model, text);
+            }
         }).show();
+    }
+
+    private void sendInboxMessage(RequestResponseModel model, String text) {
+        progress.setVisibility(View.VISIBLE);
+        repository.sendNewsForUser(
+                MSharedPreferences.getInstance().getTokenHeader(getContext()),
+                model.getType() + "\n" + "پاسخ مدیر: " + text,
+                MyApplication.company.getCompany().getId(),
+                model.getUser().getId(),
+                new ApiCallback() {
+                    @Override
+                    public void apiFailed(Object o) {
+                        progress.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "در ارسال پاسخ خطایی رخ داد!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void apiSucceeded(Object o) {
+                        Toast.makeText(getContext(), "پیام با موفقیت ارسال شد.", Toast.LENGTH_SHORT).show();
+                        progress.setVisibility(View.GONE);
+                    }
+                });
     }
 
     @Override
     public void onReject(RequestResponseModel model) {
-        new AreYouShortDialog(getContext(), null, null, null, new AreYouShortCallback() {
+        new AreYouShortDialogWithMessage(getContext(), null, null, null, new AreYouShortCallback() {
             @Override
             public void accept() {
                 progress.setVisibility(View.VISIBLE);
@@ -149,6 +177,11 @@ public class CartableFragment extends Fragment implements RequestCallback {
             @Override
             public void dismiss() {
 
+            }
+
+            @Override
+            public void sendMessage(String text) {
+                sendInboxMessage(model, text);
             }
         }).show();
     }

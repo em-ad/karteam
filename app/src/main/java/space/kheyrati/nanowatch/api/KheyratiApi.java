@@ -22,6 +22,7 @@ import space.kheyrati.nanowatch.model.FcmRequestModel;
 import space.kheyrati.nanowatch.model.FcmResponseModel;
 import space.kheyrati.nanowatch.model.NewsRequestModel;
 import space.kheyrati.nanowatch.model.NewsResponseModel;
+import space.kheyrati.nanowatch.model.PersonalMessageRequestModel;
 import space.kheyrati.nanowatch.model.RequestDeleteResponseModel;
 import space.kheyrati.nanowatch.model.RequestRequestModel;
 import space.kheyrati.nanowatch.model.RequestResponseModel;
@@ -97,6 +98,10 @@ public interface KheyratiApi {
     @POST("news")
     Call<ResponseBody> sendNews(@Header("Authorization") String authHeader,
                                 @Body NewsRequestModel requestModel);
+
+    @POST("news")
+    Call<ResponseBody> sendNews(@Header("Authorization") String authHeader,
+                                @Body PersonalMessageRequestModel requestModel);
 
     @GET("EnterExit/last/{companyId}")
     Call<StateResponseModel> getState(@Header("Authorization") String authHeader,

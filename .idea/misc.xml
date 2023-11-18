@@ -14,8 +14,12 @@
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_primary.xml" value="0.1265" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_white.xml" value="0.1265" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/drawable/rounded_white_box.xml" value="0.1265" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_are_you_short.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_are_you_short_with_message.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_force_update.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_send_news.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/dialog_send_reply.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_cartable.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_news.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/fragment_traffic.xml" value="0.23489583333333333" />
         <entry key="..\:/Users/Emad/Desktop/NanoWatch/app/src/main/res/layout/item_news.xml" value="0.25416666666666665" />
